@@ -65,15 +65,18 @@ INSERT INTO datalake.competitions_by_person_and_state (
         lake_c.competition_id = dump_c.id AND
         p.countryId = 'Brazil'
     GROUP BY p.id, lake_c.state_id
-
+    ON DUPLICATE KEY UPDATE (n_competitions)
 ;
 
-DROP TABLE IF EXISTS CompetitionsEachCountry;
-CREATE TABLE CompetitionsEachCountry AS
+INSERT INTO dump.competitions_by_person_and_country (
+    wca_id,
+    country_name,
+    n_competitions
+)
     SELECT
-        p.id AS id,
-        c.countryId AS countryId,
-        COUNT(DISTINCT c.id) AS qtd
+        p.id                        AS wca_id,
+        c.countryId                 AS country_name,
+        COUNT(DISTINCT c.id)        AS n_competitions
     FROM
         Persons p,
         Competitions c,
@@ -83,46 +86,42 @@ CREATE TABLE CompetitionsEachCountry AS
         c.id = r.competitionId AND
         p.countryId = 'Brazil'
     GROUP BY p.id, c.countryId
+    ON DUPLICATE KEY UPDATE (n_competitions)
 ;
-ALTER TABLE CompetitionsEachCountry CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE INDEX idx_id ON CompetitionsEachCountry (id);
-CREATE INDEX idx_countryId ON CompetitionsEachCountry (countryId);
 
-DROP TABLE IF EXISTS StatePerson;
-CREATE TABLE StatePerson AS
+INSERT INTO datalake.estimated_state_for_user (
+    wca_id,
+    state_id
+)
     SELECT
         p.id AS id,
         cesMaxState.name AS stateName,
-        cecMaxCountry.countryId AS countryId
     FROM
         Persons p
             LEFT JOIN (
-                SELECT id, name
-                FROM CompetitionsEachState c1
-                WHERE qtd = (
-                    SELECT MAX(qtd)
-                    FROM CompetitionsEachState c2
-                    WHERE c1.id = c2.id
+                SELECT wca_id, state_id
+                FROM datalake.competitions_by_person_and_state c1
+                WHERE n_competitions = (
+                    SELECT MAX(n_competitions)
+                    FROM datalake.competitions_by_person_and_state c2
+                    WHERE c1.wca_id = c2.wca_id
                 )
-            ) AS cesMaxState ON p.id = cesMaxState.id
+            ) AS ces_max_state ON p.wca_id = ces_max_state.wca_id
             LEFT JOIN  (
-                SELECT id, countryId
-                FROM CompetitionsEachCountry c1
-                WHERE qtd = (
-                    SELECT MAX(qtd)
-                    FROM CompetitionsEachCountry c2
-                    WHERE c1.id = c2.id
+                SELECT wca_id, country_name
+                FROM dump.competitions_by_person_and_country c1
+                WHERE n_competitions = (
+                    SELECT MAX(n_competitions)
+                    FROM dump.competitions_by_person_and_country c2
+                    WHERE c1.wca_id = c2.wca_id
                 )
-            ) AS cecMaxCountry on p.id = cecMaxCountry.id
+            ) AS cec_max_country on p.wca_id = cec_max_country.wca_id
     WHERE
         p.countryId = 'Brazil' AND
-        cecMaxCountry.countryId = 'Brazil' AND
-        cesMaxState.name IS NOT NULL
+        cec_max_country.country_name = 'Brazil' AND
+        ces_max_state.name IS NOT NULL
+    ON DUPLICATE KEY UPDATE (state_id)
 ;
-ALTER TABLE StatePerson CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE INDEX idx_id ON StatePerson (id);
-CREATE INDEX idx_state ON StatePerson (stateName);
-CREATE INDEX idx_countryId ON StatePerson (countryId);
 
 DROP TABLE IF EXISTS ResultsByState;
 CREATE TABLE ResultsByState AS
