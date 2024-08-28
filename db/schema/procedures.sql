@@ -94,8 +94,8 @@ INSERT INTO datalake.estimated_state_for_user (
     state_id
 )
     SELECT
-        p.id AS id,
-        cesMaxState.name AS stateName,
+        p.id AS id,                 AS wca_id
+        ces_max_state.name          AS state_id,
     FROM
         Persons p
             LEFT JOIN (
@@ -123,49 +123,70 @@ INSERT INTO datalake.estimated_state_for_user (
     ON DUPLICATE KEY UPDATE (state_id)
 ;
 
-DROP TABLE IF EXISTS ResultsByState;
-CREATE TABLE ResultsByState AS
+INSERT INTO dump.all_persons_with_states (
+    wca_id,
+    state_id
+)
     SELECT
-        r.personId AS personId,
-        r.personName AS personName,
-        r.eventId AS eventId,
-        sp.stateName AS stateName,
-        MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0)) AS average,
-        MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0)) AS single
+        wca_id                              AS wca_id,
+        COALESCE(ru.state_id, es.state_id)  AS state_id
+    FROM
+        datalake.estimated_state_for_user es
+        LEFT JOIN app.registered_users re
+            ON es.wca_id = re.wca_id
+    ON DUPLICATE KEY UPDATE (state_id)
+;
+
+INSERT INTO dump.results_by_state (
+    wca_id,
+    state_id,
+    event_id,
+    average,
+    single
+)
+    SELECT
+        r.personId              AS wca_id,
+        r.eventId               AS event_id,
+        all.state_id             AS state_id,
+        MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0))     AS average,
+        MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0))        AS single
     FROM
         Results r
-            JOIN StatePerson sp
-                ON r.personId = sp.id
-    GROUP BY r.personId, r.personName, r.eventId, sp.stateName;
+            JOIN dump.all_persons_with_states all
+                ON r.personId = all.wca_id
+    GROUP BY r.personId, r.personName, r.eventId, all.state_id;
+    ON DUPLICATE KEY UPDATE (state_id, average, single)
 ;
-ALTER TABLE ResultsByState CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE INDEX idx_id ON ResultsByState (personId);
-CREATE INDEX idx_eventId ON ResultsByState (eventId);
-CREATE INDEX idx_state ON ResultsByState (stateName);
-CREATE INDEX idx_average ON ResultsByState (average);
-CREATE INDEX idx_single ON ResultsByState (single);
 
-DROP TABLE IF EXISTS ResultsByStateRankingSingle;
-CREATE TABLE ResultsByStateRankingSingle AS
+INSERT INTO datalake.ranking_single (
+    wca_id,
+    event_id,
+    state_id,
+    single,
+    ranking
+)
     SELECT
-        rs1.personId AS personId,
-        rs1.personName AS personName,
-        rs1.eventId AS eventId,
-        rs1.stateName AS stateName,
-        NULLIF(NULLIF(NULLIF(rs1.single, 0),-1),-2) as single,
-        dense_rank() OVER (PARTITION BY rs2.eventId, rs2.stateName ORDER BY rs2.single ASC) AS ranking
+        rs1.wca_id              AS wca_id,
+        rs1.event_id            AS event_id,
+        rs1.state_id            AS state_id,
+        NULLIF(NULLIF(NULLIF(rs1.single, 0),-1),-2)     AS single,
+        dense_rank() OVER (
+            PARTITION BY rs2.event_id, rs2.state_id ORDER BY rs2.single ASC
+        ) AS ranking
     FROM
-        ResultsByState rs1
+        dump.results_by_state rs1
             LEFT JOIN (
                 SELECT
-                    personId,
-                    eventId,
-                    stateName,
+                    wca_id,
+                    event_id,
+                    state_id,
                     COALESCE(NULLIF(NULLIF(NULLIF(single,0),-1),-2), 9999999999) AS single
                 FROM
-                    ResultsByState
+                    dump.results_by_state
             ) AS rs2
-                ON rs1.personId = rs2.personId AND rs1.eventId = rs2.eventId AND rs1.stateName = rs2.stateName
+                ON rs1.wca_id = rs2.wca_id 
+                    AND rs1.event_id = rs2.event_id 
+                    AND rs1.state_id = rs2.state_id
     -- WHERE rs1.eventId != '333mbf'
     -- UNION
     -- SELECT
@@ -190,37 +211,43 @@ CREATE TABLE ResultsByStateRankingSingle AS
     --         ) AS rs4
     --             ON rs3.personId = rs4.personId AND rs3.eventId = rs4.eventId AND rs3.stateName = rs4.stateName
     -- WHERE rs3.eventId = '333mbf'
+    ON DUPLICATE KEY UPDATE (state_id, single, ranking)
 ;
-ALTER TABLE ResultsByStateRankingSingle CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE INDEX idx_personId ON ResultsByStateRankingSingle (personId);
-CREATE INDEX idx_eventId ON ResultsByStateRankingSingle (eventId);
-CREATE INDEX idx_state ON ResultsByStateRankingSingle (stateName);
 
-DROP TABLE IF EXISTS ResultsByStateRankingAverage;
-CREATE TABLE ResultsByStateRankingAverage AS
+INSERT INTO datalake.ranking_average(
+    wca_id,
+    state_id,
+    event_id,
+    average,
+    ranking
+)
     SELECT
-        rs1.personId AS personId,
-        rs1.personName AS personName,
-        rs1.eventId AS eventId,
-        rs1.stateName AS stateName,
-        NULLIF(NULLIF(NULLIF(rs1.average, 0),-1),-2) as average,
-        dense_rank() OVER (PARTITION BY rs2.eventId, rs2.stateName ORDER BY rs2.average ASC) AS ranking
+        rs1.wca_id          AS wca_id,
+        rs1.event_id        AS event_id,
+        rs1.state_id        AS state_id,
+        NULLIF(NULLIF(NULLIF(rs1.average, 0),-1),-2)    AS average,
+        dense_rank() OVER (
+            PARTITION BY rs2.event_id, rs2.state_id ORDER BY rs2.average ASC
+        ) AS ranking
     FROM
-        ResultsByState rs1
+        dump.results_by_state rs1
             LEFT JOIN (
                 SELECT
-                    personId,
-                    eventId,
-                    stateName,
+                    wca_id,
+                    event_id,
+                    state_id,
                     COALESCE(NULLIF(NULLIF(NULLIF(average,0),-1),-2), 9999999999) AS average
                 FROM
-                    ResultsByState
+                    dump.results_by_state
             ) AS rs2
-                ON rs1.personId = rs2.personId AND rs1.eventId = rs2.eventId AND rs1.stateName = rs2.stateName
+                ON rs1.wca_id = rs2.wca_id
+                    AND rs1.event_id = rs2.event_id
+                    AND rs1.state_id = rs2.state_id
+    ON DUPLICATE KEY UPDATE (state_id, average, ranking)
 ;
-ALTER TABLE ResultsByStateRankingAverage CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-CREATE INDEX idx_personId ON ResultsByStateRankingAverage (personId);
-CREATE INDEX idx_eventId ON ResultsByStateRankingAverage (eventId);
-CREATE INDEX idx_state ON ResultsByStateRankingAverage (stateName);
+
+TRUNCATE TABLE dump.all_persons_with_states;
+TRUNCATE TABLE dump.competitions_by_person_and_country;
+TRUNCATE TABLE dump.results_by_state;
 
 END

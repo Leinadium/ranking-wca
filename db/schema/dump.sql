@@ -1,3 +1,11 @@
+CREATE TABLE IF NOT EXISTS dump.all_persons_with_states (
+    wca_id,
+    state_id,
+    PRIMARY KEY (wca_id),
+    INDEX (state_id)
+);
+
+
 CREATE TABLE IF NOT EXISTS dump.competitions_by_person_and_country (
     wca_id              VARCHAR(10) NOT NULL,
     country_name        VARCHAR(50) NOT NULL,
@@ -9,7 +17,7 @@ CREATE TABLE IF NOT EXISTS dump.competitions_by_person_and_country (
 
 CREATE TABLE IF NOT EXISTS dump.results_by_state (
     wca_id              VARCHAR(10) NOT NULL,
-    state_id            CHAR(2) NOT NULL,
+    state_id            CHAR(2) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
     event_id            VARCHAR(6) NOT NULL,
     average             FLOAT,
     single              FLOAT,
