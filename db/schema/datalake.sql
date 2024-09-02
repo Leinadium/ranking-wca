@@ -14,21 +14,13 @@ CREATE TABLE IF NOT EXISTS datalake.competitors (
 );
 -----------------------------------------------------
 
--- states
-CREATE TABLE IF NOT EXISTS datalake.states (
-    state_id            CHAR(2) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-    state_name          VARCHAR(18) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-    PRIMARY KEY (state_id)
-);
------------------------------------------------------
-
 -- competitions
 CREATE TABLE IF NOT EXISTS datalake.competitions (
     competition_id      VARCHAR(32) NOT NULL,
     competition_name    VARCHAR(50) NOT NULL,
     state_id            CHAR(2) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
     PRIMARY KEY (competition_id),
-    FOREIGN KEY (state_id) REFERENCES datalake.states(state_id)
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id)
 );
 -----------------------------------------------------
 
@@ -38,7 +30,7 @@ CREATE TABLE IF NOT EXISTS datalake.competitions_by_person_and_state (
     state_id            CHAR(2) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
     n_competitions      INT NOT NULL,
     PRIMARY KEY (wca_id, state_id),
-    FOREIGN KEY (state_id) REFERENCES datalake.states(state_id)
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id)
 );
 -----------------------------------------------------
 
@@ -48,7 +40,7 @@ CREATE TABLE IF NOT EXISTS datalake.estimated_state_for_user (
     state_id            CHAR(2) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
     PRIMARY KEY (wca_id),
     FOREIGN KEY (wca_id) REFERENCES datalake.competitors(wca_id),
-    FOREIGN KEY (state_id) REFERENCES datalake.states(state_id)
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id)
 );
 -----------------------------------------------------
 
@@ -61,7 +53,7 @@ CREATE TABLE IF NOT EXISTS datalake.ranking_single (
     ranking             INT NOT NULL,
     PRIMARY KEY (wca_id, event_id),
     FOREIGN KEY (wca_id) REFERENCES datalake.competitors(wca_id),
-    FOREIGN KEY (state_id) REFERENCES datalake.states(state_id),
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id),
     INDEX (ranking)
 );
 
@@ -73,7 +65,7 @@ CREATE TABLE IF NOT EXISTS datalake.ranking_average (
     ranking             INT NOT NULL,
     PRIMARY KEY (wca_id, event_id),
     FOREIGN KEY (wca_id) REFERENCES datalake.competitors(wca_id),
-    FOREIGN KEY (state_id) REFERENCES datalake.states(state_id),
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id),
     INDEX (ranking)
 );
 -----------------------------------------------------
