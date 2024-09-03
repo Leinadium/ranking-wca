@@ -5,11 +5,11 @@ services:
       - .env
     ports:
       - ${MYSQL_PORT}:${MYSQL_PORT}
-    healthcheck:
-      test: mysql ${MYSQL_DATABASE} --user=${MYSQL_USER} --password='${MYSQL_PASSWORD}' --silent --execute "SELECT 1;"
-      interval: 5s
-      timeout: 5s
-      retries: 30
+    # healthcheck:
+    #   test: mysql ${MYSQL_DATABASE} --user=${MYSQL_USER} --password='${MYSQL_PASSWORD}' --silent --execute "SELECT 1;"
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 30
     volumes:
       - db-data:/var/lib/mysql
     # networks:

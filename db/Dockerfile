@@ -1,6 +1,6 @@
 FROM mysql
 
-ADD schema/ /docker-entrypoint-initdb.d/
+# ADD schema/ /docker-entrypoint-initdb.d/
 
 EXPOSE ${MYSQL_PORT}
 

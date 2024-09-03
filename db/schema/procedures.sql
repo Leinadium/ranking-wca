@@ -15,6 +15,7 @@ CREATE INDEX idx_countryId ON dump.Competitions (countryId);
 CREATE INDEX idx_personId ON dump.Results (personId);
 CREATE INDEX idx_competitionId ON dump.Results (competitionId);
 CREATE INDEX idx_id ON dump.Persons (id);
+CREATE INDEX idx_country ON dump.Persons (countryId);
 
 -- appluing encoding to tables
 ALTER TABLE dump.Competitions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
@@ -24,12 +25,10 @@ ALTER TABLE dump.Results CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_a
 -- filling competitions
 INSERT INTO datalake.competitions(
     competition_id,
-    competition_name,
     state_id
 )
     SELECT
         c.id            AS competition_id,
-        c.name          AS competition_name,
         s.state_id      AS state_id
     FROM
         (
@@ -40,64 +39,75 @@ INSERT INTO datalake.competitions(
             WHERE c.countryId = 'Brazil'
         ) AS c 
         LEFT JOIN 
-            datalake.states s ON c.name = s.state_name
-    ON DUPLICATE KEY UPDATE state_id=s.state_id
+            app.states s ON c.name = s.state_name
+        WHERE s.state_id IS NOT NULL
+;
+
+REPLACE INTO datalake.competitors(
+    wca_id,
+    wca_name
+)
+    SELECT
+        p.id                        AS wca_id,
+        p.name                      AS wca_name
+    FROM
+        dump.Persons p
+    WHERE
+        p.countryId = 'Brazil'
 ;
 
 -- loading number of competitions each person in each state
-INSERT INTO datalake.competitions_by_person_and_state (
+REPLACE INTO datalake.competitions_by_person_and_state (
     wca_id,
     state_id,
     n_competitions
 )
     SELECT
-        p.id                        AS wca_id, 
+        p.wca_id                    AS wca_id, 
         lake_c.state_id             AS state_id,
         COUNT(DISTINCT dump_c.id)   AS n_competitions
     FROM
-        dump.Persons p,
+        datalake.competitors p,
         dump.Results r,
         datalake.competitions lake_c,
         dump.Competitions dump_c
     WHERE
-        p.id = r.personId AND
+        p.wca_id = r.personId AND
         dump_c.id = r.competitionId AND
-        lake_c.competition_id = dump_c.id AND
-        p.countryId = 'Brazil'
-    GROUP BY p.id, lake_c.state_id
-    ON DUPLICATE KEY UPDATE (n_competitions)
+        lake_c.competition_id = dump_c.id
+    GROUP BY p.wca_id, lake_c.state_id
+    -- ON DUPLICATE KEY UPDATE (n_competitions)
 ;
 
-INSERT INTO dump.competitions_by_person_and_country (
+REPLACE INTO dump.competitions_by_person_and_country (
     wca_id,
     country_name,
     n_competitions
 )
     SELECT
-        p.id                        AS wca_id,
+        p.wca_id                    AS wca_id,
         c.countryId                 AS country_name,
         COUNT(DISTINCT c.id)        AS n_competitions
     FROM
-        Persons p,
-        Competitions c,
-        Results r
+        datalake.competitors p,
+        dump.Competitions c,
+        dump.Results r
     WHERE
-        p.id = r.personId AND
-        c.id = r.competitionId AND
-        p.countryId = 'Brazil'
-    GROUP BY p.id, c.countryId
-    ON DUPLICATE KEY UPDATE (n_competitions)
+        p.wca_id = r.personId AND
+        c.id = r.competitionId
+    GROUP BY p.wca_id, c.countryId
+    -- ON DUPLICATE KEY UPDATE (n_competitions)
 ;
 
-INSERT INTO datalake.estimated_state_for_user (
+REPLACE INTO datalake.estimated_state_for_user (
     wca_id,
     state_id
 )
     SELECT
-        p.id AS id,                 AS wca_id
-        ces_max_state.name          AS state_id,
+        p.wca_id                    AS wca_id,
+        ces_max_state.state_id      AS state_id
     FROM
-        Persons p
+        datalake.competitors p
             LEFT JOIN (
                 SELECT wca_id, state_id
                 FROM datalake.competitions_by_person_and_state c1
@@ -117,24 +127,23 @@ INSERT INTO datalake.estimated_state_for_user (
                 )
             ) AS cec_max_country on p.wca_id = cec_max_country.wca_id
     WHERE
-        p.countryId = 'Brazil' AND
         cec_max_country.country_name = 'Brazil' AND
-        ces_max_state.name IS NOT NULL
-    ON DUPLICATE KEY UPDATE (state_id)
+        ces_max_state.state_id IS NOT NULL
+    -- ON DUPLICATE KEY UPDATE (state_id)
 ;
 
-INSERT INTO dump.all_persons_with_states (
+REPLACE INTO dump.all_persons_with_states (
     wca_id,
     state_id
 )
     SELECT
-        wca_id                              AS wca_id,
-        COALESCE(ru.state_id, es.state_id)  AS state_id
+        es.wca_id                           AS wca_id,
+        COALESCE(re.state_id, es.state_id)  AS state_id
     FROM
         datalake.estimated_state_for_user es
         LEFT JOIN app.registered_users re
             ON es.wca_id = re.wca_id
-    ON DUPLICATE KEY UPDATE (state_id)
+    -- ON DUPLICATE KEY UPDATE (state_id)
 ;
 
 INSERT INTO dump.results_by_state (
