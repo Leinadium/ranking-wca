@@ -146,7 +146,7 @@ REPLACE INTO dump.all_persons_with_states (
     -- ON DUPLICATE KEY UPDATE (state_id)
 ;
 
-INSERT INTO dump.results_by_state (
+REPLACE INTO dump.results_by_state (
     wca_id,
     state_id,
     event_id,
@@ -155,19 +155,19 @@ INSERT INTO dump.results_by_state (
 )
     SELECT
         r.personId              AS wca_id,
+        al.state_id             AS state_id,
         r.eventId               AS event_id,
-        all.state_id             AS state_id,
         MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0))     AS average,
         MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0))        AS single
     FROM
         Results r
-            JOIN dump.all_persons_with_states all
-                ON r.personId = all.wca_id
-    GROUP BY r.personId, r.personName, r.eventId, all.state_id;
-    ON DUPLICATE KEY UPDATE (state_id, average, single)
+            JOIN dump.all_persons_with_states al
+                ON r.personId = al.wca_id
+    WHERE al.state_id IS NOT NULL
+    GROUP BY r.personId, r.eventId, al.state_id
 ;
 
-INSERT INTO datalake.ranking_single (
+REPLACE INTO datalake.ranking_single (
     wca_id,
     event_id,
     state_id,
@@ -220,10 +220,9 @@ INSERT INTO datalake.ranking_single (
     --         ) AS rs4
     --             ON rs3.personId = rs4.personId AND rs3.eventId = rs4.eventId AND rs3.stateName = rs4.stateName
     -- WHERE rs3.eventId = '333mbf'
-    ON DUPLICATE KEY UPDATE (state_id, single, ranking)
 ;
 
-INSERT INTO datalake.ranking_average(
+REPLACE INTO datalake.ranking_average(
     wca_id,
     state_id,
     event_id,
@@ -232,8 +231,8 @@ INSERT INTO datalake.ranking_average(
 )
     SELECT
         rs1.wca_id          AS wca_id,
-        rs1.event_id        AS event_id,
         rs1.state_id        AS state_id,
+        rs1.event_id        AS event_id,
         NULLIF(NULLIF(NULLIF(rs1.average, 0),-1),-2)    AS average,
         dense_rank() OVER (
             PARTITION BY rs2.event_id, rs2.state_id ORDER BY rs2.average ASC
@@ -252,7 +251,6 @@ INSERT INTO datalake.ranking_average(
                 ON rs1.wca_id = rs2.wca_id
                     AND rs1.event_id = rs2.event_id
                     AND rs1.state_id = rs2.state_id
-    ON DUPLICATE KEY UPDATE (state_id, average, ranking)
 ;
 
 TRUNCATE TABLE dump.all_persons_with_states;
