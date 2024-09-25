@@ -1,4 +1,6 @@
-CREATE PROCEDURE IF NOT EXISTS `UpdateWithDump` ()
+DELIMITER //
+
+CREATE PROCEDURE IF NOT EXISTS app.update ()
 LANGUAGE SQL
 NOT DETERMINISTIC
 MODIFIES SQL DATA
@@ -7,23 +9,24 @@ BEGIN
 -- assuming dump has been filled with WCA sql dump.
 
 -- set string encode
-ALTER DATABASE dump CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+ALTER DATABASE dump CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- creating indexes on dump tables
-CREATE INDEX idx_id ON dump.Competitions (id);
-CREATE INDEX idx_countryId ON dump.Competitions (countryId);
-CREATE INDEX idx_personId ON dump.Results (personId);
-CREATE INDEX idx_competitionId ON dump.Results (competitionId);
-CREATE INDEX idx_id ON dump.Persons (id);
-CREATE INDEX idx_country ON dump.Persons (countryId);
+CREATE INDEX IF NOT EXISTS idx_id ON dump.Competitions (id);
+CREATE INDEX IF NOT EXISTS idx_countryId ON dump.Competitions (countryId);
+CREATE INDEX IF NOT EXISTS idx_personId ON dump.Results (personId);
+CREATE INDEX IF NOT EXISTS idx_competitionId ON dump.Results (competitionId);
+CREATE INDEX IF NOT EXISTS idx_id ON dump.Persons (id);
+CREATE INDEX IF NOT EXISTS idx_country ON dump.Persons (countryId);
 
 -- appluing encoding to tables
-ALTER TABLE dump.Competitions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-ALTER TABLE dump.Persons CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-ALTER TABLE dump.Results CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+ALTER TABLE dump.Competitions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE dump.Persons CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE dump.Results CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE dump.Events CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- filling competitions
-INSERT INTO datalake.competitions(
+REPLACE INTO datalake.competitions(
     competition_id,
     state_id
 )
@@ -160,7 +163,7 @@ REPLACE INTO dump.results_by_state (
         MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0))     AS average,
         MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0))        AS single
     FROM
-        Results r
+        dump.Results r
             JOIN dump.all_persons_with_states al
                 ON r.personId = al.wca_id
     WHERE al.state_id IS NOT NULL
@@ -253,8 +256,77 @@ REPLACE INTO datalake.ranking_average(
                     AND rs1.state_id = rs2.state_id
 ;
 
+REPLACE INTO datalake.sum_of_ranks(
+    wca_id,
+    sum_single,
+    sum_average,
+    sum_sum
+)
+    SELECT
+        cc.wca_id,
+        ss.sum_single,
+        sa.sum_average,
+        ss.sum_single + sa.sum_average sum_sum
+    FROM
+        datalake.competitors cc
+            LEFT JOIN (
+                SELECT
+                    c.wca_id,
+                    SUM(rs.ranking) sum_single
+                FROM
+                    datalake.competitors c
+                        RIGHT JOIN datalake.ranking_single rs ON c.wca_id = rs.wca_id
+                GROUP BY
+                    wca_id
+            ) AS ss on cc.wca_id = ss.wca_id
+
+            LEFT JOIN (
+                SELECT
+                    c.wca_id,
+                    SUM(r.ranking) sum_average
+                FROM
+                    datalake.competitors c
+                        RIGHT JOIN datalake.ranking_average r ON c.wca_id = r.wca_id
+                GROUP BY
+                    wca_id
+            ) AS sa on cc.wca_id = sa.wca_id
+;
+
+-- SELECT
+--         rs1.wca_id          AS wca_id,
+--         rs1.state_id        AS state_id,
+--         rs1.event_id        AS event_id,
+--         NULLIF(NULLIF(NULLIF(rs1.average, 0),-1),-2)    AS average,
+--         dense_rank() OVER (
+--             PARTITION BY rs2.event_id, rs2.state_id ORDER BY rs2.average ASC
+--         ) AS ranking
+
+REPLACE INTO datalake.ranking_sum(
+    wca_id,
+    state_id,
+    ranking_single,
+    ranking_average
+)
+    SELECT
+    FROM
+        dump.all_persons_with_states al
+            LEFT JOIN (
+                SELECT
+                    sr.wca_id,
+                    dense_rank() OVER (
+                        PARTITION BY sr.wca_id ORDER BY sr.sum_single ASC
+                    ) AS ranking
+                FROM
+                    dalake.sum_of_ranks sr
+            )
+
+;
+
+
 TRUNCATE TABLE dump.all_persons_with_states;
 TRUNCATE TABLE dump.competitions_by_person_and_country;
 TRUNCATE TABLE dump.results_by_state;
 
-END
+END //
+
+DELIMITER ;

@@ -26,5 +26,4 @@ REPLACE INTO app.states (state_id, state_name) VALUES
     ('SP', 'São Paulo'),
     ('SE', 'Sergipe'),
     ('TO', 'Tocantins')
---  ON DUPLICATE KEY UPDATE (state_name)
 ;

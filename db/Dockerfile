@@ -1,4 +1,5 @@
-FROM mysql
+# FROM mysql
+FROM mariadb
 
 # ADD schema/ /docker-entrypoint-initdb.d/
 
