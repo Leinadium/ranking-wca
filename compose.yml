@@ -16,9 +16,14 @@ services:
     #   - internal
     restart: unless-stopped
 
-# networks:
-#   internal:
-#     external: true
+  ranking-wca-updater:
+    build: ./updater
+    environment:
+      - MYSQL_HOST=ranking-wca-db
+    env_file:
+      - .env
+    profiles:
+      - tools
 
 volumes:
   db-data:

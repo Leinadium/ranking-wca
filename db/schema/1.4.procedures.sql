@@ -301,26 +301,26 @@ REPLACE INTO datalake.sum_of_ranks(
 --             PARTITION BY rs2.event_id, rs2.state_id ORDER BY rs2.average ASC
 --         ) AS ranking
 
-REPLACE INTO datalake.ranking_sum(
-    wca_id,
-    state_id,
-    ranking_single,
-    ranking_average
-)
-    SELECT
-    FROM
-        dump.all_persons_with_states al
-            LEFT JOIN (
-                SELECT
-                    sr.wca_id,
-                    dense_rank() OVER (
-                        PARTITION BY sr.wca_id ORDER BY sr.sum_single ASC
-                    ) AS ranking
-                FROM
-                    dalake.sum_of_ranks sr
-            )
+-- REPLACE INTO datalake.ranking_sum(
+--     wca_id,
+--     state_id,
+--     ranking_single,
+--     ranking_average
+-- )
+--     SELECT
+--     FROM
+--         dump.all_persons_with_states al
+--             LEFT JOIN (
+--                 SELECT
+--                     sr.wca_id,
+--                     dense_rank() OVER (
+--                         PARTITION BY sr.wca_id ORDER BY sr.sum_single ASC
+--                     ) AS ranking
+--                 FROM
+--                     dalake.sum_of_ranks sr
+--             )
 
-;
+-- ;
 
 
 TRUNCATE TABLE dump.all_persons_with_states;

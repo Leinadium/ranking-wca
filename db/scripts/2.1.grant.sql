@@ -1,0 +1,3 @@
+GRANT ALL PRIVILEGES ON app.* TO wca@'%';
+GRANT ALL PRIVILEGES ON datalake.* TO wca@'%';
+GRANT ALL PRIVILEGES ON dump.* TO wca@'%';

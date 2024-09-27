@@ -19,4 +19,3 @@ GRANT ALL PRIVILEGES ON dump.* TO 'USER'@'%';
 mysql -u USER -p
 mariadb --host localhost --port 3306 --user USER --password --database dump < PATH
 ```
-

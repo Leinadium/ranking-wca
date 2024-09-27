@@ -3,8 +3,7 @@ CREATE DATABASE datalake;
 -- metadata
 CREATE TABLE IF NOT EXISTS datalake.export_date (
     last_update         DATETIME,
-    next_update         DATETIME,
-    PRIMARY KEY (last_update, next_update)
+    PRIMARY KEY (last_update)
 );
 -----------------------------------------------------
 

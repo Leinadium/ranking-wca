@@ -12,9 +12,9 @@ var db *gorm.DB
 
 func GetDB() (*gorm.DB, error) {
 	if db == nil {
-		new_db, err := gorm.Open(mysql.Open(os.Getenv("GORM_DSN")), &gorm.Config{})
+		newDb, err := gorm.Open(mysql.Open(os.Getenv("GORM_DSN")), &gorm.Config{})
 		if err == nil {
-			db = new_db
+			db = newDb
 			return db, nil
 		} else {
 			return nil, err
