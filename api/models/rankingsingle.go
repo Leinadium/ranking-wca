@@ -1,8 +1,6 @@
 package models
 
-import (
-	"github.com/guregu/null/v5"
-)
+import "github.com/guregu/null/v5"
 
 type RankingSingle struct {
 	WcaId   string     `json:"wcaId" gorm:"column:wca_id"`

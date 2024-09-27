@@ -11,5 +11,5 @@ type RankingAverage struct {
 }
 
 func (RankingAverage) TableName() string {
-	return "datalake.ranking_single"
+	return "datalake.ranking_average"
 }
