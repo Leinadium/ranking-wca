@@ -18,9 +18,10 @@ All routes are prefixed with an `/api`
 
 ## Ranking
 
-- `/ranking/average/<event_id>/<state_id>
+- `/ranking/average/<event_id>/<state_id>`
   - **in**: event (e.g. 333OH) and state (e.g. RJ)
-  - **out:** ```
+  - **out:**
+```
 [
   {
     wcaID: "2017TESC01",
@@ -43,9 +44,10 @@ All routes are prefixed with an `/api`
 ]
 ```
 
-- `/ranking/single/<event_id>/<state_id>
+- `/ranking/single/<event_id>/<state_id>`
   - **in**: event (e.g. 333OH) and state (e.g. RJ)
-  - **out:** ```
+  - **out:**
+```
 [
   {
     wcaID: "2017TESC01",
