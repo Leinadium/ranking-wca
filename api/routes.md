@@ -4,50 +4,30 @@ All routes are prefixed with an `/api`
 
 ## Person
 
-### Average
+### Average and single
 
-```
-GET /person/average/<id>
-    args: wca_id (e.g. 2018GUIM02)
+```text
+GET /person/<mode>/<id>
+    args:
+        mode ("average" or "single")
+        wca_id (e.g. 2018GUIM02)
 
 {
   name: "Daniel xxxxx",
   state: "RJ",
+  registered: false,
   rankings: [
     {
       event: "333",
       ranking: 1,
-      average: 10.32,
+      best: 10.32,
+      compName: "Brasileiro 2024"
     },
     {
       event: "333OH",
       ranking: 10,
-      average: 13.76,
-    },
-    ...
-  ]
-}
-```
-
-### Single
-
-```
-GET /person/single/<id>
-    args: wca_id (e.g. 2018GUIM02)
-
-{
-  name: "Daniel xxxxx",
-  state: "RJ,
-  rankings: [
-    {
-      event: "333",
-      ranking: 12,
-      single: 9.45,
-    },
-    {
-      event: "333OH",
-      ranking: 9,
-      average: 12.89,
+      best: 13.76,
+      compName: "Brasileiro 2024"
     },
     ...
   ]
@@ -58,7 +38,7 @@ GET /person/single/<id>
 
 ### By mode, event and state
 
-```
+```text
 GET /ranking/<mode>/<event_id>/<state_id>
     args:
         mode ("average" or "single")
@@ -67,7 +47,7 @@ GET /ranking/<mode>/<event_id>/<state_id>
 
 [
   {
-    wcaID: "2017TESC01",
+    wcaId: "2017TESC01",
     name: "Pedro xxxxx",
     best: 15.91,
     ranking: 1,
@@ -76,7 +56,7 @@ GET /ranking/<mode>/<event_id>/<state_id>
     compName: "Brasileiro 2024"
   },
   {
-    wcaID: "2018GUIM02",
+    wcaId: "2018GUIM02",
     name: "Daniel xxxxx",
     best: 20.12,
     ranking: 2,

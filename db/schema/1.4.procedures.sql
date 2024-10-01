@@ -157,16 +157,22 @@ REPLACE INTO dump.results_by_state (
     single
 )
     SELECT
-        r.personId              AS wca_id,
-        al.state_id             AS state_id,
-        r.eventId               AS event_id,
-        MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0))     AS average,
-        MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0))        AS single
+        al.wca_id                   AS wca_id,
+        al.state_id                 AS state_id,
+        ra.eventId                  AS event_id,
+        MIN(NULLIF(NULLIF(NULLIF(ra.best, -2),-1),0))   AS average,
+        MIN(NULLIF(NULLIF(NULLIF(rs.best, -2),-1),0))   AS single
     FROM
-        dump.Results r
-            JOIN dump.all_persons_with_states al
-                ON r.personId = al.wca_id
+        -- dump.Results r
+        --     JOIN dump.all_persons_with_states al
+        --         ON r.personId = al.wca_id
+        dump.all_persons_with_states al
+            LEFT JOIN dump.RanksAverage ra
+                ON al.wca_id = ra.personId
+            LEFT JOIN dump.RanksSingle rs
+                ON al.wca_id = rs.personId
     WHERE al.state_id IS NOT NULL
+    AND ra.eventId = rs.eventId
     GROUP BY r.personId, r.eventId, al.state_id
 ;
 

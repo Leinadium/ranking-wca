@@ -16,7 +16,9 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	// api := router.Group("/api")
+	api := router.Group("/api")
+	api.GET("/person/:mode/:id", nil)
+	api.GET("/ranking/:mode/:id", nil)
 
 	_ = router.Run()
 }
