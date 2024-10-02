@@ -12,18 +12,23 @@ BEGIN
 ALTER DATABASE dump CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- creating indexes on dump tables
-CREATE INDEX IF NOT EXISTS idx_id ON dump.Competitions (id);
-CREATE INDEX IF NOT EXISTS idx_countryId ON dump.Competitions (countryId);
-CREATE INDEX IF NOT EXISTS idx_personId ON dump.Results (personId);
-CREATE INDEX IF NOT EXISTS idx_competitionId ON dump.Results (competitionId);
-CREATE INDEX IF NOT EXISTS idx_id ON dump.Persons (id);
-CREATE INDEX IF NOT EXISTS idx_country ON dump.Persons (countryId);
+-- TODO: CHECK USAGE OF ALL INDEXES
+CREATE INDEX IF NOT EXISTS idx_comp_id ON dump.Competitions (id);
+CREATE INDEX IF NOT EXISTS idx_comp_countryId ON dump.Competitions (countryId);
+CREATE INDEX IF NOT EXISTS idx_res_eventId ON dump.Results (eventId);
+CREATE INDEX IF NOT EXISTS idx_res_best ON dump.Results (best);
+CREATE INDEX IF NOT EXISTS idx_res_personId ON dump.Results (personId);
+CREATE INDEX IF NOT EXISTS idx_res_competitionId ON dump.Results (competitionId);
+CREATE INDEX IF NOT EXISTS idx_per_id ON dump.Persons (id);
+CREATE INDEX IF NOT EXISTS idx_per_country ON dump.Persons (countryId);
 
 -- appluing encoding to tables
 ALTER TABLE dump.Competitions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ALTER TABLE dump.Persons CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ALTER TABLE dump.Results CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ALTER TABLE dump.Events CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE dump.RanksSingle CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ALTER TABLE dump.RanksAverage CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- filling competitions
 REPLACE INTO datalake.competitions(

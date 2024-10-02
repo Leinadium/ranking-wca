@@ -1,21 +1,5 @@
 package routes
 
-import "github.com/guregu/null/v5"
-
-type RankingQuery struct {
-	WcaId      string
-	Name       string
-	Best       int32
-	Ranking    int32
-	Registered bool
-	CompName   string
-	Time1      null.Int32
-	Time2      null.Int32
-	Time3      null.Int32
-	Time4      null.Int32
-	Time5      null.Int32
-}
-
 const QUERY_RANKINGS = `
 SELECT
 	ra.wca_id AS wca_id,
