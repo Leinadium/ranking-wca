@@ -11,11 +11,11 @@ SELECT
 	dlk.single      AS single,
 	comp.id         AS competition_id,
 	comp.name       AS competition_name,
-	dmp.value1,
-	dmp.value2,
-	dmp.value3,
-	dmp.value4,
-	dmp.value5,
+	dmp.value1		AS time_1,
+	dmp.value2		AS time_2,
+	dmp.value3		AS time_3,
+	dmp.value4		AS time_4,
+	dmp.value5		AS time_5,
 	STR_TO_DATE(CONCAT(comp.year, ',', comp.endMonth, ',', comp.endDay), '%Y,%m,%d') AS ts
 FROM
 	datalake.ranking_single dlk
