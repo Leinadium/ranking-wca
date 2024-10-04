@@ -1,4 +1,4 @@
-package routes
+package models
 
 import (
 	"github.com/guregu/null/v5"

@@ -1,8 +1,9 @@
-package main
+package database
 
 import (
 	"os"
 
+	"github.com/Leinadium/ranking-wca-api/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -26,9 +27,7 @@ func GetDB() (*gorm.DB, error) {
 func GetDbOrSetError(c *gin.Context) *gorm.DB {
 	db, err := GetDB()
 	if err != nil {
-		c.JSON(500, gin.H{
-			"message": "Error connecting to database",
-		})
+		utils.LogSetError(c, "error connecting to database", 500, err)
 		return nil
 	}
 	return db

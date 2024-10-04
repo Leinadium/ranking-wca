@@ -1,29 +1,92 @@
 package routes
 
-const QUERY_X = `
-SELECT
-	dlk.wca_id      AS wca_id,
-	ct.wca_name     AS name,
-	dlk.state_id    AS state_id,
-	CASE WHEN ru.wca_id is not null THEN true ELSE false END AS registered,
-	dlk.event_id    AS event_id,
-	dlk.ranking 	AS ranking,
-	dlk.single      AS single,
-	comp.id         AS competition_id,
-	comp.name       AS competition_name,
-	dmp.value1		AS time_1,
-	dmp.value2		AS time_2,
-	dmp.value3		AS time_3,
-	dmp.value4		AS time_4,
-	dmp.value5		AS time_5,
-	STR_TO_DATE(CONCAT(comp.year, ',', comp.endMonth, ',', comp.endDay), '%Y,%m,%d') AS ts
-FROM
-	datalake.ranking_single dlk
-		LEFT JOIN datalake.competitors ct on dlk.wca_id = ct.wca_id
-		LEFT JOIN app.registered_users ru on dlk.wca_id = ru.wca_id
-		LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
-		LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
-WHERE
-	dlk.single = dmp.best
-	AND dlk.wca_id = :id
-`
+import (
+	"database/sql"
+	"net/http"
+
+	"github.com/Leinadium/ranking-wca-api/database"
+	"github.com/Leinadium/ranking-wca-api/models"
+	"github.com/Leinadium/ranking-wca-api/utils"
+	"github.com/gin-gonic/gin"
+	"github.com/guregu/null/v5"
+)
+
+func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map[string]models.PersonQuery {
+	curr, ok := m[p.EventId]
+	if !ok {
+		m[p.EventId] = p
+		return m
+	}
+	// check ts
+	// if is after, ignore
+	if curr.Ts.After(p.Ts) {
+		return m
+	}
+	// if is equals, check round (higher wins)
+	// if curr.Ts.Equal(p.Ts) {
+	// 	if curr.Round > p.Round {
+	// 		return m
+	// 	}
+	// }
+	// if is before, or higher round, update
+	m[p.EventId] = p
+	return m
+}
+
+func GetPerson(c *gin.Context) {
+	modeReq := c.Param("mode")
+	if modeReq == "" {
+		utils.SetError(c, "mode not provided", 400)
+		return
+	}
+	wcaIdReq := c.Param("id")
+	if wcaIdReq == "" {
+		utils.SetError(c, "id not provided", 400)
+		return
+	}
+	db := database.GetDbOrSetError(c)
+	if db == nil {
+		return
+	}
+
+	// query
+	pqs := []models.PersonQuery{}
+	query := db.Raw(models.QUERY_PERSON, sql.Named("wcaId", wcaIdReq))
+
+	if err := query.Find(&pqs).Error; err != nil {
+		utils.LogSetError(c, "could not query database", 500, err)
+		return
+	}
+
+	if len(pqs) == 0 {
+		utils.SetError(c, "could not find wca id", 404)
+		return
+	}
+
+	// create values and removing duplicates
+	m := make(map[string]models.PersonQuery)
+	for _, v := range pqs {
+		m = updateWithBetter(m, v)
+	}
+
+	// final response
+	var rankings []models.PersonRankingResponse
+
+	for _, v := range m {
+		rankings = append(rankings, models.PersonRankingResponse{
+			Event:           v.EventId,
+			Ranking:         v.Ranking,
+			Best:            v.Best,
+			CompetitionName: v.CompName,
+			Times:           [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
+		})
+	}
+	ret := models.PersonResponse{
+		Name:       pqs[0].Name,
+		State:      pqs[0].StateId,
+		Registered: pqs[0].Registered,
+		Rankings:   rankings,
+	}
+
+	c.JSON(http.StatusOK, ret)
+}

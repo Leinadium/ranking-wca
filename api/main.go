@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Leinadium/ranking-wca-api/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -17,8 +18,8 @@ func main() {
 	}))
 
 	api := router.Group("/api")
-	api.GET("/person/:mode/:id", nil)
-	api.GET("/ranking/:mode/:id", nil)
+	api.GET("/person/:mode/:id", routes.GetPerson)
+	// api.GET("/ranking/:mode/:id", nil)
 
 	_ = router.Run()
 }
