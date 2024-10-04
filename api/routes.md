@@ -21,13 +21,15 @@ GET /person/<mode>/<id>
       event: "333",
       ranking: 1,
       best: 10.32,
-      compName: "Brasileiro 2024"
+      compName: "Brasileiro 2024",
+      times: [10.00, 12.00, 14.00, 16.00, 18.00],
     },
     {
       event: "333OH",
       ranking: 10,
       best: 13.76,
-      compName: "Brasileiro 2024"
+      compName: "Brasileiro 2024",
+      times: [10.00, 12.00, 14.00, 16.00, 18.00],
     },
     ...
   ]
