@@ -15,10 +15,12 @@ ALTER DATABASE dump CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 -- TODO: CHECK USAGE OF ALL INDEXES
 CREATE INDEX IF NOT EXISTS idx_comp_id ON dump.Competitions (id);
 CREATE INDEX IF NOT EXISTS idx_comp_countryId ON dump.Competitions (countryId);
+
 CREATE INDEX IF NOT EXISTS idx_res_eventId ON dump.Results (eventId);
 CREATE INDEX IF NOT EXISTS idx_res_best ON dump.Results (best);
 CREATE INDEX IF NOT EXISTS idx_res_personId ON dump.Results (personId);
 CREATE INDEX IF NOT EXISTS idx_res_competitionId ON dump.Results (competitionId);
+
 CREATE INDEX IF NOT EXISTS idx_per_id ON dump.Persons (id);
 CREATE INDEX IF NOT EXISTS idx_per_country ON dump.Persons (countryId);
 
@@ -27,8 +29,8 @@ ALTER TABLE dump.Competitions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_g
 ALTER TABLE dump.Persons CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ALTER TABLE dump.Results CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ALTER TABLE dump.Events CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-ALTER TABLE dump.RanksSingle CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-ALTER TABLE dump.RanksAverage CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- ALTER TABLE dump.RanksSingle CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- ALTER TABLE dump.RanksAverage CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- filling competitions
 REPLACE INTO datalake.competitions(
@@ -154,7 +156,34 @@ REPLACE INTO dump.all_persons_with_states (
     -- ON DUPLICATE KEY UPDATE (state_id)
 ;
 
-REPLACE INTO dump.results_by_state (
+-- REPLACE INTO dump.results_by_state (
+--     wca_id,
+--     state_id,
+--     event_id,
+--     average,
+--     single
+-- )
+--     SELECT
+--         al.wca_id                   AS wca_id,
+--         al.state_id                 AS state_id,
+--         ra.eventId                  AS event_id,
+--         MIN(NULLIF(NULLIF(NULLIF(ra.best, -2),-1),0))   AS average,
+--         MIN(NULLIF(NULLIF(NULLIF(rs.best, -2),-1),0))   AS single
+--     FROM
+--         -- dump.Results r
+--         --     JOIN dump.all_persons_with_states al
+--         --         ON r.personId = al.wca_id
+--         dump.all_persons_with_states al
+--             LEFT JOIN dump.RanksAverage ra
+--                 ON al.wca_id = ra.personId
+--             LEFT JOIN dump.RanksSingle rs
+--                 ON al.wca_id = rs.personId
+--     WHERE al.state_id IS NOT NULL
+--     AND ra.eventId = rs.eventId
+--     GROUP BY al.wca_id, al.state_id, ra.eventId 
+-- ;
+
+ REPLACE INTO dump.results_by_state (
     wca_id,
     state_id,
     event_id,
@@ -162,22 +191,16 @@ REPLACE INTO dump.results_by_state (
     single
 )
     SELECT
-        al.wca_id                   AS wca_id,
-        al.state_id                 AS state_id,
-        ra.eventId                  AS event_id,
-        MIN(NULLIF(NULLIF(NULLIF(ra.best, -2),-1),0))   AS average,
-        MIN(NULLIF(NULLIF(NULLIF(rs.best, -2),-1),0))   AS single
+        r.personId                                          AS wca_id,
+        al.state_id                                         AS state_id,
+        r.eventId                                           AS event_id,
+        MIN(NULLIF(NULLIF(NULLIF(r.average, -2),-1),0))     AS average,
+        MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0))        AS single
     FROM
-        -- dump.Results r
-        --     JOIN dump.all_persons_with_states al
-        --         ON r.personId = al.wca_id
-        dump.all_persons_with_states al
-            LEFT JOIN dump.RanksAverage ra
-                ON al.wca_id = ra.personId
-            LEFT JOIN dump.RanksSingle rs
-                ON al.wca_id = rs.personId
+        dump.Results r
+            JOIN dump.all_persons_with_states al
+                ON r.personId = al.wca_id
     WHERE al.state_id IS NOT NULL
-    AND ra.eventId = rs.eventId
     GROUP BY r.personId, r.eventId, al.state_id
 ;
 
@@ -288,7 +311,7 @@ REPLACE INTO datalake.sum_of_ranks(
                     datalake.competitors c
                         RIGHT JOIN datalake.ranking_single rs ON c.wca_id = rs.wca_id
                 GROUP BY
-                    wca_id
+                    wca_id 
             ) AS ss on cc.wca_id = ss.wca_id
 
             LEFT JOIN (

@@ -157,21 +157,25 @@ func ImportSql(filename string) error {
 }
 
 func RunProcedure(db *gorm.DB) error {
-	return db.Exec("CALL app.update()").Error
+	return db.Transaction(func(tx *gorm.DB) error {
+		return tx.Exec("CALL app.update()").Error
+	})
 }
 
 func UpdateTimestamp(db *gorm.DB, exportDate string) error {
 	// delete
-	if err := db.Exec("TRUNCATE TABLE datalake.export_date").Error; err != nil {
-		return err
-	}
-	// create
-	t, err := time.Parse(time.RFC3339, exportDate)
-	if err != nil {
-		return err
-	}
+	return db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Exec("TRUNCATE TABLE datalake.export_date").Error; err != nil {
+			return err
+		}
+		// create
+		t, err := time.Parse(time.RFC3339, exportDate)
+		if err != nil {
+			return err
+		}
 
-	return db.Save(&WCAExportDb{Date: t}).Error
+		return tx.Save(&WCAExportDb{Date: t}).Error
+	})
 }
 
 type WCAExportApiResponse struct {
