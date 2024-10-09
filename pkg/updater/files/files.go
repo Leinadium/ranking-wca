@@ -8,11 +8,11 @@ import (
 	"os"
 	"strings"
 
-	"ranking.leinadium.dev/pkg/updater/utils"
+	"ranking.leinadium.dev/pkg/updater/consts"
 )
 
 func ExtractZip() error {
-	r, err := zip.OpenReader(utils.DUMP_SQL_ZIP)
+	r, err := zip.OpenReader(consts.DUMP_SQL_ZIP)
 	if err != nil {
 		return err
 	}
@@ -29,7 +29,7 @@ func ExtractZip() error {
 
 		if strings.HasSuffix(f.Name, ".sql") {
 			log.Println("found sql file", f.Name)
-			uncFile, err := os.Create(utils.DUMP_SQL_FINAL)
+			uncFile, err := os.Create(consts.DUMP_SQL_FINAL)
 			if err != nil {
 				return err
 			}
@@ -48,10 +48,10 @@ func ExtractZip() error {
 }
 
 func DeleteFiles() error {
-	if err := os.Remove(utils.DUMP_SQL_ZIP); err != nil {
+	if err := os.Remove(consts.DUMP_SQL_ZIP); err != nil {
 		return err
 	}
-	if err := os.Remove(utils.DUMP_SQL_FINAL); err != nil {
+	if err := os.Remove(consts.DUMP_SQL_FINAL); err != nil {
 		return err
 	}
 	return nil

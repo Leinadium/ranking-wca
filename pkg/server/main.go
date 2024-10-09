@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"github.com/gin-contrib/cors"
@@ -6,7 +6,7 @@ import (
 	"ranking.leinadium.dev/pkg/server/routes"
 )
 
-func main() {
+func Main() {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
 

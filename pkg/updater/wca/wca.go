@@ -8,14 +8,14 @@ import (
 	"net/http"
 	"os"
 
-	"ranking.leinadium.dev/pkg/updater/utils"
+	"ranking.leinadium.dev/pkg/updater/consts"
 )
 
 func GetWcaApi() (WCAExportApiResponse, error) {
 	// request from api
 	var ret WCAExportApiResponse
 
-	r, err := http.Get(utils.WCA_EXPORT_PUBLIC)
+	r, err := http.Get(consts.WCA_EXPORT_PUBLIC)
 	if err != nil {
 		println("Error", err.Error())
 	}
@@ -31,7 +31,7 @@ func GetWcaApi() (WCAExportApiResponse, error) {
 
 func DownloadWcaDump(url string) error {
 	// create
-	file, err := os.Create(utils.DUMP_SQL_ZIP)
+	file, err := os.Create(consts.DUMP_SQL_ZIP)
 	if err != nil {
 		return err
 	}

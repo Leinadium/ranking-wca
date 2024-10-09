@@ -9,17 +9,17 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"ranking.leinadium.dev/pkg/updater/utils"
+	"ranking.leinadium.dev/pkg/updater/consts"
 )
 
 func GetDB() (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		utils.MYSQL_USER,
-		utils.MYSQL_PASSWORD,
-		utils.MYSQL_HOST,
-		utils.MYSQL_PORT,
-		utils.MYSQL_DEFAULT_DATABASE,
+		consts.MYSQL_USER,
+		consts.MYSQL_PASSWORD,
+		consts.MYSQL_HOST,
+		consts.MYSQL_PORT,
+		consts.MYSQL_DEFAULT_DATABASE,
 	)
 	return gorm.Open(
 		mysql.Open(dsn), &gorm.Config{},
@@ -42,11 +42,11 @@ func SelectExportDate(db *gorm.DB) (WCAExportDb, error) {
 func ImportSql(filename string) error {
 	cmd := exec.Command(
 		"mysql",
-		"--host", utils.MYSQL_HOST,
-		"--port", utils.MYSQL_PORT,
-		"--user", utils.MYSQL_USER,
-		"-p"+utils.MYSQL_PASSWORD,
-		utils.MYSQL_DUMP_DATABASE,
+		"--host", consts.MYSQL_HOST,
+		"--port", consts.MYSQL_PORT,
+		"--user", consts.MYSQL_USER,
+		"-p"+consts.MYSQL_PASSWORD,
+		consts.MYSQL_DUMP_DATABASE,
 		"-e", "source "+filename,
 	)
 	cmd.Stdout = os.Stdout

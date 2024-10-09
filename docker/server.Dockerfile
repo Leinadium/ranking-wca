@@ -4,10 +4,10 @@ WORKDIR /src
 COPY ../go.mod ../go.sum /src/
 RUN go mod download && go mod verify
 
-COPY ../app /src/app
+COPY ../cmd /src/cmd
 COPY ../pkg /src/pkg
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /server /src/app/server/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o /server /src/cmd/server/main.go
 
 FROM gcr.io/distroless/base-debian11 AS release
 WORKDIR /

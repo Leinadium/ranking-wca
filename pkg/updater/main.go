@@ -1,16 +1,16 @@
-package main
+package updater
 
 import (
 	"log"
 	"time"
 
+	"ranking.leinadium.dev/pkg/updater/consts"
 	"ranking.leinadium.dev/pkg/updater/database"
 	"ranking.leinadium.dev/pkg/updater/files"
-	"ranking.leinadium.dev/pkg/updater/utils"
 	"ranking.leinadium.dev/pkg/updater/wca"
 )
 
-func main() {
+func Main() {
 	// connect to database
 	log.Println("connecting to db")
 	db, err := database.GetDB()
@@ -52,7 +52,7 @@ func main() {
 	// importing
 	// OBS: this will not rollback if it fails!
 	log.Println("importing dump...")
-	if err := database.ImportSql(utils.DUMP_SQL_FINAL); err != nil {
+	if err := database.ImportSql(consts.DUMP_SQL_FINAL); err != nil {
 		log.Fatalln("could not import dump", err.Error())
 	}
 
