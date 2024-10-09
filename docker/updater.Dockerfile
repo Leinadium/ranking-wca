@@ -1,10 +1,13 @@
 FROM golang:latest AS build
 
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY ./*.go ./
-RUN CGO_ENABLED=0 GOOS=linux go build -o /updater github.com/Leinadium/ranking-wca/updater
+WORKDIR /src
+COPY ../go.mod ../go.sum /src/
+RUN go mod download && go mod verify
+
+COPY ../app /src/app
+COPY ../pkg /src/pkg
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /updater /src/app/updater/main.go
 
 # -------------------------------------
 FROM alpine:latest AS release

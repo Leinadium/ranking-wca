@@ -3,10 +3,10 @@ package database
 import (
 	"os"
 
-	"github.com/Leinadium/ranking-wca-api/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"ranking.leinadium.dev/pkg/server/utils"
 )
 
 var db *gorm.DB

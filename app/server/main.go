@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Leinadium/ranking-wca-api/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"ranking.leinadium.dev/pkg/server/routes"
 )
 
 func main() {

@@ -1,6 +1,7 @@
 services:
   ranking-wca-db:
-    build: ./db
+    build:
+      dockerfile: ./docker/db.Dockerfile
     env_file:
       - .env
     ports:
@@ -17,7 +18,8 @@ services:
     restart: unless-stopped
 
   ranking-wca-updater:
-    build: ./updater
+    build:
+      dockerfile: ./docker/updater.Dockerfile
     environment:
       - MYSQL_HOST=ranking-wca-db
     env_file:

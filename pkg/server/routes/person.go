@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/Leinadium/ranking-wca-api/database"
-	"github.com/Leinadium/ranking-wca-api/models"
-	"github.com/Leinadium/ranking-wca-api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/guregu/null/v5"
+	"ranking.leinadium.dev/pkg/server/database"
+	"ranking.leinadium.dev/pkg/server/models"
+	"ranking.leinadium.dev/pkg/server/utils"
 )
 
 func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map[string]models.PersonQuery {
