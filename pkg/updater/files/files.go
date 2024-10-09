@@ -7,12 +7,12 @@ import (
 	"log"
 	"os"
 	"strings"
-
-	"ranking.leinadium.dev/pkg/updater/consts"
 )
 
-func ExtractZip() error {
-	r, err := zip.OpenReader(consts.DUMP_SQL_ZIP)
+func ExtractZip(zipfile, sqlfile string) error {
+	// r, err := zip.OpenReader(consts.DUMP_SQL_ZIP)
+	r, err := zip.OpenReader(zipfile)
+
 	if err != nil {
 		return err
 	}
@@ -29,7 +29,8 @@ func ExtractZip() error {
 
 		if strings.HasSuffix(f.Name, ".sql") {
 			log.Println("found sql file", f.Name)
-			uncFile, err := os.Create(consts.DUMP_SQL_FINAL)
+			uncFile, err := os.Create(sqlfile)
+			// uncFile, err := os.Create(consts.DUMP_SQL_FINAL)
 			if err != nil {
 				return err
 			}
@@ -47,11 +48,11 @@ func ExtractZip() error {
 	return nil
 }
 
-func DeleteFiles() error {
-	if err := os.Remove(consts.DUMP_SQL_ZIP); err != nil {
+func DeleteFiles(zipfile, sqlfile string) error {
+	if err := os.Remove(zipfile); err != nil {
 		return err
 	}
-	if err := os.Remove(consts.DUMP_SQL_FINAL); err != nil {
+	if err := os.Remove(sqlfile); err != nil {
 		return err
 	}
 	return nil

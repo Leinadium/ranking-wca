@@ -4,10 +4,14 @@ import (
 	"log"
 	"time"
 
-	"ranking.leinadium.dev/pkg/updater/consts"
 	"ranking.leinadium.dev/pkg/updater/database"
 	"ranking.leinadium.dev/pkg/updater/files"
 	"ranking.leinadium.dev/pkg/updater/wca"
+)
+
+const (
+	DUMP_SQL_ZIP   = "./wca_dump.sql.zip"
+	DUMP_SQL_FINAL = "./wca_dump.sql"
 )
 
 func Main() {
@@ -45,14 +49,14 @@ func Main() {
 
 	// extract
 	log.Println("extracting...")
-	if err := files.ExtractZip(); err != nil {
+	if err := files.ExtractZip(DUMP_SQL_FINAL, DUMP_SQL_FINAL); err != nil {
 		log.Fatalln("could not extract zip", err.Error())
 	}
 
 	// importing
 	// OBS: this will not rollback if it fails!
 	log.Println("importing dump...")
-	if err := database.ImportSql(consts.DUMP_SQL_FINAL); err != nil {
+	if err := database.ImportSql(DUMP_SQL_FINAL); err != nil {
 		log.Fatalln("could not import dump", err.Error())
 	}
 
@@ -68,7 +72,7 @@ func Main() {
 
 	// cleaning
 	log.Println("cleaning up")
-	if err := files.DeleteFiles(); err != nil {
+	if err := files.DeleteFiles(DUMP_SQL_ZIP, DUMP_SQL_FINAL); err != nil {
 		log.Fatalln("could not delete files", err.Error())
 	}
 }
