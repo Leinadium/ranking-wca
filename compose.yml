@@ -5,7 +5,7 @@ services:
     env_file:
       - .env
     ports:
-      - ${MYSQL_PORT}:${MYSQL_PORT}
+      - "3306:3306"
     # healthcheck:
     #   test: mysql ${MYSQL_DATABASE} --user=${MYSQL_USER} --password='${MYSQL_PASSWORD}' --silent --execute "SELECT 1;"
     #   interval: 5s
@@ -20,12 +20,16 @@ services:
   ranking-wca-updater:
     build:
       dockerfile: ./docker/updater.Dockerfile
-    environment:
-      - MYSQL_HOST=ranking-wca-db
-    env_file:
-      - .env
+    volumes:
+      - ./config.toml:/config.toml
     profiles:
       - tools
+  
+  ranking-wca-server:
+    build:
+      dockerfile: ./docker/server.Dockerfile
+    volumes:
+      - ./config.toml:/config.toml
 
 volumes:
   db-data:

@@ -9,9 +9,14 @@ import (
 	"strings"
 )
 
-func ExtractZip(zipfile, sqlfile string) error {
+const (
+	ZipFile  = "wca_export.sql.zip"
+	DumpFile = "wca_export.sql"
+)
+
+func ExtractZip() error {
 	// r, err := zip.OpenReader(consts.DUMP_SQL_ZIP)
-	r, err := zip.OpenReader(zipfile)
+	r, err := zip.OpenReader(ZipFile)
 
 	if err != nil {
 		return err
@@ -29,7 +34,7 @@ func ExtractZip(zipfile, sqlfile string) error {
 
 		if strings.HasSuffix(f.Name, ".sql") {
 			log.Println("found sql file", f.Name)
-			uncFile, err := os.Create(sqlfile)
+			uncFile, err := os.Create(DumpFile)
 			// uncFile, err := os.Create(consts.DUMP_SQL_FINAL)
 			if err != nil {
 				return err
@@ -39,6 +44,7 @@ func ExtractZip(zipfile, sqlfile string) error {
 				return err
 			}
 			done = true
+			uncFile.Close()
 			break
 		}
 	}
@@ -48,11 +54,11 @@ func ExtractZip(zipfile, sqlfile string) error {
 	return nil
 }
 
-func DeleteFiles(zipfile, sqlfile string) error {
-	if err := os.Remove(zipfile); err != nil {
+func DeleteFiles() error {
+	if err := os.Remove(ZipFile); err != nil {
 		return err
 	}
-	if err := os.Remove(sqlfile); err != nil {
+	if err := os.Remove(DumpFile); err != nil {
 		return err
 	}
 	return nil

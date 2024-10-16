@@ -8,14 +8,29 @@ import (
 	"net/http"
 	"os"
 
-	"ranking.leinadium.dev/pkg/updater/consts"
+	"ranking.leinadium.dev/pkg/config"
+	"ranking.leinadium.dev/pkg/files"
 )
 
-func GetWcaApi() (WCAExportApiResponse, error) {
-	// request from api
-	var ret WCAExportApiResponse
+type WCAresponse struct {
+	ExportDate string `json:"export_date"`
+	SqlUrl     string `json:"sql_url"`
+	TsvUrl     string `json:"tsv_url"`
+}
 
-	r, err := http.Get(consts.WCA_EXPORT_PUBLIC)
+type WCAapi struct {
+	config config.Config
+}
+
+func NewWCAapi(c config.Config) WCAapi {
+	return WCAapi{config: c}
+}
+
+func (a WCAapi) Get() (WCAresponse, error) {
+	// request from api
+	var ret WCAresponse
+
+	r, err := http.Get(a.config.WCA.ExportURL)
 	if err != nil {
 		println("Error", err.Error())
 	}
@@ -29,9 +44,9 @@ func GetWcaApi() (WCAExportApiResponse, error) {
 	return ret, err
 }
 
-func DownloadWcaDump(url string) error {
+func (a WCAapi) Download(url string) error {
 	// create
-	file, err := os.Create(consts.DUMP_SQL_ZIP)
+	file, err := os.Create(files.ZipFile)
 	if err != nil {
 		return err
 	}
@@ -56,10 +71,4 @@ func DownloadWcaDump(url string) error {
 		return fmt.Errorf("empty zip file")
 	}
 	return nil
-}
-
-type WCAExportApiResponse struct {
-	ExportDate string `json:"export_date"`
-	SqlUrl     string `json:"sql_url"`
-	TsvUrl     string `json:"tsv_url"`
 }

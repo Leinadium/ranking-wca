@@ -9,7 +9,7 @@ COPY ../pkg /src/pkg
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /server /src/cmd/server/main.go
 
-FROM gcr.io/distroless/base-debian11 AS release
+FROM gcr.io/distroless/static-debian12 AS release
 WORKDIR /
 COPY --from=build /server /server
 EXPOSE 8080
