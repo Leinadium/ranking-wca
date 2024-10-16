@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/guregu/null/v5"
 	"ranking.leinadium.dev/pkg/db/models"
-	"ranking.leinadium.dev/pkg/utils"
+	"ranking.leinadium.dev/pkg/errors"
 )
 
 func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map[string]models.PersonQuery {
@@ -35,12 +35,12 @@ func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map
 func (gs *GlobalState) GetPerson(c *gin.Context) {
 	modeReq := c.Param("mode")
 	if modeReq == "" {
-		utils.SetError(c, "mode not provided", 400)
+		errors.SetError(c, "mode not provided", 400)
 		return
 	}
 	wcaIdReq := c.Param("id")
 	if wcaIdReq == "" {
-		utils.SetError(c, "id not provided", 400)
+		errors.SetError(c, "id not provided", 400)
 		return
 	}
 
@@ -49,12 +49,12 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	query := gs.DB.Raw(models.QUERY_PERSON, sql.Named("wcaId", wcaIdReq))
 
 	if err := query.Find(&pqs).Error; err != nil {
-		utils.LogSetError(c, "could not query database", 500, err)
+		errors.LogSetError(c, "could not query database", 500, err)
 		return
 	}
 
 	if len(pqs) == 0 {
-		utils.SetError(c, "could not find wca id", 404)
+		errors.SetError(c, "could not find wca id", 404)
 		return
 	}
 
