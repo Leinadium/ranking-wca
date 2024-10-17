@@ -45,8 +45,18 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	}
 
 	// query
+	var rawSql string
+	if modeReq == "single" {
+		rawSql = models.QueryPersonSingle
+	} else if modeReq == "average" {
+		rawSql = models.QueryPersonAverage
+	} else {
+		errors.SetError(c, "invalid mode", 400)
+		return
+	}
+
 	pqs := []models.PersonQuery{}
-	query := gs.DB.Raw(models.QUERY_PERSON, sql.Named("wcaId", wcaIdReq))
+	query := gs.DB.Raw(rawSql, sql.Named("wcaId", wcaIdReq))
 
 	if err := query.Find(&pqs).Error; err != nil {
 		errors.LogSetError(c, "could not query database", 500, err)
@@ -65,10 +75,10 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	}
 
 	// final response
-	var rankings []models.PersonRankingResponse
+	var rankings []models.PersonRankingsResponse
 
 	for _, v := range m {
-		rankings = append(rankings, models.PersonRankingResponse{
+		rankings = append(rankings, models.PersonRankingsResponse{
 			Event:           v.EventId,
 			Ranking:         v.Ranking,
 			Best:            v.Best,
