@@ -1,21 +1,35 @@
 package models
 
 import (
+	"time"
+
 	"github.com/guregu/null/v5"
 )
 
+type RankingResponse struct {
+	Name            string      `json:"name"`
+	WCAid           string      `json:"wcaId"`
+	Best            null.Float  `json:"best"`
+	Ranking         int         `json:"ranking"`
+	Times           [5]null.Int `json:"times"`
+	Registered      bool        `json:"registered"`
+	CompetitionName string      `json:"compName"`
+}
+
 type RankingQuery struct {
-	WcaId      string
-	Name       string
-	Best       int32
-	Ranking    int32
-	Registered bool
-	CompName   string
-	Time1      null.Int32
-	Time2      null.Int32
-	Time3      null.Int32
-	Time4      null.Int32
-	Time5      null.Int32
+	Name       string     `gorm:"column:name"`
+	WCAid      string     `gorm:"column:wca_id"`
+	Best       null.Float `gorm:"column:best"`
+	Ranking    int        `gorm:"column:ranking"`
+	Registered string     `gorm:"column:registered"`
+	CompId     string     `gorm:"competition_id"`
+	CompName   string     `gorm:"column:competition_name"`
+	Time1      null.Int   `gorm:"column:time_1"`
+	Time2      null.Int   `gorm:"column:time_2"`
+	Time3      null.Int   `gorm:"column:time_3"`
+	Time4      null.Int   `gorm:"column:time_4"`
+	Time5      null.Int   `gorm:"column:time_5"`
+	Ts         time.Time  `gorm:"column:ts"`
 }
 
 const QUERY_RANKINGS = `
