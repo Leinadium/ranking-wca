@@ -1,35 +1,40 @@
 <script lang="ts">
 	import EventText from '../common/EventText.svelte';
-	import { timeToString } from '$lib/utils.js';
+	import { timeToString } from '$lib/utils';
+	import type { PersonTableProps } from '../../types/person/props';
 
 	let {
-		data = {
-			'333': {
+		data = [
+			{
+				event: '333',
 				single: 10.32,
 				average: 11.69,
 				rankingSingle: 10,
 				rankingAverage: 100
 			},
-			'444': {
+			{
+				event: '444',
 				single: 54.9,
 				average: 66.09,
 				rankingSingle: 100,
 				rankingAverage: 200
 			},
-			sq1: {
+			{
+				event: 'sq1',
 				single: 12.0,
 				average: 15.55,
 				rankingSingle: 2,
 				rankingAverage: 2
 			},
-			'333mbf': {
+			{
+				event: '333mbf',
 				single: 5.12,
 				average: 8.73,
 				rankingSingle: 10,
-				rankingAverage: 100
+				rankingAverage: 100,
 			}
-		}
-	} = $props();
+		]
+	}: PersonTableProps = $props();
 </script>
 
 <table>

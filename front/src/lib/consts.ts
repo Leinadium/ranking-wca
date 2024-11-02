@@ -1,4 +1,4 @@
-export const EVENT_NAMES = {
+export const EVENT_NAMES: { [key: string]: [string, string]} = {
     '222': ['Cubo 2x2x2', 'event-333'],
     '333': ['Cubo 3x3x3', 'event-333'],
     '333bf': ['3x3x3 Vendado', 'event-333bf'],
@@ -19,7 +19,7 @@ export const EVENT_NAMES = {
     sq1: ['Square-1', 'event-sq1']
 };
 
-export const STATE_NAMES = {
+export const STATE_NAMES: { [key: string]: string} = {
     "AC": "Acre",
     "AL": "Alagoas",
     "AP": "Amapá",

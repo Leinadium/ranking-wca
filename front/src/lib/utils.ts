@@ -1,4 +1,4 @@
-export const timeToString = (ts: number) => {
+export function timeToString(ts: number | string): string {
     if (typeof ts === "number") {
         if (ts === 0) {
             return "";
@@ -10,8 +10,9 @@ export const timeToString = (ts: number) => {
             return ts.toFixed(2);
         }
     }
+    return ts
 }
 
-export const stateIdToPng = (st: string) => {
+export function stateIdToPng(st: string): string {
     return `/flags/${st.toLowerCase()}.png`
 }
