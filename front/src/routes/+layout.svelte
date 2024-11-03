@@ -29,6 +29,7 @@
 		box-sizing: border-box;
 		width: 100%;
 		height: 100%;
+		min-height: 100vh;
 		margin: 0 !important;
 		padding: 0;
 		border: 0;
