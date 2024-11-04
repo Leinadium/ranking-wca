@@ -81,6 +81,7 @@
 		margin: 0;
 		border: 0;
 		padding: 0;
+		flex-grow: 20;
 
 		font-family:
 			'Roboto',
