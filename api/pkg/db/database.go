@@ -43,7 +43,7 @@ func (db *WCAdb) RunUpdate() error {
 
 func (db *WCAdb) ExportDate() (models.ExportDate, error) {
 	var ret models.ExportDate
-	query := db.DB.First(&ret)
+	query := db.DB.Take(&ret)
 	if query.Error != nil {
 		if errors.Is(query.Error, gorm.ErrRecordNotFound) {
 			return ret, nil

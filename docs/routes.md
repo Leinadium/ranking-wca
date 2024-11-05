@@ -22,10 +22,17 @@ All routes are prefixed with an `/api`
 ```
 
 ```text
-[✅] GET /auth/callback
+[❌] GET /auth/callback
 {
   access_token: "xxxx",
-  expires_in: 720
+  expires_in: 720,
+  name: "Daniel Guimarães",
+  wca_id: "2018GUIM02",
+  register: {
+    is_able: true,  // or false
+    state_id: "RJ",    // or null
+    updated: "2024-11-05T13:00:00Z" [RFC3339]   // or null
+  }
 }
 ```
 
