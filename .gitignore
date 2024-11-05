@@ -21,6 +21,9 @@
 go.work
 go.work.sum
 
+# mac
+.DS_Store
+
 # env file
 .env
 config.toml

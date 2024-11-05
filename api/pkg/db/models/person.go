@@ -14,11 +14,13 @@ type PersonResponse struct {
 }
 
 type PersonRankingsResponse struct {
-	Event           string      `json:"event"`
-	Ranking         int         `json:"ranking"`
-	Best            null.Float  `json:"best"`
-	CompetitionName string      `json:"compName"`
-	Times           [5]null.Int `json:"times"`
+	Event            string      `json:"event"`
+	Ranking          int         `json:"ranking"`
+	Best             null.Float  `json:"best"`
+	CompetitionId    string      `json:"compId"`
+	CompetitionName  string      `json:"compName"`
+	CompetitionState null.String `json:"compState"`
+	Times            [5]null.Int `json:"times"`
 }
 
 type PersonQuery struct {
@@ -31,6 +33,7 @@ type PersonQuery struct {
 	Best       null.Float `gorm:"column:best"`
 	CompId     string     `gorm:"column:competition_id"`
 	CompName   string     `gorm:"column:competition_name"`
+	CompState  string     `gorm:"column:competition_state"`
 	// Round      int        `gorm:"column:round"`
 	Time1 null.Int  `gorm:"column:time_1"`
 	Time2 null.Int  `gorm:"column:time_2"`
@@ -51,6 +54,7 @@ SELECT
     dlk.single      AS best,
     comp.id         AS competition_id,
     comp.name       AS competition_name,
+    comp2.state_id  AS competition_state,
     -- dmp.roundTypeId AS round,
     dmp.value1      AS time_1,
     dmp.value2      AS time_2,
@@ -64,6 +68,7 @@ FROM
         LEFT JOIN app.registered_users ru on dlk.wca_id = ru.wca_id
         LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
+        LEFT JOIN datalake.competitions comp2 on (dmp.competitionId = comp2.competition_id)
 WHERE
     dlk.single = dmp.best
     AND dlk.wca_id = @wcaId

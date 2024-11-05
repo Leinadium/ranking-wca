@@ -85,6 +85,7 @@ func (gs *GlobalState) GetPersonWithMode(c *gin.Context) {
 			Event:           v.EventId,
 			Ranking:         v.Ranking,
 			Best:            v.Best,
+			CompetitionId:   v.CompId,
 			CompetitionName: v.CompName,
 			Times:           [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
 		})
