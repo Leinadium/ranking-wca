@@ -4,117 +4,124 @@ All routes are prefixed with an `/api`
 
 ## Status
 
-```text
--------------------------------------------------
-[✅] GET /status/
+### [✅] `GET /status/`
+
+Get status of database update
+
+```json5
 {
-  last_update: "2024-11-05T13:00:00Z" [RFC3339]
+  "last_update": "string"  // datetime in RFC3339
 }
 ```
 
 ## Auth
 
-```text
-[✅] GET /auth/endpoint
+### [✅] `GET /auth/endpoint`
+
+Get authentication oauth endpoint
+
+```json5
 {
-  url: "https://worldcubeassociation.org/
+  "url": "string" // url for oauth endpoint
 }
 ```
 
-```text
-[❌] GET /auth/callback
+### [❌] `GET /auth/callback`
+
+Information retrieved from oauth callback
+
+```json5
 {
-  access_token: "xxxx",
-  expires_in: 720,
-  name: "Daniel Guimarães",
-  wca_id: "2018GUIM02",
-  register: {
-    is_able: true,  // or false
-    state_id: "RJ",    // or null
-    updated: "2024-11-05T13:00:00Z" [RFC3339]   // or null
+  "access_token": "string",  // to be used in register state endpoint
+  "expires_in:" "int"  // ttl in seconds,
+  "name": "string",  // name of competitor
+  "wca_id": "string",
+  "register": {
+    "is_able": "bool",  // can be registered (is from brazil)
+    "state_id": "string | null",  // current registered state
+    "updated": "string | null"  // datetime in RFC3339 of last update (cannot change again in X days)
   }
 }
 ```
 
 ## Person
 
-### Average and single
+### [✅] `GET /person/info/<wca_id>`
 
-```text
--------------------------------------------------
-[✅] GET /person/info/<id>
-    args:
-        wca_id (e.g. 2018GUIM02)
+Get general information of competitor
+
+* `<wca_id>`: competitiors's wca id (e.g. 2018GUIM02)
+
+```json5
 {
-  name: "Daniel Guimarães",
-  state: "RJ",
-  registered: false,
-  totalCompetitions: 12,
-  stateCompetitions: 8,
+  "name": "string",   // name of competitor
+  "state": "string",  // state id (guessed or registered)
+  "registered": "bool",  // if is registered (to be able to add a check next to hist name)
+  "totalCompetitions": "int",  // number of competitions competed
+  "stateCompetitions": "int",  // number of competitions competed in his state
 }
--------------------------------------------------
-[✅] GET /person/<mode>/<id>
-    args:
-        mode ("average" or "single")
-        wca_id (e.g. 2018GUIM02)
+```
+
+### [✅] `GET /person/<mode>/<id>`
+
+Get average or single of competitor
+
+* `<mode>`: "average" or "single"
+* `<wca_id>`: competitor's wca id (e.g. 2018GUIM02)
+
+```json5
 {
-  name: "Daniel xxxxx",
-  state: "RJ",
-  registered: false,
-  rankings: [
+  "name": "string",
+  "state": "string",  // state id
+  "registered": "bool",  // is registered
+  "rankings": [
     {
-      event: "333",
-      ranking: 1,
-      best: 10.32,
-      compName: "Brasileiro 2024",
-      times: [10.00, 12.00, 14.00, 16.00, 18.00],
+      "event": "string",  // event_id, e.g. 333
+      "ranking": "int",  // starting from 1
+      "best": "int",   // his time
+      "compId": "string",  // https://www.worldcubeassociation.org/competitions/:id
+      "compName": "string",  // name of competition
+      "compState": "string | null",  // state of competition, may be null if multiple cities
+      "times": "int[5]",   // the average in which he obtained his average/single time. not really useful
     },
-    {
-      event: "333OH",
-      ranking: 10,
-      best: 13.76,
-      compName: "Brasileiro 2024",
-      times: [10.00, 12.00, 14.00, 16.00, 18.00],
-    },
-    ...
   ]
 }
--------------------------------------------------
-[❌] GET /person/table/<id>
-    args:
-        wca_id (e.g. 2018GUIM02)
+```
+
+### [❌] `GET /person/table/<id>`
+
+Get information of competitor in a similiar style as the wca's page. May be used directly in a table
+
+* `<wca_id>`:  (e.g. 2018GUIM02)
+
+```json5
 {
-  table: [
+  "table": [
     {
-      event: "333",
-      single: 10.32,
-      average: 11.69,
-      rankingSingle: 10,
-      rankingAvarege: 100,
+      "event": "string",    // e.g. 333, 444, sq1, mbld
+      "single": "int",    // single time
+      "average": "int",   // average time
+      "rankingSingle": "int",  // ranking by single by competitor's state
+      "rankingAvarege": "int",  // ranking by average by competitor's state
     },
-    {
-      event: "444",
-      single: 54.90,
-      average: 66.09,
-      rankingSingle: 100,
-      rankingAverage: 200,
-    },
-    ...
   ]
 }
--------------------------------------------------
 ```
 
 ## Ranking
 
-### By mode, event and state
+Get ranking by average or single, by event, by state
+Will support national ranking (state = BR)
+
+Might be simplified, like the /table/ endpoint above
+
+### [❌] `GET /ranking/<mode>/<event_id>/<state_id>`
+
+* `<mode>`: "average" or "single"
+* `<event_id>`: event id (e.g. 333OH, sq1)
+* `<state_id>`: state id (e.g. RJ. BR (nation ranking) is not supported yet)
 
 ```text
-[❌] GET /ranking/<mode>/<event_id>/<state_id>
-    args:
-        mode ("average" or "single")
-        event (e.g. 333OH)
-        state (e.g. RJ)
 [
   {
     wcaId: "2017TESC01",
