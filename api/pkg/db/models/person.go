@@ -97,3 +97,33 @@ WHERE
     dlk.single = dmp.best
     AND dlk.wca_id = @wcaId
 `
+
+type PersonInfo struct {
+	Name              string `gorm:"column:name" json:"name"`
+	State             string `gorm:"column:state_id" json:"state"`
+	Registered        bool   `gorm:"column:registered" json:"registered"`
+	TotalCompetitions int    `gorm:"column:total_competitions" json:"totalCompetitions"`
+	StateCompetitions int    `gorm:"column:state_competitions" json:"stateCompetitions"`
+}
+
+const QueryPersonInfo = `
+SELECT
+    ct.wca_name AS name,
+    es.state_id AS state_id,
+    CASE WHEN ru.wca_id IS NOT NULL THEN true ELSE false END AS registered,
+    cb.n_competitions AS state_competitions,
+    cb2.total AS total_competitions
+FROM
+    datalake.competitors ct
+        LEFT JOIN app.registered_users ru ON ru.wca_id = ct.wca_id
+        LEFT JOIN datalake.estimated_state_for_user es ON es.wca_id = ct.wca_id
+        LEFT JOIN datalake.competitions_by_person_and_state cb ON cb.wca_id = ct.wca_id
+        LEFT JOIN (
+            SELECT personId, COUNT(DISTINCT competitionId) AS total
+            FROM dump.Results
+            WHERE personId = @wcaId
+        ) as cb2 ON cb2.personId = ct.wca_id
+WHERE
+    es.state_id = cb.state_id
+    AND ct.wca_id = @wcaId
+`

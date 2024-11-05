@@ -27,7 +27,8 @@ func Main() {
 	}
 
 	api := router.Group("/api")
-	api.GET("/person/:mode/:id", gs.GetPerson)
+	api.GET("/person/info/:id", gs.GetPersonInfo)
+	api.GET("/person/:mode/:id", gs.GetPersonWithMode)
 	// api.GET("/ranking/:mode/:id", nil)
 
 	_ = router.Run()

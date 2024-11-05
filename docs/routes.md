@@ -7,11 +7,22 @@ All routes are prefixed with an `/api`
 ### Average and single
 
 ```text
-GET /person/<mode>/<id>
+-------------------------------------------------
+[✅] GET /person/info/<id>
+    args:
+        wca_id (e.g. 2018GUIM02)
+{
+  name: "Daniel Guimarães",
+  state: "RJ",
+  registered: false,
+  totalCompetitions: 12,
+  stateCompetitions: 8,
+}
+-------------------------------------------------
+[✅] GET /person/<mode>/<id>
     args:
         mode ("average" or "single")
         wca_id (e.g. 2018GUIM02)
-
 {
   name: "Daniel xxxxx",
   state: "RJ",
@@ -34,6 +45,30 @@ GET /person/<mode>/<id>
     ...
   ]
 }
+-------------------------------------------------
+[❌] GET /person/table/<id>
+    args:
+        wca_id (e.g. 2018GUIM02)
+{
+  table: [
+    {
+      event: "333",
+      single: 10.32,
+      average: 11.69,
+      rankingSingle: 10,
+      rankingAvarege: 100,
+    },
+    {
+      event: "444",
+      single: 54.90,
+      average: 66.09,
+      rankingSingle: 100,
+      rankingAverage: 200,
+    },
+    ...
+  ]
+}
+-------------------------------------------------
 ```
 
 ## Ranking
@@ -41,12 +76,11 @@ GET /person/<mode>/<id>
 ### By mode, event and state
 
 ```text
-GET /ranking/<mode>/<event_id>/<state_id>
+[❌] GET /ranking/<mode>/<event_id>/<state_id>
     args:
         mode ("average" or "single")
         event (e.g. 333OH)
         state (e.g. RJ)
-
 [
   {
     wcaId: "2017TESC01",

@@ -4,8 +4,11 @@ import (
 	"database/sql"
 	"net/http"
 
+	errs "errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/guregu/null/v5"
+	"gorm.io/gorm"
 	"ranking.leinadium.dev/pkg/db/models"
 	"ranking.leinadium.dev/pkg/errors"
 )
@@ -32,15 +35,15 @@ func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map
 	return m
 }
 
-func (gs *GlobalState) GetPerson(c *gin.Context) {
+func (gs *GlobalState) GetPersonWithMode(c *gin.Context) {
 	modeReq := c.Param("mode")
 	if modeReq == "" {
-		errors.SetError(c, "mode not provided", 400)
+		errors.SetError(c, "mode not provided", http.StatusBadRequest)
 		return
 	}
 	wcaIdReq := c.Param("id")
 	if wcaIdReq == "" {
-		errors.SetError(c, "id not provided", 400)
+		errors.SetError(c, "id not provided", http.StatusBadRequest)
 		return
 	}
 
@@ -51,7 +54,7 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	} else if modeReq == "average" {
 		rawSql = models.QueryPersonAverage
 	} else {
-		errors.SetError(c, "invalid mode", 400)
+		errors.SetError(c, "invalid mode", http.StatusBadRequest)
 		return
 	}
 
@@ -59,12 +62,12 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	query := gs.DB.Raw(rawSql, sql.Named("wcaId", wcaIdReq))
 
 	if err := query.Find(&pqs).Error; err != nil {
-		errors.LogSetError(c, "could not query database", 500, err)
+		errors.LogSetError(c, "could not query database", http.StatusInternalServerError, err)
 		return
 	}
 
 	if len(pqs) == 0 {
-		errors.SetError(c, "could not find wca id", 404)
+		errors.SetError(c, "could not find wca id", http.StatusNotFound)
 		return
 	}
 
@@ -94,4 +97,25 @@ func (gs *GlobalState) GetPerson(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, ret)
+}
+
+func (gs *GlobalState) GetPersonInfo(c *gin.Context) {
+	wcaIdReq := c.Param("id")
+	if wcaIdReq == "" {
+		errors.SetError(c, "id not provided", http.StatusBadRequest)
+		return
+	}
+
+	// query
+	var res models.PersonInfo
+	query := gs.DB.Raw(models.QueryPersonInfo, sql.Named("wcaId", wcaIdReq))
+	if err := query.First(&res).Error; err != nil {
+		if errs.Is(err, gorm.ErrRecordNotFound) {
+			errors.SetError(c, "wca id not found", http.StatusNotFound)
+		} else {
+			errors.SetError(c, "could not connect to database", http.StatusInternalServerError)
+		}
+		return
+	}
+	c.JSON(http.StatusOK, res)
 }
