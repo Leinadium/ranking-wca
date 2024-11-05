@@ -19,18 +19,23 @@ func Main() {
 		AllowCredentials: true,
 	}))
 
-	c := config.ParseTOML("config.toml")
+	config := config.ParseTOML("config.toml")
 
 	gs := routes.GlobalState{
-		Config: c,
-		DB:     db.NewWCAdb(c).DB,
+		Config: config,
+		DB:     db.NewWCAdb(config).DB,
 	}
 
 	api := router.Group("/api")
 	api.GET("/status", gs.GetStatus)
-	api.GET("/person/info/:id", gs.GetPersonInfo)
-	api.GET("/person/:mode/:id", gs.GetPersonWithMode)
-	// api.GET("/ranking/:mode/:id", nil)
+
+	auth := api.Group("/auth")
+	auth.GET("/endpoint", gs.GetAuthEndpoint)
+	auth.GET("/callback", gs.GetAuthCallback)
+
+	person := api.Group("/person")
+	person.GET("/info/:id", gs.GetPersonInfo)
+	person.GET("/:mode/:id", gs.GetPersonWithMode)
 
 	_ = router.Run()
 }

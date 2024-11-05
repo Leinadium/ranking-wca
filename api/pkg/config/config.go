@@ -20,6 +20,11 @@ type Config struct {
 	WCA struct {
 		ExportURL string `toml:"export_url"`
 	} `toml:"wca"`
+	Auth struct {
+		ClientId     string `toml:"client_id"`
+		ClientSecret string `toml:"client_secret"`
+		RedirectURI  string `toml:"redirect_uri"`
+	} `toml:"auth"`
 }
 
 func ParseTOML(tomlfile string) Config {
