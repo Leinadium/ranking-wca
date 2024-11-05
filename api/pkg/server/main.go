@@ -27,6 +27,7 @@ func Main() {
 	}
 
 	api := router.Group("/api")
+	api.GET("/status", gs.GetStatus)
 	api.GET("/person/info/:id", gs.GetPersonInfo)
 	api.GET("/person/:mode/:id", gs.GetPersonWithMode)
 	// api.GET("/ranking/:mode/:id", nil)
