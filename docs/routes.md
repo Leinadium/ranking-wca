@@ -2,6 +2,33 @@
 
 All routes are prefixed with an `/api`
 
+## Status
+
+```text
+-------------------------------------------------
+[✅] GET /status/
+{
+  last_update: "2024-11-05T13:00:00Z" [RFC3339]
+}
+```
+
+## Auth
+
+```text
+[✅] GET /auth/endpoint
+{
+  url: "https://worldcubeassociation.org/
+}
+```
+
+```text
+[✅] GET /auth/callback
+{
+  access_token: "xxxx",
+  expires_in: 720
+}
+```
+
 ## Person
 
 ### Average and single
