@@ -1,11 +1,11 @@
 FROM golang:latest AS build
 
 WORKDIR /src
-COPY ../back/go.mod ../back/go.sum /src/
+COPY ../api/go.mod ../api/go.sum /src/
 RUN go mod download && go mod verify
 
-COPY ../back/cmd /src/cmd
-COPY ../back/pkg /src/pkg
+COPY ../api/cmd /src/cmd
+COPY ../api/pkg /src/pkg
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /updater /src/cmd/updater/main.go
 
