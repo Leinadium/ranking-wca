@@ -8,5 +8,5 @@ type PersonTableInstance = {
 }
 
 export type PersonTableProps = {
-    data: PersonTableInstance[],
+    table: PersonTableInstance[],
 };

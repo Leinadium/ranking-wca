@@ -4,7 +4,7 @@
 	import type { PersonTableProps } from '../../types/person/props';
 
 	const example: PersonTableProps = {
-		data: [
+		table: [
 			{
 				event: '333',
 				single: 10.32,
@@ -36,7 +36,7 @@
 		]
 	};
 	let props: PersonTableProps | null = $props()
-	let data = $derived(props ? props.data : example.data)
+	let table = $derived(props ? props.table : example.table)
 
 </script>
 
@@ -51,7 +51,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each data as row}
+		{#each table as row}
 			<tr>
 				<th scope="row"><EventText id={row.event} /> </th>
 				<td>{row.rankingSingle}</td>
