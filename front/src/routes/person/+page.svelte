@@ -6,7 +6,7 @@
 </script>
 
 <div class="person-page">
-	<PersonTable {wcaId} />
+	<FullAvatar {wcaId} />
 	<PersonTable />
 
 	<div class="invite-login">

@@ -3,8 +3,8 @@
 	import { timeToString } from '$lib/utils';
 	import type { PersonTableProps } from '../../types/person/props';
 
-	let {
-		data = [
+	const example: PersonTableProps = {
+		data: [
 			{
 				event: '333',
 				single: 10.32,
@@ -34,7 +34,10 @@
 				rankingAverage: 100,
 			}
 		]
-	}: PersonTableProps = $props();
+	};
+	let props: PersonTableProps | null = $props()
+	let data = $derived(props ? props.data : example.data)
+
 </script>
 
 <table>
@@ -48,13 +51,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each Object.entries(data) as [eventId, eventData]}
+		{#each data as row}
 			<tr>
-				<th scope="row"><EventText id={eventId} /> </th>
-				<td>{eventData.rankingSingle}</td>
-				<td>{timeToString(eventData.single)}</td>
-				<td>{timeToString(eventData.average)}</td>
-				<td>{eventData.rankingAverage}</td>
+				<th scope="row"><EventText id={row.event} /> </th>
+				<td>{row.rankingSingle}</td>
+				<td>{timeToString(row.single)}</td>
+				<td>{timeToString(row.average)}</td>
+				<td>{row.rankingAverage}</td>
 			</tr>
 		{/each}
 	</tbody>
