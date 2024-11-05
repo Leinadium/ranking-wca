@@ -78,7 +78,7 @@ Get average or single of competitor
     {
       "event": "string",  // event_id, e.g. 333
       "ranking": "int",  // starting from 1
-      "best": "int",   // his time
+      "best": "int",   // competitor's time (read format.md)
       "compId": "string",  // https://www.worldcubeassociation.org/competitions/:id
       "compName": "string",  // name of competition
       "compState": "string | null",  // state of competition, may be null if multiple cities
@@ -99,8 +99,8 @@ Get information of competitor in a similiar style as the wca's page. May be used
   "table": [
     {
       "event": "string",    // e.g. 333, 444, sq1, mbld
-      "single": "int",    // single time
-      "average": "int",   // average time
+      "single": "int",    // single time (read format.md)
+      "average": "int",   // average time (read format.md)
       "rankingSingle": "int",  // ranking by single by competitor's state
       "rankingAvarege": "int",  // ranking by average by competitor's state
     },
