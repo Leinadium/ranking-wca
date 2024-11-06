@@ -132,3 +132,28 @@ WHERE
     es.state_id = cb.state_id
     AND ct.wca_id = @wcaId
 `
+
+type TablePerson struct {
+	Event          string   `gorm:"column:event" json:"event"`
+	Single         null.Int `gorm:"column:single" json:"single"`
+	Average        null.Int `gorm:"column:average" json:"average"`
+	RankingSingle  int      `gorm:"column:ranking_single" json:"rankingSingle"`
+	RankingAverage int      `gorm:"column:ranking_average" json:"rankingAverage"`
+}
+
+const QueryTablePerson = `
+SELECT
+    rs.event_id AS event,
+    rs.single   AS single,
+    rs.ranking  AS ranking_single,
+    ra.average  AS average,
+    ra.ranking  AS ranking_average
+FROM
+    datalake.ranking_single rs
+        JOIN datalake.ranking_average ra
+            ON rs.wca_id = ra.wca_id
+            AND rs.state_id = ra.state_id
+            AND rs.event_id = ra.event_id
+WHERE
+    rs.wca_id = @wcaId
+`
