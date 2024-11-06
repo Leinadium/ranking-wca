@@ -8,9 +8,9 @@ All routes are prefixed with an `/api`
 
 Get status of database update
 
-```json5
+```jsonc
 {
-  "last_update": "string"  // datetime in RFC3339
+  "last_update": "string" // datetime in RFC3339
 }
 ```
 
@@ -20,7 +20,7 @@ Get status of database update
 
 Get authentication oauth endpoint
 
-```json5
+```jsonc
 {
   "url": "string" // url for oauth endpoint
 }
@@ -30,7 +30,7 @@ Get authentication oauth endpoint
 
 Information retrieved from oauth callback
 
-```json5
+```jsonc
 {
   "access_token": "string",  // to be used in register state endpoint
   "expires_in:" "int"  // ttl in seconds,
@@ -50,15 +50,15 @@ Information retrieved from oauth callback
 
 Get general information of competitor
 
-* `<wca_id>`: competitiors's wca id (e.g. 2018GUIM02)
+- `<wca_id>`: competitiors's wca id (e.g. 2018GUIM02)
 
-```json5
+```jsonc
 {
-  "name": "string",   // name of competitor
-  "state": "string",  // state id (guessed or registered)
-  "registered": "bool",  // if is registered (to be able to add a check next to hist name)
-  "totalCompetitions": "int",  // number of competitions competed
-  "stateCompetitions": "int",  // number of competitions competed in his state
+  "name": "string", // name of competitor
+  "state": "string", // state id (guessed or registered)
+  "registered": "bool", // if is registered (to be able to add a check next to hist name)
+  "totalCompetitions": "int", // number of competitions competed
+  "stateCompetitions": "int" // number of competitions competed in his state
 }
 ```
 
@@ -66,24 +66,24 @@ Get general information of competitor
 
 Get average or single of competitor
 
-* `<mode>`: "average" or "single"
-* `<wca_id>`: competitor's wca id (e.g. 2018GUIM02)
+- `<mode>`: "average" or "single"
+- `<wca_id>`: competitor's wca id (e.g. 2018GUIM02)
 
-```json5
+```jsonc
 {
   "name": "string",
-  "state": "string",  // state id
-  "registered": "bool",  // is registered
+  "state": "string", // state id
+  "registered": "bool", // is registered
   "rankings": [
     {
-      "event": "string",  // event_id, e.g. 333
-      "ranking": "int",  // starting from 1
-      "best": "int",   // competitor's time (read format.md)
-      "compId": "string",  // https://www.worldcubeassociation.org/competitions/:id
-      "compName": "string",  // name of competition
-      "compState": "string | null",  // state of competition, may be null if multiple cities
-      "times": "int[5]",   // the average in which he obtained his average/single time. not really useful
-    },
+      "event": "string", // event_id, e.g. 333
+      "ranking": "int", // starting from 1
+      "best": "int", // competitor's time (read format.md)
+      "compId": "string", // https://www.worldcubeassociation.org/competitions/:id
+      "compName": "string", // name of competition
+      "compState": "string | null", // state of competition, may be null if multiple cities
+      "times": "int[5]" // the average in which he obtained his average/single time. not really useful
+    }
   ]
 }
 ```
@@ -92,18 +92,18 @@ Get average or single of competitor
 
 Get information of competitor in a similiar style as the wca's page. May be used directly in a table
 
-* `<wca_id>`:  (e.g. 2018GUIM02)
+- `<wca_id>`: (e.g. 2018GUIM02)
 
-```json5
+```jsonc
 {
   "table": [
     {
-      "event": "string",    // e.g. 333, 444, sq1, mbld
-      "single": "int",    // single time (read format.md)
-      "average": "int",   // average time (read format.md)
-      "rankingSingle": "int",  // ranking by single by competitor's state
-      "rankingAvarege": "int",  // ranking by average by competitor's state
-    },
+      "event": "string", // e.g. 333, 444, sq1, mbld
+      "single": "int", // single time (read format.md)
+      "average": "int", // average time (read format.md)
+      "rankingSingle": "int", // ranking by single by competitor's state
+      "rankingAvarege": "int" // ranking by average by competitor's state
+    }
   ]
 }
 ```
@@ -117,9 +117,9 @@ Might be simplified, like the /table/ endpoint above
 
 ### [❌] `GET /ranking/<mode>/<event_id>/<state_id>`
 
-* `<mode>`: "average" or "single"
-* `<event_id>`: event id (e.g. 333OH, sq1)
-* `<state_id>`: state id (e.g. RJ. BR (nation ranking) is not supported yet)
+- `<mode>`: "average" or "single"
+- `<event_id>`: event id (e.g. 333OH, sq1)
+- `<state_id>`: state id (e.g. RJ. BR (national ranking) is not supported yet)
 
 ```text
 [
