@@ -39,7 +39,12 @@ func (a WCAapi) Get() (WCAresponse, error) {
 	r, err := http.Get(a.config.WCA.ExportURL)
 	if err != nil {
 		println("Error", err.Error())
+		return WCAresponse{}, err
 	}
+	if r == nil {
+		return WCAresponse{}, errors.New("unknown error")
+	}
+
 	defer r.Body.Close()
 
 	if r.StatusCode != 200 {

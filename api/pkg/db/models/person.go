@@ -16,7 +16,7 @@ type PersonResponse struct {
 type PersonRankingsResponse struct {
 	Event            string      `json:"event"`
 	Ranking          int         `json:"ranking"`
-	Best             null.Float  `json:"best"`
+	Best             null.Int    `json:"best"`
 	CompetitionId    string      `json:"compId"`
 	CompetitionName  string      `json:"compName"`
 	CompetitionState null.String `json:"compState"`
@@ -24,16 +24,16 @@ type PersonRankingsResponse struct {
 }
 
 type PersonQuery struct {
-	WcaId      string     `gorm:"column:wca_id"`
-	Name       string     `gorm:"column:name"`
-	StateId    string     `gorm:"column:state_id"`
-	Registered bool       `gorm:"column:registered"`
-	EventId    string     `gorm:"column:event_id"`
-	Ranking    int        `gorm:"column:ranking"`
-	Best       null.Float `gorm:"column:best"`
-	CompId     string     `gorm:"column:competition_id"`
-	CompName   string     `gorm:"column:competition_name"`
-	CompState  string     `gorm:"column:competition_state"`
+	WcaId      string   `gorm:"column:wca_id"`
+	Name       string   `gorm:"column:name"`
+	StateId    string   `gorm:"column:state_id"`
+	Registered bool     `gorm:"column:registered"`
+	EventId    string   `gorm:"column:event_id"`
+	Ranking    int      `gorm:"column:ranking"`
+	Best       null.Int `gorm:"column:best"`
+	CompId     string   `gorm:"column:competition_id"`
+	CompName   string   `gorm:"column:competition_name"`
+	CompState  string   `gorm:"column:competition_state"`
 	// Round      int        `gorm:"column:round"`
 	Time1 null.Int  `gorm:"column:time_1"`
 	Time2 null.Int  `gorm:"column:time_2"`

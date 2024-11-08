@@ -9,7 +9,7 @@ import (
 type RankingResponse struct {
 	Name            string      `json:"name"`
 	WCAid           string      `json:"wcaId"`
-	Best            null.Float  `json:"best"`
+	Best            null.Int    `json:"best"`
 	Ranking         int         `json:"ranking"`
 	Times           [5]null.Int `json:"times"`
 	Registered      bool        `json:"registered"`
@@ -17,19 +17,19 @@ type RankingResponse struct {
 }
 
 type RankingQuery struct {
-	Name       string     `gorm:"column:name"`
-	WCAid      string     `gorm:"column:wca_id"`
-	Best       null.Float `gorm:"column:best"`
-	Ranking    int        `gorm:"column:ranking"`
-	Registered string     `gorm:"column:registered"`
-	CompId     string     `gorm:"competition_id"`
-	CompName   string     `gorm:"column:competition_name"`
-	Time1      null.Int   `gorm:"column:time_1"`
-	Time2      null.Int   `gorm:"column:time_2"`
-	Time3      null.Int   `gorm:"column:time_3"`
-	Time4      null.Int   `gorm:"column:time_4"`
-	Time5      null.Int   `gorm:"column:time_5"`
-	Ts         time.Time  `gorm:"column:ts"`
+	Name       string    `gorm:"column:name"`
+	WCAid      string    `gorm:"column:wca_id"`
+	Best       null.Int  `gorm:"column:best"`
+	Ranking    int       `gorm:"column:ranking"`
+	Registered string    `gorm:"column:registered"`
+	CompId     string    `gorm:"competition_id"`
+	CompName   string    `gorm:"column:competition_name"`
+	Time1      null.Int  `gorm:"column:time_1"`
+	Time2      null.Int  `gorm:"column:time_2"`
+	Time3      null.Int  `gorm:"column:time_3"`
+	Time4      null.Int  `gorm:"column:time_4"`
+	Time5      null.Int  `gorm:"column:time_5"`
+	Ts         time.Time `gorm:"column:ts"`
 }
 
 const QUERY_RANKINGS = `
