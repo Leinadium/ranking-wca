@@ -99,7 +99,7 @@ FROM
         LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
 WHERE
-    dlk.single = dmp.best
+    dlk.average = dmp.best
     AND dlk.wca_id = @wcaId
 `
 
