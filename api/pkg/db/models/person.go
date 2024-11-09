@@ -81,7 +81,7 @@ SELECT
     dlk.state_id    AS state_id,
     CASE WHEN ru.wca_id is not null THEN true ELSE false END AS registered,
     dlk.event_id    AS event_id,
-    dlk.ranking     AS ranking,
+    dlk.average     AS ranking,
     dlk.single      AS best,
     comp.id         AS competition_id,
     comp.name       AS competition_name,

@@ -82,12 +82,13 @@ func (gs *GlobalState) GetPersonWithMode(c *gin.Context) {
 
 	for _, v := range m {
 		rankings = append(rankings, models.PersonRankingsResponse{
-			Event:           v.EventId,
-			Ranking:         v.Ranking,
-			Best:            v.Best,
-			CompetitionId:   v.CompId,
-			CompetitionName: v.CompName,
-			Times:           [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
+			Event:            v.EventId,
+			Ranking:          v.Ranking,
+			Best:             v.Best,
+			CompetitionId:    v.CompId,
+			CompetitionName:  v.CompName,
+			CompetitionState: null.NewString(v.CompState, true),
+			Times:            [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
 		})
 	}
 	ret := models.PersonResponse{
