@@ -85,6 +85,7 @@ SELECT
     dlk.average     AS best,
     comp.id         AS competition_id,
     comp.name       AS competition_name,
+    comp2.state_id  AS competition_state,
     -- dmp.roundTypeId AS round,
     dmp.value1      AS time_1,
     dmp.value2      AS time_2,
@@ -98,6 +99,7 @@ FROM
         LEFT JOIN app.registered_users ru on dlk.wca_id = ru.wca_id
         LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
+        LEFT JOIN datalake.competitions comp2 on (dmp.competitionId = comp2.competition_id)
 WHERE
     dlk.average = dmp.best
     AND dlk.wca_id = @wcaId
