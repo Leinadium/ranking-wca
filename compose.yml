@@ -13,8 +13,8 @@ services:
       retries: 30
     volumes:
       - db-data:/var/lib/mysql
-    # networks:
-    #   - internal
+    networks:
+      - internal
     restart: unless-stopped
 
   ranking-wca-updater:
@@ -24,6 +24,8 @@ services:
       - ./config.toml:/config.toml
     profiles:
       - tools
+    networks:
+      - internal
   
   ranking-wca-server:
     build:
@@ -32,9 +34,15 @@ services:
       - ./config.toml:/config.toml
     ports:
       - "8080:8080"
+    networks:
+      - internal
     depends_on:
       ranking-wca-db:
         condition: service_healthy
 
 volumes:
   db-data:
+
+networks:
+  internal:
+    external: true
