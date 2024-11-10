@@ -147,6 +147,21 @@ REPLACE INTO datalake.estimated_state_for_user (
     -- ON DUPLICATE KEY UPDATE (state_id)
 ;
 
+
+REPLACE INTO app.registered_users (
+    wca_id,
+    state_id
+)
+    SELECT
+        wca_id,
+        state_id
+    FROM
+        app.next_update_users
+;
+
+TRUNCATE TABLE app.next_update_users;
+
+
 REPLACE INTO dump.all_persons_with_states (
     wca_id,
     state_id
@@ -340,5 +355,3 @@ TRUNCATE TABLE dump.competitions_by_person_and_country;
 TRUNCATE TABLE dump.results_by_state;
 
 END //
-
-DELIMITER ;
