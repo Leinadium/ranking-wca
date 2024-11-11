@@ -47,6 +47,8 @@ export const FONT_FAMILY_TOKENS = {
     SECONDARY: '"Roboto", sans-serif',
 };
 
+export const BASE_PIXEL_FONT_SIZE: number = 16;
+
 export const FONT_SIZE_TOKENS = {
     BIGGER_6: '2.000rem', // 32px
     BIGGER_5: '1.812rem', // 29px
@@ -65,3 +67,5 @@ export const LINE_HEIGHT_TOKENS = {
     MEDIUM_FONT: '130%',
     SMALL_FONT: '150%',
 };
+
+export const SPACING_FACTOR: number = 8;

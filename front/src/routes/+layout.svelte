@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Footer from '../components/common/Footer.svelte';
+	import Grid from '../components/common/Grid/Grid.svelte';
 	import Header from '../components/common/Header.svelte';
 	
 	let { children } = $props();
@@ -9,91 +10,12 @@
 	<link rel="stylesheet" href="https://icons.cubing.net/css/cubing-icons.css" />
 </svelte:head>
 
-<div id="body-inner">
-	<Header />
-	<main>
+<Header />
+
+<main>
+	<Grid margin={8} gap={2}>
 		{@render children?.()}
-	</main>
-	<Footer />
-</div>
+	</Grid>
+</main>
 
-<style>
-	#body-inner {
-		box-sizing: border-box;
-		width: 100%;
-		height: 100%;
-		min-height: 100vh;
-		margin: 0 !important;
-		padding: 0;
-		border: 0;
-		position: relative;
-
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: center;
-		align-items: center;
-
-		background-color: var(--color-white);
-	}
-
-	@media (min-width: 768px) {
-		main {
-			padding-left: 5%;
-			padding-right: 5%;
-			width: 750px;
-		}
-	}
-	@media (min-width: 992px) {
-		main {
-			padding-left: 10%;
-			padding-right: 10%;
-			width: 970px;
-		}
-	}
-
-	@media (min-width: 1200px) {
-		main {
-			padding-left: 15%;
-			padding-right: 15%;
-			width: 1170px;
-		}
-	}
-
-	@media screen and (max-width: 767px) {
-		main {
-			padding: 0;
-			width: 100%;
-			overflow-y: hidden;
-		}
-	}
-
-	main {
-		box-sizing: border-box;
-		height: 100%;
-		/* width: 100%; */
-		margin: 0;
-		border: 0;
-		padding: 0;
-		flex-grow: 20;
-
-		font-family:
-			'Roboto',
-			system-ui,
-			-apple-system,
-			BlinkMacSystemFont,
-			'Segoe UI',
-			Roboto,
-			Oxygen,
-			Ubuntu,
-			Cantarell,
-			'Open Sans',
-			'Helvetica Neue',
-			sans-serif;
-	}
-
-	:global(html) {
-		--color-white: #fff;
-		--color-lightgray: #f8f8f8;
-		--color-mediumgray: #e9e9e9;
-	}
-</style>
+<Footer />
