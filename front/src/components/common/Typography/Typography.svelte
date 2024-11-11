@@ -41,6 +41,12 @@
             size: FONT_SIZE_TOKENS.BIGGER_1,
             lineHeight: LINE_HEIGHT_TOKENS.BIG_FONT,
         },
+        button: {
+            tag: 'span',
+            family: FONT_FAMILY_TOKENS.SECONDARY,
+            size: FONT_SIZE_TOKENS.BIGGER_1,
+            lineHeight: LINE_HEIGHT_TOKENS.BIG_FONT,
+        },
         bodyOne: {
             tag: 'p',
             family: FONT_FAMILY_TOKENS.SECONDARY,

@@ -54,6 +54,7 @@ export const FONT_SIZE_TOKENS = {
     BIGGER_3: '1.438rem', // 23px
     BIGGER_2: '1.250rem', // 20px
     BIGGER_1: '1.125rem', // 18px
+    BUTTON: '1.125rem', // 18px
     BASE: '1rem', // 16px
     SMALLER_1: '0.875rem', // 14px
     SMALLER_2: '0.812rem', // 13px

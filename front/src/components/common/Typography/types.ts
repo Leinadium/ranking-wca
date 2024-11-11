@@ -1,9 +1,9 @@
 import type { ColorTokens } from "$lib/tokens/types";
 
-type TypographyTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'bodyOne' | 'bodyTwo' | 'caption';
+type TypographyTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'button' | 'bodyOne' | 'bodyTwo' | 'caption';
 
 export interface TypographyProps {
-    children: any;
+    children: any; // TODO: Melhorar tipagem
     type: TypographyTypes;
     color: ColorTokens;
 };
@@ -22,6 +22,7 @@ export interface TypographyTypesConfigs {
     h4: TypographyTypeConfigs;
     h5: TypographyTypeConfigs;
     h6: TypographyTypeConfigs;
+    button: TypographyTypeConfigs;
     bodyOne: TypographyTypeConfigs;
     bodyTwo: TypographyTypeConfigs;
     caption: TypographyTypeConfigs;

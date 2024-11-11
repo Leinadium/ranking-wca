@@ -1,0 +1,56 @@
+.button {
+    cursor: pointer;
+    display: flex;
+    /* TODO: Calcular espaçamentos com base num fator a ser especificado como token */
+    gap: 16px;
+    padding: 8px 16px;
+}
+
+.button-basic {
+    background-color: transparent;
+    border: none;
+}
+
+.button-outlined {
+    background-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.button-primary {
+    color: var(--color-primary-base);
+    border-color: var(--color-primary-base);
+}
+
+.button-secondary {
+    color: var(--color-secondary-base);
+    border-color: var(--color-secondary-base);
+}
+
+.button-neutral {
+    color: var(--color-neutral-dark-1);
+    border-color: var(--color-neutral-dark-1);
+}
+
+.button-positive {
+    color: var(--color-accent-positive-base);
+    border-color: var(--color-accent-positive-base);
+}
+
+.button-warning {
+    color: var(--color-accent-warning-base);
+    border-color: var(--color-accent-warning-base);
+}
+
+.button-negative {
+    color: var(--color-accent-negative-base);
+    border-color: var(--color-accent-negative-base);
+}
+
+.button-full {
+    width: 100%;
+}
+
+.button-auto {
+    width: 'auto';
+}
