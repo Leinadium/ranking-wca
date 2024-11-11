@@ -2,6 +2,8 @@ import type { ColorTokens } from "$lib/tokens/types";
 
 type TypographyTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'button' | 'bodyOne' | 'bodyTwo' | 'caption';
 
+type TypographyWeightOptions = 'regular' | 'bold';
+
 export interface TypographyProps {
     children: any; // TODO: Melhorar tipagem
     type: TypographyTypes;
@@ -13,6 +15,7 @@ interface TypographyTypeConfigs {
     family: string;
     size: string;
     lineHeight: string;
+    weight: TypographyWeightOptions;
 };
 
 export interface TypographyTypesConfigs {
