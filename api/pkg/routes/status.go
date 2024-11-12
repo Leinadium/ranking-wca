@@ -22,7 +22,7 @@ func (gs *GlobalState) GetStatus(c *gin.Context) {
 		}
 	} else {
 		c.JSON(http.StatusOK, gin.H{
-			"last_update": exportDate.Date.Format(time.RFC3339),
+			"lastUpdate": exportDate.Date.Format(time.RFC3339),
 		})
 	}
 }

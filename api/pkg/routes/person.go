@@ -121,3 +121,25 @@ func (gs *GlobalState) GetPersonInfo(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, res)
 }
+
+func (gs *GlobalState) GetPersonTable(c *gin.Context) {
+	wcaIdReq := c.Param("id")
+	if wcaIdReq == "" {
+		errors.SetError(c, "id not provided", http.StatusBadRequest)
+		return
+	}
+
+	// query
+	var res []models.TablePerson
+	query := gs.DB.Raw(models.QueryTablePerson, sql.Named("wcaId", wcaIdReq))
+	if err := query.Find(&res).Error; err != nil {
+		if errs.Is(err, gorm.ErrRecordNotFound) {
+			errors.SetError(c, "wca id not found", http.StatusNotFound)
+		} else {
+			errors.SetError(c, "could not connect to database", http.StatusInternalServerError)
+		}
+		return
+	}
+	c.JSON(http.StatusOK, res)
+
+}

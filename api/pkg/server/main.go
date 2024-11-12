@@ -32,8 +32,10 @@ func Main() {
 	auth := api.Group("/auth")
 	auth.GET("/endpoint", gs.GetAuthEndpoint)
 	auth.GET("/callback", gs.GetAuthCallback)
+	auth.POST("/register", gs.PostRegisterState)
 
 	person := api.Group("/person")
+	person.GET("/table/:id", gs.GetPersonTable)
 	person.GET("/info/:id", gs.GetPersonInfo)
 	person.GET("/:mode/:id", gs.GetPersonWithMode)
 

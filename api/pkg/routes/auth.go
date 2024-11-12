@@ -16,6 +16,32 @@ import (
 	"ranking.leinadium.dev/pkg/wca"
 )
 
+type ResponseAPIme struct {
+	Me struct {
+		Name    string `json:"name"`
+		WCAid   string `json:"wca_id"`
+		Country string `json:"country_iso2"`
+	} `json:"me"`
+}
+
+func requestMe(c *gin.Context, accessToken string) (ResponseAPIme, bool) {
+	req, _ := http.NewRequest("GET", wca.EndpointApiMe, nil)
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", accessToken))
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		errors.SetError(c, "could not reach wca api", http.StatusInternalServerError)
+		return ResponseAPIme{}, false
+	}
+
+	var parsedFinal ResponseAPIme
+	if json.NewDecoder(res.Body).Decode(&parsedFinal) != nil {
+		errors.SetError(c, "invalid response from wca api /me", http.StatusInternalServerError)
+		return ResponseAPIme{}, false
+	}
+	return parsedFinal, true
+}
+
 func (gs *GlobalState) GetAuthEndpoint(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"url": fmt.Sprintf("%s?client_id=%s&redirect_uri=%s&response_type=code&scope=",
@@ -70,24 +96,8 @@ func (gs *GlobalState) GetAuthCallback(c *gin.Context) {
 	}
 
 	// obtaining <me> information
-	req, _ := http.NewRequest("GET", wca.EndpointApiMe, nil)
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", parsedRes.AccessToken))
-	client := http.Client{}
-	res, err = client.Do(req)
-	if err != nil {
-		errors.SetError(c, "could not reach wca api", http.StatusInternalServerError)
-		return
-	}
-
-	var parsedFinal struct {
-		Me struct {
-			Name    string `json:"name"`
-			WcaID   string `json:"wca_id"`
-			Country string `json:"country_iso2"`
-		} `json:"me"`
-	}
-	if json.NewDecoder(res.Body).Decode(&parsedFinal) != nil {
-		errors.SetError(c, "invalid response from wca api /me", http.StatusInternalServerError)
+	parsedFinal, ok := requestMe(c, parsedRes.AccessToken)
+	if !ok {
 		return
 	}
 
@@ -109,15 +119,84 @@ func (gs *GlobalState) GetAuthCallback(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"access_token": parsedRes.AccessToken,
-		"expires_in":   parsedRes.ExpiresIn,
-		"name":         parsedFinal.Me.Name,
-		"wca_id":       parsedFinal.Me.WcaID,
+		"accessToken": parsedRes.AccessToken,
+		"expiresIn":   parsedRes.ExpiresIn,
+		"name":        parsedFinal.Me.Name,
+		"wcaId":       parsedFinal.Me.WCAid,
 		"register": gin.H{
-			"is_able":  parsedFinal.Me.Country == "BR",
-			"state_id": state,
-			"updated":  lastUpdate,
+			"canRegister": parsedFinal.Me.Country == "BR",
+			"stateId":     state,
+			"updated":     lastUpdate,
 		},
 	})
+}
 
+func (gs *GlobalState) PostRegisterState(c *gin.Context) {
+	// parsing body
+	var input struct {
+		AccessToken string `json:"accessToken"`
+		WCAid       string `json:"wcaId"`
+		StateID     string `json:"stateId"`
+	}
+
+	if json.NewDecoder(c.Request.Body).Decode(&input) != nil {
+		errors.SetError(c, "invalid input", http.StatusBadRequest)
+		return
+	}
+
+	// obtaining <me> information
+	parsedMe, ok := requestMe(c, input.AccessToken)
+	if !ok {
+		return
+	}
+
+	if parsedMe.Me.WCAid != input.WCAid {
+		errors.SetError(c, "wcaId does not match", http.StatusBadRequest)
+		return
+	}
+
+	// 	db.Where(User{Name: "non_existing"}).Attrs(User{Email: "fake@fake.org"}).FirstOrInit(&user)
+	// // user -> User{Name: "non_existing", Email: "fake@fake.org"}
+
+	// fetching or registering
+	var registeredUser models.RegisteredUser
+	query := gs.DB.Where(
+		models.RegisteredUser{WcaID: input.WCAid}).Take(&registeredUser)
+
+	if query.Error != nil {
+		if errs.Is(query.Error, gorm.ErrRecordNotFound) {
+			// continue
+		} else {
+			errors.SetError(c, "could not reach database", http.StatusInternalServerError)
+			return
+		}
+	} else {
+		if time.Since(registeredUser.RegisterDate).Hours() < 24 {
+			errors.SetError(c, "wait 24h before registering again", http.StatusTooEarly)
+			return
+		}
+	}
+	var insertErr error
+	if registeredUser.WcaID != "" {
+		insertErr = gs.DB.Model(&registeredUser).Updates(models.RegisteredUser{
+			StateID:      input.StateID,
+			RegisterDate: time.Now(),
+		}).Error
+	} else {
+		registeredUser.StateID = input.StateID
+		registeredUser.WcaID = input.WCAid
+		registeredUser.RegisterDate = time.Now()
+		insertErr = gs.DB.Create(&registeredUser).Error
+	}
+
+	if insertErr != nil {
+		if errs.Is(insertErr, gorm.ErrForeignKeyViolated) {
+			errors.SetError(c, "invalid state_id", http.StatusBadRequest)
+		} else {
+			errors.SetError(c, "could not update database", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	c.AbortWithStatus(202)
 }

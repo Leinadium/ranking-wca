@@ -10,7 +10,7 @@ Get status of database update
 
 ```jsonc
 {
-  "last_update": "string" // datetime in RFC3339
+  "lastUpdate": "string" // datetime in RFC3339
 }
 ```
 
@@ -26,23 +26,41 @@ Get authentication oauth endpoint
 }
 ```
 
-### [❌] `GET /auth/callback`
+### [✅] `GET /auth/callback`
 
 Information retrieved from oauth callback
 
 ```jsonc
 {
-  "access_token": "string",  // to be used in register state endpoint
-  "expires_in:" "int"  // ttl in seconds,
-  "name": "string",  // name of competitor
-  "wca_id": "string",
+  "accessToken": "string", // to be used in register state endpoint
+  "expiresIn": "int", // ttl in seconds,
+  "name": "string", // name of competitor
+  "wcaId": "string",
   "register": {
-    "is_able": "bool",  // can be registered (is from brazil)
-    "state_id": "string | null",  // current registered state
-    "updated": "string | null"  // datetime in RFC3339 of last update (cannot change again in X days)
+    "canRegister": "bool", // can be registered (is from brazil)
+    "stateId": "string | null", // current registered state
+    "updated": "string | null" // datetime in RFC3339 of last update (cannot change again in X days)
   }
 }
 ```
+
+### [✅] `POST /auth/register`
+
+body:
+
+````jsonc
+{
+  "accessToken": "string",
+  "wcaId": "string",     // optional
+  "stateId": "string",   // e.g. RJ
+}
+
+response:
+
+- `202`: ```<empty>```
+- `4xx`: ```{"error": "..."}```
+
+````
 
 ## Person
 
@@ -88,7 +106,7 @@ Get average or single of competitor
 }
 ```
 
-### [❌] `GET /person/table/<id>`
+### [✅] `GET /person/table/<id>`
 
 Get information of competitor in a similiar style as the wca's page. May be used directly in a table
 
@@ -121,25 +139,25 @@ Might be simplified, like the /table/ endpoint above
 - `<event_id>`: event id (e.g. 333OH, sq1)
 - `<state_id>`: state id (e.g. RJ. BR (national ranking) is not supported yet)
 
-```text
+```jsonc
 [
   {
-    wcaId: "2017TESC01",
-    name: "Pedro xxxxx",
-    best: 15.91,
-    ranking: 1,
-    times: [10.91, 11.91, -1, 13.04, 56.10],
-    registered: false,
-    compName: "Brasileiro 2024"
+    "wcaId": "2017TESC01",
+    "name": "Pedro xxxxx",
+    "best": 15.91,
+    "ranking": 1,
+    "times": [10.91, 11.91, -1, 13.04, 56.1],
+    "registered": false,
+    "compName": "Brasileiro 2024"
   },
   {
-    wcaId: "2018GUIM02",
-    name: "Daniel xxxxx",
-    best: 20.12,
-    ranking: 2,
-    times: [10.00, 12.00, 14.00, 16.00, 18.00],
-    registered: true,
-    compName: "Planetario 2023"
+    "wcaId": "2018GUIM02",
+    "name": "Daniel xxxxx",
+    "best": 20.12,
+    "ranking": 2,
+    "times": [10.0, 12.0, 14.0, 16.0, 18.0],
+    "registered": true,
+    "compName": "Planetario 2023"
   }
 ]
 ```
