@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Footer from '../components/common/Footer.svelte';
-	import Grid from '../components/common/Grid/Grid.svelte';
+	import GridRoot from '../components/common/Grid/Root/GridRoot.svelte';
 	import Header from '../components/common/Header.svelte';
 	
 	let { children } = $props();
@@ -13,9 +13,9 @@
 <Header />
 
 <main>
-	<Grid margin={8} gap={2}>
+	<GridRoot margin={8} gap={2}>
 		{@render children?.()}
-	</Grid>
+	</GridRoot>
 </main>
 
 <Footer />

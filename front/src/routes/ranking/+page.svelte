@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Button from "../../components/common/Button/Button.svelte";
-	import ButtonGroup from "../../components/common/ButtonGroup/ButtonGroup.svelte";
-	import GridItem from "../../components/common/GridItem/GridItem.svelte";
-	import InputGroup from "../../components/common/InputGroup/InputGroup.svelte";
-	import InputLabel from "../../components/common/InputLabel/InputLabel.svelte";
+	import ButtonGroupRoot from "../../components/common/ButtonGroup/Root/ButtonGroupRoot.svelte";
+	import ButtonGroupItem from "../../components/common/ButtonGroup/Item/ButtonGroupItem.svelte";
+	import GridItem from "../../components/common/Grid/Item/GridItem.svelte";
+	import InputGroupRoot from "../../components/common/InputGroup/Root/InputGroupRoot.svelte";
+	import InputGroupLabel from "../../components/common/InputGroup/Label/InputGroupLabel.svelte";
 	import PageTitle from "../../components/common/PageTitle/PageTitle.svelte";
 	import Select from "../../components/common/Select/Select.svelte";
 	import Typography from "../../components/common/Typography/Typography.svelte";
@@ -44,23 +44,23 @@
 </GridItem>
 
 <GridItem direction={'ROW'} justifyContent={'start'} gap={4}>
-	<InputGroup>
-		<InputLabel text={'Evento'} />
-		<ButtonGroup>
-			<Button type="OUTLINED" color="PRIMARY" icon={'Ícone 1'} />
-			<Button type="OUTLINED" color="PRIMARY" icon={'Ícone 2'} />
-			<Button type="OUTLINED" color="PRIMARY" icon={'Ícone 3'} />
-			<Button type="OUTLINED" color="PRIMARY" icon={'Ícone 4'} />
-		</ButtonGroup>
-	</InputGroup>
+	<InputGroupRoot>
+		<InputGroupLabel text={'Evento'} />
+		<ButtonGroupRoot>
+			<ButtonGroupItem type="OUTLINED" color="PRIMARY" icon={'Ícone 1'} />
+			<ButtonGroupItem type="OUTLINED" color="PRIMARY" icon={'Ícone 2'} />
+			<ButtonGroupItem type="OUTLINED" color="PRIMARY" icon={'Ícone 3'} />
+			<ButtonGroupItem type="OUTLINED" color="PRIMARY" icon={'Ícone 4'} />
+		</ButtonGroupRoot>
+	</InputGroupRoot>
 	
-	<InputGroup>
-		<InputLabel text={'Estado'} />
+	<InputGroupRoot>
+		<InputGroupLabel text={'Estado'} />
 		<Select options={stateOptions} />
-	</InputGroup>
+	</InputGroupRoot>
 	
-	<InputGroup>
-		<InputLabel text={'Tipo'} />
+	<InputGroupRoot>
+		<InputGroupLabel text={'Tipo'} />
 		<Select options={typeOptions} />
-	</InputGroup>
+	</InputGroupRoot>
 </GridItem>

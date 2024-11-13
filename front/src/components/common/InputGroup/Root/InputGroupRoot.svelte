@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { ButtonGroupProps } from "./types";
+    import type { InputGroupRootProps } from "./types";
 
-    let { children }: ButtonGroupProps = $props();
+    let { children }: InputGroupRootProps = $props();
 </script>
 
 <!-- TODO: Criar componente de grid -->
-<div class="button-group">
+<div class="input-group">
     {@render children()}
 </div>
 

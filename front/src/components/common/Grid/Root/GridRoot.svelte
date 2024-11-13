@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { SPACING_FACTOR } from "$lib/tokens";
 	import { fromPixelToRem } from "$lib/utils/style";
-    import type { GridProps } from "./types";
+    import type { GridRootProps } from "./types";
 
-    let { children, margin = 0, gap = 0 }: GridProps = $props();
+    let { children, margin = 0, gap = 0 }: GridRootProps = $props();
 
     const customStyle = `
         gap: ${fromPixelToRem(gap * SPACING_FACTOR)}rem;
