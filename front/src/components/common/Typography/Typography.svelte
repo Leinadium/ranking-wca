@@ -82,7 +82,7 @@
         font-weight: ${TYPES_CONFIGS[type].weight};
         font-size: ${TYPES_CONFIGS[type].size};
         line-height: ${TYPES_CONFIGS[type].lineHeight};
-        color: ${COLOR_TOKENS[color]};
+        color: ${color ? COLOR_TOKENS[color] : 'inherit'};
     `
 </script>
 

@@ -1,14 +1,10 @@
 <script lang="ts">
-	import type { ButtonGroupRootProps } from "./types";
+	import GridItem from "../../Grid/Item/GridItem.svelte";
+    import type { ButtonGroupRootProps } from "./types";
 
-    let { children }: ButtonGroupRootProps = $props();
+    let { children, ...props }: ButtonGroupRootProps = $props();
 </script>
 
-<!-- TODO: Criar componente de grid -->
-<div class="button-group">
+<GridItem classes={'button-group'} justifyContent={'flex-start'}>
     {@render children()}
-</div>
-
-<style>
-    @import './style.css';
-</style>
+</GridItem>

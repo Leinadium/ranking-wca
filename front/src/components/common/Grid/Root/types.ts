@@ -1,5 +1,7 @@
+import type { Snippet } from "svelte";
+
 export interface GridRootProps {
-    children: any; // TODO: Melhorar tipagem
+    children: Snippet<[]>;
     margin?: number;
     gap?: number;
 };

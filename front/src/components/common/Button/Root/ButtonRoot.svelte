@@ -1,11 +1,16 @@
 <script lang="ts">
-	import Typography from "../Typography/Typography.svelte";
-    import type { ButtonProps, ButtonConfigs, ButtonClassesConfigs } from "./types";
+    import type { ButtonRootProps, ButtonRootConfigs, ButtonRootClassesConfigs } from "./types";
 
-    //TODO: Criar componente de ícone
-    let { type = 'OUTLINED', color, width = 'auto', icon, text, onClickFn }: ButtonProps = $props();
+    let {
+        type = 'OUTLINED',
+        color,
+        width = 'auto',
+        children,
+        onClickFn,
+        ...props
+    }: ButtonRootProps = $props();
 
-    const TYPE_CLASSES: ButtonClassesConfigs = {
+    const TYPE_CLASSES: ButtonRootClassesConfigs = {
         type: {
             BASIC: 'button-basic',
             OUTLINED: 'button-outlined',
@@ -19,7 +24,7 @@
             NEGATIVE: 'button-negative',
         }
     };
-    const TYPES_CONFIGS: ButtonConfigs = {
+    const TYPES_CONFIGS: ButtonRootConfigs = {
         type: {
             class: TYPE_CLASSES.type[type],
         },
@@ -56,13 +61,7 @@
     class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'}`}
     onclick={onClickFn}
 >
-    {#if icon}
-        <span>{icon}</span>
-    {/if}
-
-    {#if text}
-        <Typography type="button" color={TYPES_CONFIGS.color[color].mainColor}>{text}</Typography>
-    {/if}
+    {@render children?.({...props, color: TYPES_CONFIGS.color[color].mainColor})}
 </button>
 
 <style>

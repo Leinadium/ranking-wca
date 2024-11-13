@@ -1,3 +1,5 @@
+import type { Snippet } from "svelte";
+
 export interface ButtonGroupRootProps {
-    children: any; // TODO: Melhorar tipagem
+    children: Snippet<[]>;
 };

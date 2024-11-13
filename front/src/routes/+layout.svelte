@@ -6,10 +6,6 @@
 	let { children } = $props();
 </script>
 
-<svelte:head>
-	<link rel="stylesheet" href="https://icons.cubing.net/css/cubing-icons.css" />
-</svelte:head>
-
 <Header />
 
 <main>

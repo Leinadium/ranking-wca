@@ -1,8 +1,10 @@
 <script lang="ts">
-	import Button from "../../Button/Button.svelte";
-import type { ButtonProps } from "../../Button/types";
+	import ButtonRoot from "../../Button/Root/ButtonRoot.svelte";
+	import type { ButtonRootProps } from "../../Button/Root/types";
 
-    let props: ButtonProps = $props();
+    let { children, ...props }: ButtonRootProps = $props();
 </script>
 
-<Button {...props} />
+<ButtonRoot {...props}>
+    {@render children?.({ ...props })}
+</ButtonRoot>

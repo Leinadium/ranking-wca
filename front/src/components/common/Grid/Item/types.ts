@@ -1,3 +1,5 @@
+import type { Snippet } from "svelte";
+
 type GridItemDirection = 'ROW' | 'COLUMN'
 
 type GridItemJustifyContentOptions = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'left' | 'right';
@@ -7,7 +9,8 @@ type GridItemAlignItemsOptions = 'flex-start' | 'flex-end' | 'center' | 'baselin
 type GridItemWrapOptions = 'NOWRAP' | 'WRAP' | 'WRAP-REVERSE' | 'CUSTOM-WRAP';
 
 export interface GridItemProps {
-    children: any; // TODO: Melhorar tipagem
+    children: Snippet<[]>;
+    classes?: string;
     margin?: number;
     gap?: number;
     direction?: GridItemDirection;

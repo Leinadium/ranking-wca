@@ -5,6 +5,7 @@
 
     let {
         children,
+        classes = '',
         margin = 0,
         gap = 0,
         direction = 'ROW',
@@ -23,7 +24,7 @@
     `
 </script>
 
-<div class="grid-item" style={customStyle}>
+<div class="grid-item {classes}" style={customStyle}>
     {@render children()}
 </div>
 
