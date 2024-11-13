@@ -1,0 +1,9 @@
+.table-sort-label {
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+}
+
+.table-sort-label:hover {
+    text-decoration: underline;
+}

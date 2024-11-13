@@ -17,6 +17,7 @@ export interface ButtonRootProps {
     width?: ButtonRootWidthOptions;
     children?: any; // TODO: Melhorar tipagem
     onClickFn?: () => void;
+    disabled?: boolean;
 };
 
 interface ButtonRootColorConfigs {

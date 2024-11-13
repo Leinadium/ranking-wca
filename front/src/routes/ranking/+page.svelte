@@ -9,6 +9,17 @@
 	import Typography from "../../components/common/Typography/Typography.svelte";
 	import ButtonGroupText from "../../components/common/ButtonGroup/Text/ButtonGroupText.svelte";
 	import ButtonGroupIcon from "../../components/common/ButtonGroup/Icon/ButtonGroupIcon.svelte";
+	import TableContainer from "../../components/common/Table/TableContainer/TableContainer.svelte";
+	import TableBase from "../../components/common/Table/TableBase/TableBase.svelte";
+	import TableHead from "../../components/common/Table/TableHead/TableHead.svelte";
+	import TableRow from "../../components/common/Table/TableRow/TableRow.svelte";
+	import TableCell from "../../components/common/Table/TableCell/TableCell.svelte";
+	import TableSortLabel from "../../components/common/Table/TableSortLabel/TableSortLabel.svelte";
+	import TableBody from "../../components/common/Table/TableBody/TableBody.svelte";
+	import TableFooter from "../../components/common/Table/TableFooter/TableFooter.svelte";
+	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
+	import { paginate } from "$lib/utils/pagination";
+	import { stateIdToPng } from "$lib/utils";
 
 	//TODO: Consumir dados da API
 	const lastUpdatedAt = '2024-11-09T00:00:15Z'
@@ -123,6 +134,140 @@
 			value: 'average',
 		},
 	]
+	// TODO: Rota de ranking precisa retornar "stateId"
+	let tableData: any = $state({
+		data: [
+			{
+				wcaId: "2017TESC01",
+				name: "Pedro xxxxx",
+				best: 15.91,
+				ranking: 1,
+				times: [10.91, 11.91, -1, 13.04, 56.10],
+				registered: false,
+				compName: "Brasileiro 2024",
+				stateId: "SP",
+			},
+			{
+				wcaId: "2018GUIM02",
+				name: "Daniel xxxxx",
+				best: 20.12,
+				ranking: 2,
+				times: [10.00, 12.00, 14.00, 16.00, 18.00],
+				registered: true,
+				compName: "Planetario 2023",
+				stateId: null,
+			},
+			{
+				wcaId: "2017TESC01",
+				name: "Renan xxxxx",
+				best: 15.91,
+				ranking: 3,
+				times: [10.91, 11.91, -1, 13.04, 56.10],
+				registered: false,
+				compName: "Brasileiro 2024",
+				stateId: "RJ",
+			},
+			{
+				wcaId: "2018GUIM02",
+				name: "Mateus xxxxx",
+				best: 20.12,
+				ranking: 4,
+				times: [10.00, 12.00, 14.00, 16.00, 18.00],
+				registered: true,
+				compName: "Planetario 2023",
+				stateId: "AC",
+			},
+			{
+				wcaId: "2017TESC01",
+				name: "Suzana xxxxx",
+				best: 15.91,
+				ranking: 5,
+				times: [10.91, 11.91, -1, 13.04, 56.10],
+				registered: false,
+				compName: "Brasileiro 2024",
+				stateId: "MG",
+			},
+			{
+				wcaId: "2018GUIM02",
+				name: "Maria xxxxx",
+				best: 20.12,
+				ranking: 6,
+				times: [10.00, 12.00, 14.00, 16.00, 18.00],
+				registered: true,
+				compName: "Planetario 2023",
+				stateId: "PB",
+			},
+			{
+				wcaId: "2017TESC01",
+				name: "Gustavo xxxxx",
+				best: 15.91,
+				ranking: 7,
+				times: [10.91, 11.91, -1, 13.04, 56.10],
+				registered: false,
+				compName: "Brasileiro 2024",
+				stateId: "SP",
+			},
+			{
+				wcaId: "2018GUIM02",
+				name: "Guilherme xxxxx",
+				best: 20.12,
+				ranking: 8,
+				times: [10.00, 12.00, 14.00, 16.00, 18.00],
+				registered: true,
+				compName: "Planetario 2023",
+				stateId: "ES",
+			},
+		],
+		currentPage: 1,
+		itemsPerPage: 3,
+		sortDirection: 'asc',
+		sortColumn: 'ranking',
+		sortedData: [],
+		paginatedData: [],
+		totalPages: 0
+	});
+
+  	$effect(() => {
+		tableData.sortedData = [...tableData.data].sort((a, b) => {
+			const valueA = a[tableData.sortColumn];
+			const valueB = b[tableData.sortColumn];
+
+			// Se os valores forem strings, usa localeCompare
+			if (typeof valueA === 'string' && typeof valueB === 'string') {
+				if (tableData.sortDirection === 'asc') {
+				return valueA.localeCompare(valueB); // Ascending order
+				} else {
+				return valueB.localeCompare(valueA); // Descending order
+				}
+			}
+
+			// Se os valores forem números, use comparação numérica
+			if (typeof valueA === 'number' && typeof valueB === 'number') {
+				if (tableData.sortDirection === 'asc') {
+				return valueA - valueB; // Ordem crescente
+				} else {
+				return valueB - valueA; // Ordem decrescente
+				}
+			}
+
+			// Se os valores forem de tipos mistos ou não comparáveis considera todos iguais
+			return 0;
+		});
+	})
+
+	$effect(() => {
+		tableData.totalPages = Math.ceil(tableData.sortedData.length / tableData.itemsPerPage);
+		tableData.paginatedData = paginate(tableData.sortedData, tableData.currentPage, tableData.itemsPerPage);
+	})
+
+	const onPageChange = (newPage: number) => {
+		tableData.currentPage = newPage;
+	};
+
+	const onSortChange = (newDirection: 'asc' | 'desc', column: string) => {
+		tableData.sortDirection = newDirection;
+		tableData.sortColumn = column;
+	};
 </script>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
@@ -160,3 +305,47 @@
 		</ButtonGroupRoot>
 	</InputGroupRoot>
 </GridItem>
+
+<TableContainer>
+	<TableBase>
+		<TableHead>
+			<TableRow isHeader={true}>
+				<TableCell isHeader={true}>
+					<TableSortLabel sortDirection={tableData.sortDirection} column={tableData.sortColumn} onSortChange={onSortChange}>
+						#
+					</TableSortLabel>
+				</TableCell>
+				<TableCell isHeader={true}>Nome</TableCell>
+				<TableCell isHeader={true}>ID da WCA</TableCell>
+				<TableCell isHeader={true}>Resultado</TableCell>
+				<TableCell isHeader={true}>Representando</TableCell>
+				<TableCell isHeader={true}>Competição</TableCell>
+			</TableRow>
+		</TableHead>
+
+		<TableBody>
+			{#each tableData.paginatedData as row}
+				<TableRow>
+					<TableCell>{row?.ranking}</TableCell>
+					<TableCell>{row?.name}</TableCell>
+					<TableCell>{row?.wcaId}</TableCell>
+					<TableCell>{row?.best}</TableCell>
+					<TableCell>
+						{#if row?.stateId}
+							<img src={stateIdToPng(row?.stateId?.toLowerCase())} alt={row?.stateId} height="16px" width="auto" />
+						{/if}
+					</TableCell>
+					<TableCell>{row?.compName}</TableCell>
+				</TableRow>
+			{/each}
+		</TableBody>
+
+		<TableFooter>
+			<TableRow>
+				<TableCell colspan={6}>
+					<TablePagination currentPage={tableData.currentPage} totalPages={tableData.totalPages} onPageChange={onPageChange} />
+				</TableCell>
+			</TableRow>
+		</TableFooter>
+	</TableBase>
+</TableContainer>

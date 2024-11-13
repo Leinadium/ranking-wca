@@ -7,6 +7,7 @@
         width = 'auto',
         children,
         onClickFn,
+        disabled = false,
         ...props
     }: ButtonRootProps = $props();
 
@@ -60,6 +61,7 @@
 <button
     class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'}`}
     onclick={onClickFn}
+    {disabled}
 >
     {@render children?.({...props, color: TYPES_CONFIGS.color[color].mainColor})}
 </button>
