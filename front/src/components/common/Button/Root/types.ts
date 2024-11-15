@@ -21,6 +21,7 @@ export interface ButtonRootProps {
     onClickFn?: () => void;
     disabled?: boolean;
     active?: boolean;
+    classes?: string;
 };
 
 interface ButtonRootColorConfigs {

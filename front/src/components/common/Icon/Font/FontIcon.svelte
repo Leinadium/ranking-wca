@@ -5,4 +5,4 @@
     let { name }: FontIconProps = $props();
 </script>
 
-<i class="icon {name}"></i>
+<i class="font-icon {name}"></i>

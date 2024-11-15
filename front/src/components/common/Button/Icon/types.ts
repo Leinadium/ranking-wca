@@ -1,3 +1,5 @@
-import type { FontIconProps } from "../../Icon/Font/types";
+import type { Snippet } from "svelte";
 
-export interface ButtonIconProps extends FontIconProps {};
+export interface ButtonIconProps {
+    children: Snippet<[]>;
+};

@@ -21,6 +21,7 @@
 	import { paginate } from "$lib/utils/pagination";
 	import { stateIdToPng } from "$lib/utils";
 	import Flag from "../../components/common/Flag/Flag.svelte";
+	import FontIcon from "../../components/common/Icon/Font/FontIcon.svelte";
 
 	//TODO: Consumir dados da API
 	const lastUpdatedAt = '2024-11-09T00:00:15Z'
@@ -284,7 +285,9 @@
 		<ButtonGroupRoot>
 			{#each eventFiltersOptions as event}
 				<ButtonGroupItem type="OUTLINED" color="PRIMARY">
-					<ButtonGroupIcon name={event.icon} />
+					<ButtonGroupIcon>
+						<FontIcon name={event.icon} />
+					</ButtonGroupIcon>
 				</ButtonGroupItem>
 			{/each}
 		</ButtonGroupRoot>

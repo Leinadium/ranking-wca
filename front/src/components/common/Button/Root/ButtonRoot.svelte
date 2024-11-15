@@ -12,6 +12,7 @@
         onClickFn,
         disabled = false,
         active = false,
+        classes,
         ...props
     }: ButtonRootProps = $props();
 
@@ -63,7 +64,7 @@
 </script>
 
 <button
-    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'} ${active ? 'button-active' : ''}`}
+    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'} ${active ? 'button-active' : ''} ${classes || ''}`}
     onclick={onClickFn}
     {disabled}
 >

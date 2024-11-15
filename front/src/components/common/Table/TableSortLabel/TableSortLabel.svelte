@@ -1,5 +1,9 @@
 <script lang="ts">
-	import type { TableSortLabelProps } from "./types";
+	import ButtonIcon from "../../Button/Icon/ButtonIcon.svelte";
+  import ButtonRoot from "../../Button/Root/ButtonRoot.svelte";
+	import GridItem from "../../Grid/Item/GridItem.svelte";
+	import SvgIcon from "../../Icon/SVG/SVGIcon.svelte";
+  import type { TableSortLabelProps } from "./types";
 
   let { children, sortDirection = 'asc', column, onSortChange }: TableSortLabelProps = $props();
 
@@ -9,12 +13,21 @@
   };
 </script>
 
-<button class="table-sort-label" onclick={toggleSort}>
+<GridItem gap={0} justifyContent={'flex-start'} alignItems={'center'}>
   {@render children()}
-
-  {#if sortDirection === 'asc'}
-    ▲
-  {:else}
-    ▼
-  {/if}
-</button>
+  
+  <ButtonRoot
+    type={'BASIC'}
+    color={'NEUTRAL'}
+    classes="table-sort-label"
+    onClickFn={toggleSort}
+  >
+    <ButtonIcon>
+      {#if sortDirection === 'asc'}
+        <SvgIcon name={'faSortUp'}/>
+      {:else}
+        <SvgIcon name={'faSortDown'}/>
+      {/if}
+    </ButtonIcon>
+  </ButtonRoot>
+</GridItem>
