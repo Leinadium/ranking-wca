@@ -20,6 +20,7 @@
 	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
 	import { paginate } from "$lib/utils/pagination";
 	import { stateIdToPng } from "$lib/utils";
+	import Flag from "../../components/common/Flag/Flag.svelte";
 
 	//TODO: Consumir dados da API
 	const lastUpdatedAt = '2024-11-09T00:00:15Z'
@@ -309,17 +310,17 @@
 <TableContainer>
 	<TableBase>
 		<TableHead>
-			<TableRow isHeader={true}>
-				<TableCell isHeader={true}>
+			<TableRow isHeader>
+				<TableCell isHeader>
 					<TableSortLabel sortDirection={tableData.sortDirection} column={tableData.sortColumn} onSortChange={onSortChange}>
 						#
 					</TableSortLabel>
 				</TableCell>
-				<TableCell isHeader={true}>Nome</TableCell>
-				<TableCell isHeader={true}>ID da WCA</TableCell>
-				<TableCell isHeader={true}>Resultado</TableCell>
-				<TableCell isHeader={true}>Representando</TableCell>
-				<TableCell isHeader={true}>Competição</TableCell>
+				<TableCell isHeader >Nome</TableCell>
+				<TableCell isHeader>ID da WCA</TableCell>
+				<TableCell isHeader>Resultado</TableCell>
+				<TableCell isHeader>Representando</TableCell>
+				<TableCell isHeader>Competição</TableCell>
 			</TableRow>
 		</TableHead>
 
@@ -331,9 +332,7 @@
 					<TableCell>{row?.wcaId}</TableCell>
 					<TableCell>{row?.best}</TableCell>
 					<TableCell>
-						{#if row?.stateId}
-							<img src={stateIdToPng(row?.stateId?.toLowerCase())} alt={row?.stateId} height="16px" width="auto" />
-						{/if}
+						<Flag stateId={row?.stateId} size={2} />
 					</TableCell>
 					<TableCell>{row?.compName}</TableCell>
 				</TableRow>
@@ -341,8 +340,8 @@
 		</TableBody>
 
 		<TableFooter>
-			<TableRow>
-				<TableCell colspan={6}>
+			<TableRow isFooter>
+				<TableCell isFooter colspan={6}>
 					<TablePagination currentPage={tableData.currentPage} totalPages={tableData.totalPages} onPageChange={onPageChange} />
 				</TableCell>
 			</TableRow>

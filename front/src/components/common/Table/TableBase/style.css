@@ -1,4 +1,6 @@
 .table-base {
     width: 100%;
     border-collapse: collapse;
+    background-color: transparent;
+    border: none;
 }

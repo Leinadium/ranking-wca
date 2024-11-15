@@ -12,8 +12,8 @@ type NegativeAccentColorTokens = 'ACCENT_NEGATIVE_LIGHT_2' | 'ACCENT_NEGATIVE_LI
 
 export type ColorTokens = PrimaryColorTokens | SecondaryColorTokens | NeutralColorTokens | PositiveAccentColorTokens | WarningAccentColorTokens | NegativeAccentColorTokens;
 
-export type FontFamilyTokens = 'BIGGER_6' | 'BIGGER_5' | 'BIGGER_4' | 'BIGGER_3' | 'BIGGER_2' | 'BIGGER_1' | 'BUTTON' | 'BASE' | 'SMALLER_1' | 'SMALLER_2';
+export type FontFamilyTokens = 'PRIMARY' | 'SECONDARY';
 
-export type FontSizeTokens = 'PRIMARY' | 'SECONDARY';
+export type FontSizeTokens = 'BIGGER_6' | 'BIGGER_5' | 'BIGGER_4' | 'BIGGER_3' | 'BIGGER_2' | 'BIGGER_1' | 'BUTTON_DEFAULT' | 'BUTTON_SMALL' | 'BASE' | 'SMALLER_1' | 'SMALLER_2';
 
 export type LineHeightTokens = 'BIG_FONT' | 'MEDIUM_FONT' | 'SMALL_FONT';

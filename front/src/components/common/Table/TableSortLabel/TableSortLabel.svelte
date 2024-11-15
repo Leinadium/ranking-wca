@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { TableRootProps } from "./types";
+	import type { TableSortLabelProps } from "./types";
 
-  let { children, sortDirection = 'asc', column, onSortChange }: TableRootProps = $props();
+  let { children, sortDirection = 'asc', column, onSortChange }: TableSortLabelProps = $props();
 
   const toggleSort = () => {
     const newDirection = sortDirection === 'asc' ? 'desc' : 'asc';

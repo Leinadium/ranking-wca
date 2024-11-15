@@ -1,6 +1,6 @@
 <script lang="ts">
-    import './style.css'
 	import type { FontIconProps } from './types';
+    import './style.css';
 
     let { name }: FontIconProps = $props();
 </script>

@@ -2,6 +2,7 @@
 	import { SPACING_FACTOR } from "$lib/tokens";
 	import { fromPixelToRem } from "$lib/utils/style";
     import type { GridItemProps } from "./types";
+    import './style.css';
 
     let {
         children,
@@ -27,7 +28,3 @@
 <div class="grid-item {classes}" style={customStyle}>
     {@render children()}
 </div>
-
-<style>
-    @import './style.css';
-</style>

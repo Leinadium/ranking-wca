@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { TableRootProps } from "./types";
+	import type { TableHeadProps } from "./types";
     import './style.css';
 
-    let { children }: TableRootProps = $props();
+    let { children }: TableHeadProps = $props();
 </script>
 
 <thead class="table-head">

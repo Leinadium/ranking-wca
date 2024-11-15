@@ -1,23 +1,26 @@
 import type { ColorTokens } from "$lib/tokens/types";
-import type { Snippet } from "svelte";
 
-type ButtonRootTypes = 'BASIC' | 'OUTLINED';
+export type ButtonRootTypes = 'BASIC' | 'OUTLINED';
 
 type ButtonRootTypeClasses = 'button-basic' | 'button-outlined';
 
-type ButtonRootColors = 'PRIMARY' | 'SECONDARY' | 'NEUTRAL' | 'POSITIVE' | 'WARNING' | 'NEGATIVE';
+export type ButtonRootColors = 'PRIMARY' | 'SECONDARY' | 'NEUTRAL' | 'POSITIVE' | 'WARNING' | 'NEGATIVE';
 
 type ButtonRootColorClasses = 'button-primary' | 'button-secondary' | 'button-neutral' | 'button-positive' | 'button-warning' | 'button-negative';
+
+export type ButtonRootSizes = 'SMALL' | 'DEFAULT';
 
 type ButtonRootWidthOptions = 'auto' | 'full';
 
 export interface ButtonRootProps {
     type: ButtonRootTypes;
     color: ButtonRootColors;
+    size?: ButtonRootSizes;
     width?: ButtonRootWidthOptions;
     children?: any; // TODO: Melhorar tipagem
     onClickFn?: () => void;
     disabled?: boolean;
+    active?: boolean;
 };
 
 interface ButtonRootColorConfigs {
@@ -36,7 +39,7 @@ export interface ButtonRootConfigs {
         POSITIVE: ButtonRootColorConfigs;
         WARNING: ButtonRootColorConfigs;
         NEGATIVE: ButtonRootColorConfigs;
-    }
+    };
 };
 
 export interface ButtonRootClassesConfigs {
@@ -51,5 +54,5 @@ export interface ButtonRootClassesConfigs {
         POSITIVE: ButtonRootColorClasses;
         WARNING: ButtonRootColorClasses;
         NEGATIVE: ButtonRootColorClasses;
-    }
+    };
 }

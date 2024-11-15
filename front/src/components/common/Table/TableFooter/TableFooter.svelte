@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { TableRootProps } from "./types";
+	import type { TableFooterProps } from "./types";
     import './style.css';
 
-    let { children }: TableRootProps = $props();
+    let { children }: TableFooterProps = $props();
 </script>
 
 <tfoot class="table-footer">

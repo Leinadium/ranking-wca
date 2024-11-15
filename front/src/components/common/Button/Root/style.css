@@ -22,9 +22,19 @@
     border-color: var(--color-primary-base);
 }
 
+.button-primary.button-active {
+    color: var(--color-primary-light-1);
+    background-color: var(--color-primary-dark-1);
+}
+
 .button-secondary {
     color: var(--color-secondary-base);
     border-color: var(--color-secondary-base);
+}
+
+.button-secondary.button-active {
+    color: var(--color-secondary-light-1);
+    background-color: var(--color-secondary-dark-1);
 }
 
 .button-neutral {
@@ -32,9 +42,19 @@
     border-color: var(--color-neutral-dark-1);
 }
 
+.button-neutral.button-active {
+    color: var(--color-neutral-light-1);
+    background-color: var(--color-neutral-dark-1);
+}
+
 .button-positive {
     color: var(--color-accent-positive-base);
     border-color: var(--color-accent-positive-base);
+}
+
+.button-positive.button-active {
+    color: var(--color-accent-positive-light-1);
+    background-color: var(--color-accent-positive-dark-1);
 }
 
 .button-warning {
@@ -42,9 +62,19 @@
     border-color: var(--color-accent-warning-base);
 }
 
+.button-warning.button-active {
+    color: var(--color-accent-warning-light-1);
+    background-color: var(--color-accent-warning-dark-1);
+}
+
 .button-negative {
     color: var(--color-accent-negative-base);
     border-color: var(--color-accent-negative-base);
+}
+
+.button-negative.button-active {
+    color: var(--color-accent-negative-light-1);
+    background-color: var(--color-accent-negative-dark-1);
 }
 
 .button-full {

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { COLOR_TOKENS, FONT_FAMILY_TOKENS, FONT_SIZE_TOKENS, LINE_HEIGHT_TOKENS } from '$lib/tokens';
 	import type { TypographyTypesConfigs, TypographyProps } from './types';
+    import './style.css';
 
-    let { children, type, color }: TypographyProps = $props();
+    let { children, type, color, classes, ...props }: TypographyProps = $props();
 
     const TYPES_CONFIGS: TypographyTypesConfigs = {
         h1: {
@@ -47,11 +48,18 @@
             lineHeight: LINE_HEIGHT_TOKENS.BIG_FONT,
             weight: 'bold',
         },
-        button: {
+        buttonDefault: {
             tag: 'span',
             family: FONT_FAMILY_TOKENS.SECONDARY,
-            size: FONT_SIZE_TOKENS.BIGGER_1,
-            lineHeight: LINE_HEIGHT_TOKENS.BIG_FONT,
+            size: FONT_SIZE_TOKENS.BUTTON_DEFAULT,
+            lineHeight: LINE_HEIGHT_TOKENS.SMALL_FONT,
+            weight: 'regular',
+        },
+        buttonSmall: {
+            tag: 'span',
+            family: FONT_FAMILY_TOKENS.SECONDARY,
+            size: FONT_SIZE_TOKENS.BUTTON_SMALL,
+            lineHeight: LINE_HEIGHT_TOKENS.SMALL_FONT,
             weight: 'regular',
         },
         bodyOne: {
@@ -86,10 +94,6 @@
     `
 </script>
 
-<svelte:element this={TYPES_CONFIGS[type].tag} class="typography" style={customStyle}>
+<svelte:element this={TYPES_CONFIGS[type].tag} class="typography {classes || ''}" style={customStyle} {...props}>
     {@render children()}
 </svelte:element>
-
-<style>
-    @import './style.css';
-</style>

@@ -2,16 +2,16 @@
 	import ButtonGroupItem from "../../ButtonGroup/Item/ButtonGroupItem.svelte";
 	import ButtonGroupRoot from "../../ButtonGroup/Root/ButtonGroupRoot.svelte";
 	import ButtonGroupText from "../../ButtonGroup/Text/ButtonGroupText.svelte";
-	import type { TableRootProps } from "./types";
+	import type { TablePaginationStyleConfigs, TablePaginationProps } from "./types";
 
-  let { currentPage = 1, totalPages, onPageChange }: TableRootProps = $props();
+  let { currentPage = 1, totalPages, onPageChange }: TablePaginationProps = $props();
 
   // TODO: Ver como deve ser feita a paginação conforme docs da API
   // const itemsPerPage = 10;
   // let totalItems: number = 0;
   // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  let maxVisiblePages: number = 2; // Default to 6, but can be customized
+  let maxVisiblePages: number = 3; // Default to 6, but can be customized
 
   // Lógica para calcular os números de páginas visíveis
   let visiblePages = $derived(getVisiblePages(currentPage, totalPages, maxVisiblePages))
@@ -56,18 +56,36 @@
       onPageChange(page);
     }
   };
+
+  const STYLE_CONFIGS: TablePaginationStyleConfigs = {
+    TYPE: 'OUTLINED',
+    COLOR: 'NEUTRAL',
+    SIZE: 'SMALL',
+  }
 </script>
 
 <div class="table-pagination">
   <ButtonGroupRoot>
     <!-- Botão de ir para primeira página -->
-    <ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => handlePageClick(1)} disabled={currentPage === 1}>
-      <ButtonGroupText>{'<<'}</ButtonGroupText>
+    <ButtonGroupItem
+      type={STYLE_CONFIGS.TYPE}
+      color={STYLE_CONFIGS.COLOR}
+      size={STYLE_CONFIGS.SIZE}
+      onClickFn={() => handlePageClick(1)}
+      disabled={currentPage === 1}
+    >
+      <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<<'}</ButtonGroupText>
     </ButtonGroupItem>
 
     <!-- Botão de ir para página anterior -->
-    <ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => handlePageClick(currentPage - 1)} disabled={currentPage === 1}>
-      <ButtonGroupText>{'<'}</ButtonGroupText>
+    <ButtonGroupItem
+      type={STYLE_CONFIGS.TYPE}
+      color={STYLE_CONFIGS.COLOR}
+      size={STYLE_CONFIGS.SIZE}
+      onClickFn={() => handlePageClick(currentPage - 1)}
+      disabled={currentPage === 1}
+    >
+      <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<'}</ButtonGroupText>
     </ButtonGroupItem>
 
     <!-- TODO: Implementar suporte ao selecionado -->
@@ -75,25 +93,39 @@
     <!-- Botões de número de páginas -->
     {#each visiblePages as page}
       <ButtonGroupItem
-        type="OUTLINED"
-        color="PRIMARY"
+        type={STYLE_CONFIGS.TYPE}
+        color={STYLE_CONFIGS.COLOR}
+        size={STYLE_CONFIGS.SIZE}
         onClickFn={() => {
           if (page !== '...') handlePageClick(page as number);
         }}
         disabled={page === '...'}
+        active={page === currentPage}
       >
-        <ButtonGroupText>{page}</ButtonGroupText>
+        <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{page}</ButtonGroupText>
       </ButtonGroupItem>
     {/each}
 
     <!-- Botão de ir para próxima página -->
-    <ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => handlePageClick(currentPage + 1)} disabled={currentPage === totalPages}>
-      <ButtonGroupText>{'>'}</ButtonGroupText>
+    <ButtonGroupItem
+      type={STYLE_CONFIGS.TYPE}
+      color={STYLE_CONFIGS.COLOR}
+      size={STYLE_CONFIGS.SIZE}
+      onClickFn={() => handlePageClick(currentPage + 1)}
+      disabled={currentPage === totalPages}
+    >
+      <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>'}</ButtonGroupText>
     </ButtonGroupItem>
 
     <!-- Botão de ir para última página -->
-    <ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => handlePageClick(totalPages)} disabled={currentPage === totalPages}>
-      <ButtonGroupText>{'>>'}</ButtonGroupText>
+    <ButtonGroupItem
+      type={STYLE_CONFIGS.TYPE}
+      color={STYLE_CONFIGS.COLOR}
+      size={STYLE_CONFIGS.SIZE}
+      onClickFn={() => handlePageClick(totalPages)}
+      disabled={currentPage === totalPages}
+    >
+      <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>>'}</ButtonGroupText>
     </ButtonGroupItem>
   </ButtonGroupRoot>
 </div>

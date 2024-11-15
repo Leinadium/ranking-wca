@@ -1,6 +1,8 @@
 import type { Snippet } from "svelte";
 
-export interface TableRootProps {
+export interface TableRowProps {
     children: Snippet<[]>;
     isHeader?: boolean;
+    isFooter?: boolean;
+    isHighlighted?: boolean;
 }

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { TableRootProps } from "./types";
+	import type { TableBodyProps } from "./types";
     import './style.css';
-
-    let { children }: TableRootProps = $props();
+    
+    let { children }: TableBodyProps = $props();
 </script>
 
 <tbody class="table-body">

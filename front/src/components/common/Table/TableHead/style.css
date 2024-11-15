@@ -1,5 +1,5 @@
 .table-head {
-    text-align: left;
+    text-align: left; /* TODO: Permitir personalizar alinhamento da célula */
     padding: 8px;
-    background-color: #f4f4f4;
+    border: 1px solid var(--color-neutral-base);
 }

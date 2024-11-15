@@ -1,13 +1,17 @@
 <script lang="ts">
     import type { ButtonRootProps, ButtonRootConfigs, ButtonRootClassesConfigs } from "./types";
+	import { DEFAULT_BUTTON_SIZE } from "$lib/constants/components/Button";
+    import './style.css';
 
     let {
         type = 'OUTLINED',
         color,
+        size = DEFAULT_BUTTON_SIZE,
         width = 'auto',
         children,
         onClickFn,
         disabled = false,
+        active = false,
         ...props
     }: ButtonRootProps = $props();
 
@@ -59,13 +63,9 @@
 </script>
 
 <button
-    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'}`}
+    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'} ${active ? 'button-active' : ''}`}
     onclick={onClickFn}
     {disabled}
 >
     {@render children?.({...props, color: TYPES_CONFIGS.color[color].mainColor})}
 </button>
-
-<style>
-    @import './style.css';
-</style>

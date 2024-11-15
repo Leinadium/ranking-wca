@@ -1,6 +1,6 @@
 import type { Snippet } from "svelte";
 
-export interface TableRootProps {
+export interface TableSortLabelProps {
     children: Snippet<[]>;
     sortDirection: 'asc' | 'desc';
     column: string;
