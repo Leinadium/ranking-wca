@@ -4,46 +4,44 @@
 	import ButtonGroupText from "../../ButtonGroup/Text/ButtonGroupText.svelte";
 	import type { TablePaginationStyleConfigs, TablePaginationProps } from "./types";
 
-  let { currentPage = 1, totalPages, onPageChange }: TablePaginationProps = $props();
+  // TODO: Alterar itemsPerPage quando tiver implementação na API
+  let {
+    currentPage = 1,
+    totalItems,
+    itemsPerPage = 3,
+    maxVisiblePages = 3,
+    onPageChange
+  }: TablePaginationProps = $props();
 
-  // TODO: Ver como deve ser feita a paginação conforme docs da API
-  // const itemsPerPage = 10;
-  // let totalItems: number = 0;
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  let maxVisiblePages: number = 3; // Default to 6, but can be customized
-
-  // Lógica para calcular os números de páginas visíveis
-  let visiblePages = $derived(getVisiblePages(currentPage, totalPages, maxVisiblePages))
-
- // Função para calcular páginas visíveis considerando maxVisiblePages
+  /**
+   * A paginação deve:
+   * - Sempre mostrar a primeira e a última páginas
+   * - Mostrar as páginas ao redor da atual limitando a quantidade máxima de botões visíveis permitidos (maxVisiblePages)
+   * - Mostrar reticências se houver páginas demais entre a primeira e a atual ultrapassando o maxVisiblePages
+   * - Começar pelo menos na página 2
+   * - Terminar pelo menos 1 página antes da última
+   */
  function getVisiblePages(currentPage: number, totalPages: number, maxVisiblePages: number): (number | string)[] {
     const pages: (number | string)[] = [];
-    const halfVisible = Math.floor((maxVisiblePages - 1) / 2); // Calculate half the visible pages excluding the first and last
+    const halfVisible = Math.floor((maxVisiblePages - 1) / 2); // Calcular metade das páginas visíveis excluindo a primeira e a última
 
-    // Always show the first page
     pages.push(1);
 
-    // Show ellipsis if there's a gap between the first page and the current page
     if (currentPage > halfVisible + 2) {
       pages.push('...');
     }
 
-    // Show the pages around the current page
-    let startPage = Math.max(2, currentPage - halfVisible); // Start from at least page 2
-    let endPage = Math.min(totalPages - 1, currentPage + halfVisible); // End at least 1 page before the last
+    let startPage = Math.max(2, currentPage - halfVisible);
+    let endPage = Math.min(totalPages - 1, currentPage + halfVisible);
 
-    // Ensure the pages we push are within bounds and do not skip over them
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
 
-    // Show ellipsis if there's a gap between the current page and the last page
     if (currentPage < totalPages - halfVisible - 1) {
       pages.push('...');
     }
 
-    // Always show the last page if it's not already in the list
     if (totalPages > 1 && !pages.includes(totalPages)) {
       pages.push(totalPages);
     }
@@ -51,17 +49,41 @@
     return pages;
   }
 
-  const handlePageClick = (page: number) => {
-    if (page !== currentPage) {
-      onPageChange(page);
-    }
+  function handlePageClick(page: number, currentPage: number) {
+    if (page === currentPage) return
+    onPageChange(page);
   };
+
+  function goToFirstPage(currentPage: number) {
+    handlePageClick(1, currentPage)
+  }
+
+  function goToPreviousPage(currentPage: number) {
+    handlePageClick(currentPage - 1, currentPage)
+  }
+
+  function goToNextPage(currentPage: number) {
+    handlePageClick(currentPage + 1, currentPage)
+  }
+
+  function goToLastPage(pagesCount: number, currentPage: number) {
+    handlePageClick(pagesCount, currentPage)
+  }
+
+  function goToPage(page: number | string, currentPage: number) {
+    // Não realiza nenhuma ação quando usuário clicar no botão com '...'
+    if (typeof page !== 'number') return
+    handlePageClick(page, currentPage);
+  }
 
   const STYLE_CONFIGS: TablePaginationStyleConfigs = {
     TYPE: 'OUTLINED',
     COLOR: 'NEUTRAL',
     SIZE: 'SMALL',
   }
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  let visiblePages = $derived(getVisiblePages(currentPage, totalPages, maxVisiblePages))
 </script>
 
 <div class="table__pagination">
@@ -71,7 +93,7 @@
       type={STYLE_CONFIGS.TYPE}
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
-      onClickFn={() => handlePageClick(1)}
+      onClickFn={() => goToFirstPage(currentPage)}
       disabled={currentPage === 1}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<<'}</ButtonGroupText>
@@ -82,23 +104,19 @@
       type={STYLE_CONFIGS.TYPE}
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
-      onClickFn={() => handlePageClick(currentPage - 1)}
+      onClickFn={() => goToPreviousPage(currentPage)}
       disabled={currentPage === 1}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<'}</ButtonGroupText>
     </ButtonGroupItem>
 
-    <!-- TODO: Implementar suporte ao selecionado -->
-    <!-- class:selected={page === currentPage} -->
     <!-- Botões de número de páginas -->
     {#each visiblePages as page}
       <ButtonGroupItem
         type={STYLE_CONFIGS.TYPE}
         color={STYLE_CONFIGS.COLOR}
         size={STYLE_CONFIGS.SIZE}
-        onClickFn={() => {
-          if (page !== '...') handlePageClick(page as number);
-        }}
+        onClickFn={() => goToPage(page, currentPage)}
         disabled={page === '...'}
         active={page === currentPage}
       >
@@ -111,7 +129,7 @@
       type={STYLE_CONFIGS.TYPE}
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
-      onClickFn={() => handlePageClick(currentPage + 1)}
+      onClickFn={() => goToNextPage(currentPage)}
       disabled={currentPage === totalPages}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>'}</ButtonGroupText>
@@ -122,7 +140,7 @@
       type={STYLE_CONFIGS.TYPE}
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
-      onClickFn={() => handlePageClick(totalPages)}
+      onClickFn={() => goToLastPage(totalPages, currentPage)}
       disabled={currentPage === totalPages}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>>'}</ButtonGroupText>

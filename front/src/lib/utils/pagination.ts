@@ -1,4 +1,4 @@
-export function paginate<T>(data: T[], currentPage: number, itemsPerPage: number) {
-    const offset = (currentPage - 1) * itemsPerPage;
+export function filterDataByPage<T>(data: T[], page: number, itemsPerPage: number) {
+    const offset = (page - 1) * itemsPerPage;
     return data.slice(offset, offset + itemsPerPage);
 }

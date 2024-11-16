@@ -2,7 +2,9 @@ import type { ButtonRootColors, ButtonRootSizes, ButtonRootTypes } from "../../B
 
 export interface TablePaginationProps {
     currentPage: number;
-    totalPages: number;
+    totalItems: number;
+    itemsPerPage?: number;
+    maxVisiblePages?: number;
     onPageChange: (newPage: number) => void;
 }
 

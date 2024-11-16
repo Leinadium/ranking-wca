@@ -17,13 +17,14 @@
 	import TableBody from "../../components/common/Table/TableBody/TableBody.svelte";
 	import TableFooter from "../../components/common/Table/TableFooter/TableFooter.svelte";
 	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
-	import { paginate } from "$lib/utils/pagination";
+	import { filterDataByPage } from "$lib/utils/pagination";
 	import Flag from "../../components/common/Flag/Flag.svelte";
 	import FontIcon from "../../components/common/Icon/Font/FontIcon.svelte";
 	import Tooltip from "../../components/common/Tooltip/Tooltip.svelte";
+	import { sortObjectList } from "$lib/utils/sort";
 
 	//TODO: Consumir dados da API
-	const lastUpdatedAt = '2024-11-09T00:00:15Z'
+	const lastUpdatedAt = '2024-11-09T00:00:15Z';
 	const eventFiltersOptions = [
 		{
 			icon: 'cubing-icon event-333',
@@ -110,7 +111,7 @@
 			name: '3x3x3 múltiplos cubos vendado',
 			value: '',
 		},
-	]
+	];
 	const stateFilterOptions = [
 		{
 			label: 'Todos',
@@ -124,7 +125,7 @@
 			label: 'São Paulo',
 			value: 'SP',
 		},
-	]
+	];
 	const typeFilterOptions = [
 		{
 			label: 'Tempo único',
@@ -134,7 +135,7 @@
 			label: 'Média',
 			value: 'average',
 		},
-	]
+	];
 	// TODO: Rota de ranking precisa retornar "stateId"
 	let tableData: any = $state({
 		data: [
@@ -219,56 +220,31 @@
 				stateId: "ES",
 			},
 		],
-		currentPage: 1,
+		totalItems: 8,
 		itemsPerPage: 3,
+		currentPage: 1,
 		sortDirection: 'asc',
 		sortColumn: 'ranking',
 		sortedData: [],
 		paginatedData: [],
-		totalPages: 0
 	});
 
-  	$effect(() => {
-		tableData.sortedData = [...tableData.data].sort((a, b) => {
-			const valueA = a[tableData.sortColumn];
-			const valueB = b[tableData.sortColumn];
-
-			// Se os valores forem strings, usa localeCompare
-			if (typeof valueA === 'string' && typeof valueB === 'string') {
-				if (tableData.sortDirection === 'asc') {
-				return valueA.localeCompare(valueB); // Ascending order
-				} else {
-				return valueB.localeCompare(valueA); // Descending order
-				}
-			}
-
-			// Se os valores forem números, use comparação numérica
-			if (typeof valueA === 'number' && typeof valueB === 'number') {
-				if (tableData.sortDirection === 'asc') {
-				return valueA - valueB; // Ordem crescente
-				} else {
-				return valueB - valueA; // Ordem decrescente
-				}
-			}
-
-			// Se os valores forem de tipos mistos ou não comparáveis considera todos iguais
-			return 0;
-		});
-	})
-
-	$effect(() => {
-		tableData.totalPages = Math.ceil(tableData.sortedData.length / tableData.itemsPerPage);
-		tableData.paginatedData = paginate(tableData.sortedData, tableData.currentPage, tableData.itemsPerPage);
-	})
-
-	const onPageChange = (newPage: number) => {
+	function handlePageChange(newPage: number) {
 		tableData.currentPage = newPage;
 	};
 
-	const onSortChange = (newDirection: 'asc' | 'desc', column: string) => {
+	function handleSortChange(newDirection: 'asc' | 'desc', column: string) {
 		tableData.sortDirection = newDirection;
 		tableData.sortColumn = column;
 	};
+
+  	$effect(() => {
+		tableData.sortedData = sortObjectList(tableData.data, tableData.sortColumn, tableData.sortDirection);
+	})
+
+	$effect(() => {
+		tableData.paginatedData = filterDataByPage(tableData.sortedData, tableData.currentPage, tableData.itemsPerPage);
+	})
 </script>
 
 <svelte:head>
@@ -314,7 +290,11 @@
 		<TableHead>
 			<TableRow isHeader>
 				<TableCell isHeader>
-					<TableSortLabel sortDirection={tableData.sortDirection} column={tableData.sortColumn} onSortChange={onSortChange}>
+					<TableSortLabel
+						sortDirection={tableData.sortDirection}
+						column={tableData.sortColumn}
+						onSortChange={handleSortChange}
+					>
 						#
 					</TableSortLabel>
 				</TableCell>
@@ -346,7 +326,7 @@
 		<TableFooter>
 			<TableRow isFooter>
 				<TableCell isFooter colspan={6}>
-					<TablePagination currentPage={tableData.currentPage} totalPages={tableData.totalPages} onPageChange={onPageChange} />
+					<TablePagination currentPage={tableData.currentPage} totalItems={tableData.totalItems} onPageChange={handlePageChange} />
 				</TableCell>
 			</TableRow>
 		</TableFooter>

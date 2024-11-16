@@ -1,8 +1,10 @@
 import type { Snippet } from "svelte";
 
+export type TableSortDirectionOptions = 'asc' | 'desc';
+
 export interface TableSortLabelProps {
     children: Snippet<[]>;
-    sortDirection: 'asc' | 'desc';
+    sortDirection: TableSortDirectionOptions;
     column: string;
-    onSortChange: (newDirection: 'asc' | 'desc', column: string) => void;
+    onSortChange: (newDirection: TableSortDirectionOptions, column: string) => void;
 }
