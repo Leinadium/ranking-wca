@@ -6,6 +6,7 @@
 	import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
 	import SvgIcon from '../Icon/SVG/SVGIcon.svelte';
 	import ButtonText from '../Button/Text/ButtonText.svelte';
+	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import './style.css';
 
     let { isExpanded }: SidebarProps = $props();
@@ -82,15 +83,17 @@
 					{/if}
 
 					{#each topic.items as item}
-					<ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
-						<ButtonIcon>
-							<SvgIcon name={item.icon}></SvgIcon>
-						</ButtonIcon>
+						<ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
+							<Tooltip text={item.text}>
+								<ButtonIcon>
+									<SvgIcon name={item.icon}></SvgIcon>
+								</ButtonIcon>
+							</Tooltip>
 
-						{#if isExpanded}
-							<ButtonText>{item.text}</ButtonText>
-						{/if}
-					</ButtonRoot>
+							{#if isExpanded}
+								<ButtonText>{item.text}</ButtonText>
+							{/if}
+						</ButtonRoot>
 					{/each}
 				</GridItem>
 			{/each}

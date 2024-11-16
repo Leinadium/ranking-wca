@@ -59,4 +59,8 @@
     --line-height-big-font: '110%';
     --line-height-medium-font: '130%';
     --line-height-small-font: '150%';
+
+    --shadow-inner-1: 0px 1px 4px 0px var(--color-neutral-base);
+    --shadow-outer-1: 0px 2px 4px 0px var(--color-neutral-base);
+    --shadow-outer-2: 0px 4px 8px 0px var(--color-neutral-base);
 }

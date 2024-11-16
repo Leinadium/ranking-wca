@@ -7,7 +7,6 @@
 	import PageTitle from "../../components/common/PageTitle/PageTitle.svelte";
 	import Select from "../../components/common/Select/Select.svelte";
 	import Typography from "../../components/common/Typography/Typography.svelte";
-	import ButtonGroupText from "../../components/common/ButtonGroup/Text/ButtonGroupText.svelte";
 	import ButtonGroupIcon from "../../components/common/ButtonGroup/Icon/ButtonGroupIcon.svelte";
 	import TableContainer from "../../components/common/Table/TableContainer/TableContainer.svelte";
 	import TableBase from "../../components/common/Table/TableBase/TableBase.svelte";
@@ -19,9 +18,9 @@
 	import TableFooter from "../../components/common/Table/TableFooter/TableFooter.svelte";
 	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
 	import { paginate } from "$lib/utils/pagination";
-	import { stateIdToPng } from "$lib/utils";
 	import Flag from "../../components/common/Flag/Flag.svelte";
 	import FontIcon from "../../components/common/Icon/Font/FontIcon.svelte";
+	import Tooltip from "../../components/common/Tooltip/Tooltip.svelte";
 
 	//TODO: Consumir dados da API
 	const lastUpdatedAt = '2024-11-09T00:00:15Z'
@@ -288,11 +287,13 @@
 		<InputGroupLabel text={'Evento'} />
 		<ButtonGroupRoot>
 			{#each eventFiltersOptions as event}
-				<ButtonGroupItem type="OUTLINED" color="PRIMARY">
-					<ButtonGroupIcon>
-						<FontIcon name={event.icon} />
-					</ButtonGroupIcon>
-				</ButtonGroupItem>
+				<Tooltip text={event.name}>
+					<ButtonGroupItem type="OUTLINED" color="PRIMARY">
+						<ButtonGroupIcon>
+							<FontIcon name={event.icon} />
+						</ButtonGroupIcon>
+					</ButtonGroupItem>
+				</Tooltip>
 			{/each}
 		</ButtonGroupRoot>
 	</InputGroupRoot>
@@ -329,12 +330,14 @@
 			{#each tableData.paginatedData as row}
 				<TableRow>
 					<TableCell>{row?.ranking}</TableCell>
+					<!-- TODO: Permitir clicar no nome e ser redirecionado para a página da pessoa -->
 					<TableCell>{row?.name}</TableCell>
 					<TableCell>{row?.wcaId}</TableCell>
 					<TableCell>{row?.best}</TableCell>
 					<TableCell>
 						<Flag stateId={row?.stateId} size={2} />
 					</TableCell>
+					<!-- TODO: Exibir bandeira do campeonato -->
 					<TableCell>{row?.compName}</TableCell>
 				</TableRow>
 			{/each}

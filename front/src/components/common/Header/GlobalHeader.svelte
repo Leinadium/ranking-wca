@@ -6,6 +6,7 @@
 	import Divider from '../Divider/Divider.svelte';
     import GridItem from '../Grid/Item/GridItem.svelte';
 	import SvgIcon from '../Icon/SVG/SVGIcon.svelte';
+	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import Typography from '../Typography/Typography.svelte';
     import './style.css';
 
@@ -24,19 +25,23 @@
 
         <GridItem gap={1}>
             <!-- TODO: Implementar interação de atualização dos dados -->
-            <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
-                <ButtonIcon>
-                    <SvgIcon name={'faArrowRotateBack'}></SvgIcon>
-                </ButtonIcon>
-            </ButtonRoot>
+            <Tooltip text="Atualizar dados">
+                <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                    <ButtonIcon>
+                        <SvgIcon name={'faArrowRotateBack'}></SvgIcon>
+                    </ButtonIcon>
+                </ButtonRoot>
+            </Tooltip>
 
             {#if userImageUrl}
                 <!-- TODO: Implementar interação de logout -->
-                <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
-                    <ButtonIcon>
-                        <SvgIcon name={'faSignOut'}></SvgIcon>
-                    </ButtonIcon>
-                </ButtonRoot>
+                <Tooltip text="Sair da conta">
+                    <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                        <ButtonIcon>
+                            <SvgIcon name={'faSignOut'}></SvgIcon>
+                        </ButtonIcon>
+                    </ButtonRoot>
+                </Tooltip>
             
                 <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
 

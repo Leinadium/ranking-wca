@@ -1,6 +1,5 @@
 .grid-item {
     display: flex;
-    position: relative;
     width: auto;
     height: auto;
 }
