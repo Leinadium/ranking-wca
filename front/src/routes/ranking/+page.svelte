@@ -304,13 +304,7 @@
 	
 	<InputGroupRoot>
 		<InputGroupLabel text={'Tipo'} />
-		<ButtonGroupRoot>
-			{#each typeFilterOptions as type}
-				<ButtonGroupItem type="OUTLINED" color="PRIMARY">
-					<ButtonGroupText>{type.label}</ButtonGroupText>
-				</ButtonGroupItem>
-			{/each}
-		</ButtonGroupRoot>
+		<Select options={typeFilterOptions} />
 	</InputGroupRoot>
 </GridItem>
 
