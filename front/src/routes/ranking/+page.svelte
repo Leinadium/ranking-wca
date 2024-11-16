@@ -272,8 +272,12 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Ranking | Cubos Estaduais</title>
+</svelte:head>
+
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-	<PageTitle text={'Rankings'} />
+	<PageTitle text={'Ranking'} />
 	<Typography type={'caption'} color={'NEUTRAL_DARK_1'}>
 		Última atualização: {lastUpdatedAt}
 	</Typography>

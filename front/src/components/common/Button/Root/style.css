@@ -3,6 +3,7 @@
     display: flex;
     /* TODO: Calcular espaçamentos com base num fator a ser especificado como token */
     gap: 16px;
+    align-items: center;
     padding: 8px 16px;
 }
 

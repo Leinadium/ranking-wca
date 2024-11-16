@@ -1,6 +1,6 @@
 <script lang="ts">
     import Avatar from '../Avatar/Avatar.svelte';
-import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
+    import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
 	import ButtonText from '../Button/Text/ButtonText.svelte';
 	import Divider from '../Divider/Divider.svelte';
