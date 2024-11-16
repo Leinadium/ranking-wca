@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ButtonRootProps, ButtonRootConfigs, ButtonRootClassesConfigs } from "./types";
+    import type { ButtonRootProps, ButtonRootConfigs, ButtonRootClassesConfigs, ButtonRootTagOptions, ButtonRootTag } from "./types";
 	import { DEFAULT_BUTTON_SIZE } from "$lib/constants/components/Button";
     import './style.css';
 
@@ -10,9 +10,9 @@
         width = 'auto',
         children,
         onClickFn,
-        disabled = false,
         active = false,
         classes,
+        href,
         ...props
     }: ButtonRootProps = $props();
 
@@ -61,12 +61,21 @@
             },
         }
     };
+    const TAG_OPTIONS: ButtonRootTag = {
+        BUTTON: 'button',
+        LINK: 'a',
+    }
+    const buttonTag: ButtonRootTagOptions = href ? 'LINK' : 'BUTTON';
 </script>
 
-<button
+<!-- TODO: Resolver problema de acessibilidade apontado abaixo -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<svelte:element
+    this={TAG_OPTIONS[buttonTag]}
     class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button--full' : 'button--auto'} ${active ? 'button-active' : ''} ${classes || ''}`}
-    onclick={onClickFn}
-    {disabled}
+    {...(onClickFn && { onclick: onClickFn })}
+    {...(href && { href })}
+    {...props}
 >
     {@render children?.({...props, color: TYPES_CONFIGS.color[color].mainColor})}
-</button>
+</svelte:element>

@@ -21,3 +21,11 @@
     background-color: transparent;
     border: none;
 }
+
+.table__body .table__cell .button {
+    padding: 0;
+}
+
+.table__cell .table__label--sortable {
+    padding: 0 0 0 8px;
+}

@@ -12,6 +12,10 @@ export type ButtonRootSizes = 'SMALL' | 'DEFAULT';
 
 type ButtonRootWidthOptions = 'auto' | 'full';
 
+export type ButtonRootTagOptions = 'BUTTON' | 'LINK';
+
+export type ButtonRootTargetOptions = '_blank' | '_self' | '_parent' | '_top';
+
 export interface ButtonRootProps {
     type: ButtonRootTypes;
     color: ButtonRootColors;
@@ -22,6 +26,8 @@ export interface ButtonRootProps {
     disabled?: boolean;
     active?: boolean;
     classes?: string;
+    href?: string;
+    target?: ButtonRootTargetOptions;
 };
 
 interface ButtonRootColorConfigs {
@@ -57,3 +63,7 @@ export interface ButtonRootClassesConfigs {
         NEGATIVE: ButtonRootColorClasses;
     };
 }
+
+export type ButtonRootTag = {
+    [key in ButtonRootTagOptions]: string;
+};

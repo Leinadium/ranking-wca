@@ -22,6 +22,10 @@
 	import FontIcon from "../../components/common/Icon/Font/FontIcon.svelte";
 	import Tooltip from "../../components/common/Tooltip/Tooltip.svelte";
 	import { sortObjectList } from "$lib/utils/sort";
+	import { INTERNAL_ROUTES } from "$lib/constants/routes";
+	import ButtonRoot from "../../components/common/Button/Root/ButtonRoot.svelte";
+	import ButtonText from "../../components/common/Button/Text/ButtonText.svelte";
+	import { STATE_NAMES } from "$lib/utils/location";
 
 	//TODO: Consumir dados da API
 	const lastUpdatedAt = '2024-11-09T00:00:15Z';
@@ -310,12 +314,22 @@
 			{#each tableData.paginatedData as row}
 				<TableRow>
 					<TableCell>{row?.ranking}</TableCell>
-					<!-- TODO: Permitir clicar no nome e ser redirecionado para a página da pessoa -->
-					<TableCell>{row?.name}</TableCell>
+					<TableCell>
+						<ButtonRoot
+							type={'BASIC'}
+							color={'PRIMARY'}
+							href={`${INTERNAL_ROUTES.PERSON}/${row?.wcaId}`}
+						>
+							<ButtonText>{row?.name}</ButtonText>
+						</ButtonRoot>
+					</TableCell>
 					<TableCell>{row?.wcaId}</TableCell>
 					<TableCell>{row?.best}</TableCell>
 					<TableCell>
-						<Flag stateId={row?.stateId} size={2} />
+						<GridItem justifyContent={'flex-start'} gap={1}>
+							<Flag stateId={row?.stateId} size={2} />
+							{STATE_NAMES[row?.stateId]}
+						</GridItem>
 					</TableCell>
 					<!-- TODO: Exibir bandeira do campeonato -->
 					<TableCell>{row?.compName}</TableCell>

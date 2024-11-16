@@ -7,6 +7,7 @@
 	import SvgIcon from '../Icon/SVG/SVGIcon.svelte';
 	import ButtonText from '../Button/Text/ButtonText.svelte';
 	import Tooltip from '../Tooltip/Tooltip.svelte';
+	import { EXTERNAL_ROUTES, INTERNAL_ROUTES } from '$lib/constants/routes';
 	import './style.css';
 
     let { isExpanded }: SidebarProps = $props();
@@ -18,6 +19,7 @@
 				{
 					icon: 'faFileLines',
 					text: 'Sobre Cubos Estaduais',
+					link: INTERNAL_ROUTES.MAIN,
 				},
 			],
 		},
@@ -27,10 +29,12 @@
 				{
 					icon: 'faRankingStar',
 					text: 'Ranking',
+					link: INTERNAL_ROUTES.RANKING,
 				},
 				{
 					icon: 'faPeopleGroup',
 					text: 'Pessoas',
+					link: INTERNAL_ROUTES.PEOPLE,
 				},
 			],
 		},
@@ -40,22 +44,32 @@
 				{
 					icon: 'faInfoCircle',
 					text: 'Sobre o regulamento',
+					link: 	EXTERNAL_ROUTES.ABOUTE_REGULATIONS,
+					linkTarget: '_blank',
 				},
 				{
 					icon: 'faBook',
 					text: 'Regulamentos e orientações',
+					link: 	EXTERNAL_ROUTES.REGULATIONS_AND_GUIDELINES,
+					linkTarget: '_blank',
 				},
 				{
 					icon: 'faClipboardList',
 					text: 'Regulamento',
+					link: 	EXTERNAL_ROUTES.REGULATIONS,
+					linkTarget: '_blank',
 				},
 				{
 					icon: 'faDirections',
 					text: 'Orientações',
+					link: 	EXTERNAL_ROUTES.GUIDELINES,
+					linkTarget: '_blank',
 				},
 				{
 					icon: 'faShuffle',
 					text: 'Embaralhamentos',
+					link: 	EXTERNAL_ROUTES.SCRAMBLES,
+					linkTarget: '_blank',
 				},
 			],
 		},
@@ -83,7 +97,7 @@
 					{/if}
 
 					{#each topic.items as item}
-						<ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
+						<ButtonRoot type={'BASIC'} color={'NEUTRAL'} href={item.link} target={item.linkTarget}>
 							<Tooltip text={item.text}>
 								<ButtonIcon>
 									<SvgIcon name={item.icon}></SvgIcon>

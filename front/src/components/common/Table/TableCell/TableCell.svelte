@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { TableCellProps } from "./types";
 	import Typography from "../../Typography/Typography.svelte";
-    import './style.css';
 	import GridItem from "../../Grid/Item/GridItem.svelte";
+    import './style.css';
 
     let {
         children,
