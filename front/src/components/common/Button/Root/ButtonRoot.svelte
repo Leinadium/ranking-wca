@@ -18,16 +18,16 @@
 
     const TYPE_CLASSES: ButtonRootClassesConfigs = {
         type: {
-            BASIC: 'button-basic',
-            OUTLINED: 'button-outlined',
+            BASIC: 'button--basic',
+            OUTLINED: 'button--outlined',
         },
         color: {
-            PRIMARY: 'button-primary',
-            SECONDARY: 'button-secondary',
-            NEUTRAL: 'button-neutral',
-            POSITIVE: 'button-positive',
-            WARNING: 'button-warning',
-            NEGATIVE: 'button-negative',
+            PRIMARY: 'button--primary',
+            SECONDARY: 'button--secondary',
+            NEUTRAL: 'button--neutral',
+            POSITIVE: 'button--positive',
+            WARNING: 'button--warning',
+            NEGATIVE: 'button--negative',
         }
     };
     const TYPES_CONFIGS: ButtonRootConfigs = {
@@ -64,7 +64,7 @@
 </script>
 
 <button
-    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button-full' : 'button-auto'} ${active ? 'button-active' : ''} ${classes || ''}`}
+    class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button--full' : 'button--auto'} ${active ? 'button-active' : ''} ${classes || ''}`}
     onclick={onClickFn}
     {disabled}
 >

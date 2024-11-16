@@ -5,6 +5,6 @@
     let { children }: TableBaseProps = $props();
 </script>
 
-<table class="table-base">
+<table class="table__base">
     {@render children()}
 </table>

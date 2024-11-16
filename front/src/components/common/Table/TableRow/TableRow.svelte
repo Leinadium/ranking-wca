@@ -9,8 +9,8 @@
         isHighlighted = false,
     }: TableRowProps = $props();
     const CUSTOM_CLASSES = {
-        HEADER: 'table-header-row',
-        FOOTER: 'table-footer-row',
+        HEADER: 'table__row--header',
+        FOOTER: 'table__row--footer',
         HIGHLIGHT: 'table-highlight-row',
     }
     const customClassesList = [
@@ -20,6 +20,6 @@
     ]
 </script>
 
-<tr class="table-row {customClassesList.join(' ').trim()}">
+<tr class="table__row {customClassesList.join(' ').trim()}">
     {@render children()}
 </tr>

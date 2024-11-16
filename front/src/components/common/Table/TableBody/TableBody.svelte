@@ -5,6 +5,6 @@
     let { children }: TableBodyProps = $props();
 </script>
 
-<tbody class="table-body">
+<tbody class="table__body">
     {@render children()}
 </tbody>

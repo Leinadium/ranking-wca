@@ -19,7 +19,7 @@
   <ButtonRoot
     type={'BASIC'}
     color={'NEUTRAL'}
-    classes="table-sort-label"
+    classes="table__label--sortable"
     onClickFn={toggleSort}
   >
     <ButtonIcon>

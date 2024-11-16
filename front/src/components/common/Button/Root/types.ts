@@ -2,11 +2,11 @@ import type { ColorTokens } from "$lib/tokens/types";
 
 export type ButtonRootTypes = 'BASIC' | 'OUTLINED';
 
-type ButtonRootTypeClasses = 'button-basic' | 'button-outlined';
+type ButtonRootTypeClasses = 'button--basic' | 'button--outlined';
 
 export type ButtonRootColors = 'PRIMARY' | 'SECONDARY' | 'NEUTRAL' | 'POSITIVE' | 'WARNING' | 'NEGATIVE';
 
-type ButtonRootColorClasses = 'button-primary' | 'button-secondary' | 'button-neutral' | 'button-positive' | 'button-warning' | 'button-negative';
+type ButtonRootColorClasses = 'button--primary' | 'button--secondary' | 'button--neutral' | 'button--positive' | 'button--warning' | 'button--negative';
 
 export type ButtonRootSizes = 'SMALL' | 'DEFAULT';
 

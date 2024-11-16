@@ -13,9 +13,9 @@
     }: TableCellProps = $props();
     const normalCellColor = isHeader ? 'NEUTRAL_DARK_2' : 'NEUTRAL_DARK_1'
     const CUSTOM_CLASSES = {
-        HEADER: 'table-header-cell',
-        FOOTER: 'table-footer-cell',
-        HIGHLIGHT: 'table-highlight-cell',
+        HEADER: 'table__header-cell',
+        FOOTER: 'table__cell--footer',
+        HIGHLIGHT: 'table__cell--highlighted',
     }
     const customClassesList = [
         isHeader ? CUSTOM_CLASSES.HEADER : '',
@@ -24,7 +24,7 @@
     ]
 </script>
 
-<td class="table-cell {customClassesList.join(' ').trim()}" {colspan}>
+<td class="table__cell {customClassesList.join(' ').trim()}" {colspan}>
     {#if isFooter} 
         <GridItem justifyContent={'end'}>
             {@render children()}

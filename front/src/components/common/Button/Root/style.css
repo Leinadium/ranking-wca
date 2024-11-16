@@ -7,81 +7,81 @@
     padding: 8px 16px;
 }
 
-.button-basic {
+.button--basic {
     background-color: transparent;
     border: none;
 }
 
-.button-outlined {
+.button--outlined {
     background-color: transparent;
     border-width: 1px;
     border-style: solid;
 }
 
-.button-primary {
+.button--primary {
     color: var(--color-primary-base);
     border-color: var(--color-primary-base);
 }
 
-.button-primary.button-active {
+.button--primary.button-active {
     color: var(--color-primary-light-1);
     background-color: var(--color-primary-dark-1);
 }
 
-.button-secondary {
+.button--secondary {
     color: var(--color-secondary-base);
     border-color: var(--color-secondary-base);
 }
 
-.button-secondary.button-active {
+.button--secondary.button-active {
     color: var(--color-secondary-light-1);
     background-color: var(--color-secondary-dark-1);
 }
 
-.button-neutral {
+.button--neutral {
     color: var(--color-neutral-dark-1);
     border-color: var(--color-neutral-dark-1);
 }
 
-.button-neutral.button-active {
+.button--neutral.button-active {
     color: var(--color-neutral-light-1);
     background-color: var(--color-neutral-dark-1);
 }
 
-.button-positive {
+.button--positive {
     color: var(--color-accent-positive-base);
     border-color: var(--color-accent-positive-base);
 }
 
-.button-positive.button-active {
+.button--positive.button-active {
     color: var(--color-accent-positive-light-1);
     background-color: var(--color-accent-positive-dark-1);
 }
 
-.button-warning {
+.button--warning {
     color: var(--color-accent-warning-base);
     border-color: var(--color-accent-warning-base);
 }
 
-.button-warning.button-active {
+.button--warning.button-active {
     color: var(--color-accent-warning-light-1);
     background-color: var(--color-accent-warning-dark-1);
 }
 
-.button-negative {
+.button--negative {
     color: var(--color-accent-negative-base);
     border-color: var(--color-accent-negative-base);
 }
 
-.button-negative.button-active {
+.button--negative.button-active {
     color: var(--color-accent-negative-light-1);
     background-color: var(--color-accent-negative-dark-1);
 }
 
-.button-full {
+.button--full {
     width: 100%;
 }
 
-.button-auto {
+.button--auto {
     width: 'auto';
 }

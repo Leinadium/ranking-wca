@@ -11,5 +11,5 @@
 	class="avatar"
 	style={`margin: ${fromPixelToRem(marginV * SPACING_FACTOR)}rem ${fromPixelToRem(marginH * SPACING_FACTOR)}rem`}
 >
-	<img src={imageUrl} alt={'Avatar com imagem do usuário'}>
+	<img class="avatar__image" src={imageUrl} alt={'Avatar com imagem do usuário'}>
 </div>

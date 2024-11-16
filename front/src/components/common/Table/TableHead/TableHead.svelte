@@ -5,6 +5,6 @@
     let { children }: TableHeadProps = $props();
 </script>
 
-<thead class="table-head">
+<thead class="table__head">
     {@render children()}
 </thead>

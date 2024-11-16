@@ -64,7 +64,7 @@
   }
 </script>
 
-<div class="table-pagination">
+<div class="table__pagination">
   <ButtonGroupRoot>
     <!-- Botão de ir para primeira página -->
     <ButtonGroupItem

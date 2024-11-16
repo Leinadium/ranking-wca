@@ -97,6 +97,7 @@
 		</GridItem>
 	</GridItem>
 
+	<!-- TODO: Implementar collapse do menu lateral -->
 	<ButtonRoot type={'OUTLINED'} color={'NEUTRAL'} classes={'sidebar__button--collapse'}>
 		<ButtonIcon>
 			<SvgIcon name={isExpanded ? 'faArrowLeft' : 'faArrowRight'}></SvgIcon>

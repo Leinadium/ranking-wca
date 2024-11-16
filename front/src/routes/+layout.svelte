@@ -7,7 +7,7 @@
 	
 	let { children } = $props();
 
-	const isSidebarExpanded = false;
+	const isSidebarExpanded = true;
 	const mainCustomStyle = `
 		width: ${isSidebarExpanded ? 'calc(100vw - 340px)' : 'calc(100vw - 64px)'};
 		margin: 0 ${isSidebarExpanded ? '340px' : '64px'};

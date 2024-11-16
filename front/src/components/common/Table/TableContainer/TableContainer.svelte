@@ -5,6 +5,6 @@
     let { children }: TableContainerProps = $props();
 </script>
 
-<div class="table-container">
+<div class="table__container">
     {@render children()}
 </div>
