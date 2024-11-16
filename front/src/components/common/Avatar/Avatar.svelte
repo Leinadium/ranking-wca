@@ -4,12 +4,12 @@
 	import { SPACING_FACTOR } from '$lib/tokens';
 	import './style.css';
 
-    let { imageUrl, margin }: AvatarProps = $props();
+    let { imageUrl, marginH = 0, marginV = 0 }: AvatarProps = $props();
 </script>
 
 <div
 	class="avatar"
-	style={`margin: 0rem ${margin ? fromPixelToRem(margin * SPACING_FACTOR) : ''}rem`}
+	style={`margin: ${fromPixelToRem(marginV * SPACING_FACTOR)}rem ${fromPixelToRem(marginH * SPACING_FACTOR)}rem`}
 >
 	<img src={imageUrl} alt={'Avatar com imagem do usuário'}>
 </div>

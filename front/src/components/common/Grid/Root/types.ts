@@ -2,6 +2,7 @@ import type { Snippet } from "svelte";
 
 export interface GridRootProps {
     children: Snippet<[]>;
-    margin?: number;
+    marginH?: number;
+    marginV?: number;
     gap?: number;
 };

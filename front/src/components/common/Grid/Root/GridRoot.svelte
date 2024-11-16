@@ -4,11 +4,11 @@
     import type { GridRootProps } from "./types";
     import './style.css';
 
-    let { children, margin = 0, gap = 0 }: GridRootProps = $props();
+    let { children, marginH = 0, marginV = 0, gap = 0 }: GridRootProps = $props();
 
     const customStyle = `
         gap: ${fromPixelToRem(gap * SPACING_FACTOR)}rem;
-        margin: ${fromPixelToRem(margin * SPACING_FACTOR)}rem;
+        margin: ${fromPixelToRem(marginV * SPACING_FACTOR)}rem ${fromPixelToRem(marginH * SPACING_FACTOR)}rem;
     `
 </script>
 

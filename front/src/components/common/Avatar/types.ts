@@ -1,4 +1,5 @@
 export interface AvatarProps {
     imageUrl: string;
-    margin?: number;
+    marginH?: number;
+    marginV?: number;
 }

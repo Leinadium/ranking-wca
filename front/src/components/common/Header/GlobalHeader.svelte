@@ -12,7 +12,7 @@ import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     // TODO: Formatar timestamp
     const currenTimestamp = new Date();
     // TODO: Pegar dado da API
-    const userImageUrl = null; // 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
+    const userImageUrl = 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
 </script>
 
 <header class="global-header">
@@ -40,7 +40,7 @@ import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
             
                 <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
 
-                <Avatar imageUrl={userImageUrl} margin={2} />
+                <Avatar imageUrl={userImageUrl} marginH={2} />
             {:else}
                 <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
 

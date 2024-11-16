@@ -10,7 +10,7 @@
 <GlobalHeader />
 
 <main>
-	<GridRoot margin={8} gap={2}>
+	<GridRoot marginH={8} gap={2}>
 		{@render children?.()}
 	</GridRoot>
 </main>
