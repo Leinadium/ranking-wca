@@ -70,3 +70,5 @@ export const LINE_HEIGHT_TOKENS = {
 };
 
 export const SPACING_FACTOR: number = 8;
+
+export const SIZE_FACTOR: number = 8;

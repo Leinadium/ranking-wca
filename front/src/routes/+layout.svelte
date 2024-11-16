@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Footer from '../components/common/Footer.svelte';
 	import GridRoot from '../components/common/Grid/Root/GridRoot.svelte';
-	import Header from '../components/common/Header.svelte';
+	import GlobalHeader from '../components/common/Header/GlobalHeader.svelte';
 	import './main.css';
 	
 	let { children } = $props();
 </script>
 
-<Header />
+<GlobalHeader />
 
 <main>
 	<GridRoot margin={8} gap={2}>
