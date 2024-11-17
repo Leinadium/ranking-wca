@@ -1,5 +1,4 @@
-<script>
-
+<script lang="ts">
 	import GridItem from "../components/common/Grid/Item/GridItem.svelte";
 	import PageTitle from "../components/common/PageTitle/PageTitle.svelte";
 	import Typography from "../components/common/Typography/Typography.svelte";
