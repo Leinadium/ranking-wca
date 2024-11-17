@@ -1,3 +1,4 @@
+import type { CompetitionModes } from "$lib/types/competitions";
 import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel } from "../../../../viewModels/person/types";
 import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
 
@@ -21,3 +22,9 @@ export interface RankingByModeTableData {
     sortedData: PersonEventResultViewModel[]  | [],
     paginatedData: PersonEventResultViewModel[]  | [],
 };
+
+export interface TableFiltersProps {
+    // eventId: string;
+    // stateId: string;
+    competitionMode: CompetitionModes;
+}

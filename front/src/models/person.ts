@@ -29,7 +29,7 @@ export interface PersonEventResultModel {
     compId: string;
     compName: string;
     compState: string;
-    times: { [key: number]: number }[];
+    times: number[];
 }
 
 export interface PersonRankingByModeModel {

@@ -25,7 +25,7 @@ export interface PersonEventResultViewModel {
     competitionId: string;
     competitionName: string;
     competitionState: string;
-    times: { [key: number]: number }[];
+    times: number[];
 }
 
 export interface PersonRankingByModeViewModel {

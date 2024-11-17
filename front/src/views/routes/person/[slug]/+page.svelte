@@ -19,7 +19,7 @@
 	import { updateStore } from "../../../../stores/update";
 	import { sortObjectList } from "$lib/utils/sort";
 	import { filterDataByPage } from "$lib/utils/pagination";
-	import type { CurrentRecordsTableData, RankingByModeTableData } from "./types";
+	import type { CurrentRecordsTableData, RankingByModeTableData, TableFiltersProps } from "./types";
 	import { EVENT_LIST } from "$lib/constants/events";
 	import { personStore } from "../../../../stores/person";
 	import ButtonRoot from "../../../components/common/Button/Root/ButtonRoot.svelte";
@@ -29,13 +29,12 @@
 	import { formatByGenericTimeRules, formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
 	import type { CompetitionModes } from "$lib/types/competitions";
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
-	import TableFilters from "../../../components/common/TableFilters/TableFilters.svelte";
     import './style.css'
     
     const personId = $page.params.slug
 
     // TODO: Implementar filtros
-    export const tableFilters = $state({
+    export const tableFilters: TableFiltersProps = $state({
 		// eventId: '333',
 		// stateId: null,
 		competitionMode: 'single',
@@ -210,6 +209,7 @@
                                     </ButtonText>
                                 </ButtonRoot>
                             </TableCell>
+                            <!-- TODO: Verificar regra para destacar algumas células conforme o valor -->
                             <TableCell>{formatTimeByEvent(row.single, row.eventId)}</TableCell>
                             <TableCell>{formatTimeByEvent(row.average, row.eventId)}</TableCell>
                             <TableCell>{formatValueAsInt(row.rankingSingle)}</TableCell>
@@ -288,6 +288,7 @@
                                 </ButtonRoot>
                             </TableCell>
                             <TableCell>{row.ranking}</TableCell>
+                            <!-- TODO: Verificar regra para destacar algumas células conforme o valor -->
                             <TableCell>{formatTimeByEvent(row.best, row.eventId)}</TableCell>
                             {#each row.times as resolution}
                                 <TableCell>{formatTimeByEvent(resolution, row.eventId)}</TableCell>
