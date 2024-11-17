@@ -1,6 +1,6 @@
 <script lang="ts">
-	import RankingTable from '../components/state/RankingTable.svelte';
-	import Selector from '../components/state/Selector.svelte';
+	import RankingTable from '../views/components/state/RankingTable.svelte';
+	import Selector from '../views/components/state/Selector.svelte';
 </script>
 
 <div class="person-page">

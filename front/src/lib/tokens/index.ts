@@ -72,3 +72,9 @@ export const LINE_HEIGHT_TOKENS = {
 export const SPACING_FACTOR: number = 8;
 
 export const SIZE_FACTOR: number = 8;
+
+export const SHADOW_TOKENS = {
+    INNER_1: '0px 1px 4px 0px var(--color-neutral-base)',
+    OUTER_1: '0px 2px 4px 0px var(--color-neutral-base)',
+    OUTER_2: '0px 4px 8px 0px var(--color-neutral-base)',
+}
