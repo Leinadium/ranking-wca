@@ -15,7 +15,7 @@
         dateStyle: 'full',
     });
     // TODO: Pegar dado da API
-    const userImageUrl = 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
+    const userImageUrl = null; // 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
 </script>
 
 <header class="global-header">
