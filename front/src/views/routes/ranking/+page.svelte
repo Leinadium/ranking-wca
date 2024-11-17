@@ -1,32 +1,32 @@
 <script lang="ts">
-	import ButtonGroupRoot from "../../views/components/common/ButtonGroup/Root/ButtonGroupRoot.svelte";
-	import ButtonGroupItem from "../../views/components/common/ButtonGroup/Item/ButtonGroupItem.svelte";
-	import GridItem from "../../views/components/common/Grid/Item/GridItem.svelte";
-	import InputGroupRoot from "../../views/components/common/InputGroup/Root/InputGroupRoot.svelte";
-	import InputGroupLabel from "../../views/components/common/InputGroup/Label/InputGroupLabel.svelte";
-	import PageTitle from "../../views/components/common/PageTitle/PageTitle.svelte";
-	import Select from "../../views/components/common/Select/Select.svelte";
-	import Typography from "../../views/components/common/Typography/Typography.svelte";
-	import ButtonGroupIcon from "../../views/components/common/ButtonGroup/Icon/ButtonGroupIcon.svelte";
-	import TableContainer from "../../views/components/common/Table/TableContainer/TableContainer.svelte";
-	import TableBase from "../../views/components/common/Table/TableBase/TableBase.svelte";
-	import TableHead from "../../views/components/common/Table/TableHead/TableHead.svelte";
-	import TableRow from "../../views/components/common/Table/TableRow/TableRow.svelte";
-	import TableCell from "../../views/components/common/Table/TableCell/TableCell.svelte";
-	import TableSortLabel from "../../views/components/common/Table/TableSortLabel/TableSortLabel.svelte";
-	import TableBody from "../../views/components/common/Table/TableBody/TableBody.svelte";
-	import TableFooter from "../../views/components/common/Table/TableFooter/TableFooter.svelte";
-	import TablePagination from "../../views/components/common/Table/TablePagination/TablePagination.svelte";
+	import ButtonGroupRoot from "../../components/common/ButtonGroup/Root/ButtonGroupRoot.svelte";
+	import ButtonGroupItem from "../../components/common/ButtonGroup/Item/ButtonGroupItem.svelte";
+	import GridItem from "../../components/common/Grid/Item/GridItem.svelte";
+	import InputGroupRoot from "../../components/common/InputGroup/Root/InputGroupRoot.svelte";
+	import InputGroupLabel from "../../components/common/InputGroup/Label/InputGroupLabel.svelte";
+	import PageTitle from "../../components/common/PageTitle/PageTitle.svelte";
+	import Select from "../../components/common/Select/Select.svelte";
+	import Typography from "../../components/common/Typography/Typography.svelte";
+	import ButtonGroupIcon from "../../components/common/ButtonGroup/Icon/ButtonGroupIcon.svelte";
+	import TableContainer from "../../components/common/Table/TableContainer/TableContainer.svelte";
+	import TableBase from "../../components/common/Table/TableBase/TableBase.svelte";
+	import TableHead from "../../components/common/Table/TableHead/TableHead.svelte";
+	import TableRow from "../../components/common/Table/TableRow/TableRow.svelte";
+	import TableCell from "../../components/common/Table/TableCell/TableCell.svelte";
+	import TableSortLabel from "../../components/common/Table/TableSortLabel/TableSortLabel.svelte";
+	import TableBody from "../../components/common/Table/TableBody/TableBody.svelte";
+	import TableFooter from "../../components/common/Table/TableFooter/TableFooter.svelte";
+	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
 	import { filterDataByPage } from "$lib/utils/pagination";
-	import Flag from "../../views/components/common/Flag/Flag.svelte";
-	import FontIcon from "../../views/components/common/Icon/Font/FontIcon.svelte";
-	import Tooltip from "../../views/components/common/Tooltip/Tooltip.svelte";
+	import Flag from "../../components/common/Flag/Flag.svelte";
+	import FontIcon from "../../components/common/Icon/Font/FontIcon.svelte";
+	import Tooltip from "../../components/common/Tooltip/Tooltip.svelte";
 	import { sortObjectList } from "$lib/utils/sort";
 	import { INTERNAL_ROUTES } from "$lib/constants/routes";
-	import ButtonRoot from "../../views/components/common/Button/Root/ButtonRoot.svelte";
-	import ButtonText from "../../views/components/common/Button/Text/ButtonText.svelte";
+	import ButtonRoot from "../../components/common/Button/Root/ButtonRoot.svelte";
+	import ButtonText from "../../components/common/Button/Text/ButtonText.svelte";
 	import { STATE_NAMES } from "$lib/utils/location";
-	import { updateStore } from "../../stores/update";
+	import { updateStore } from "../../../stores/update";
 
 	const EVENT_FILTER_OPTIONS = [
 		{

@@ -1,4 +1,4 @@
-import type { TableSortDirectionOptions } from "../../views/components/common/Table/TableSortLabel/types";
+import type { TableSortDirectionOptions } from "../components/common/Table/TableSortLabel/types";
 
 export function compareStringsForSorting(firstValue: string, secondValue: string, sortDirection: TableSortDirectionOptions) {
     // Ordem crescente

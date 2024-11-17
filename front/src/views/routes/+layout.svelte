@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Footer from '../views/components/common/Footer.svelte';
-	import GridRoot from '../views/components/common/Grid/Root/GridRoot.svelte';
-	import GlobalHeader from '../views/components/common/Header/GlobalHeader.svelte';
-	import Sidebar from '../views/components/common/Sidebar/Sidebar.svelte';
+	import Footer from '../components/common/Footer.svelte';
+	import GridRoot from '../components/common/Grid/Root/GridRoot.svelte';
+	import GlobalHeader from '../components/common/Header/GlobalHeader.svelte';
+	import Sidebar from '../components/common/Sidebar/Sidebar.svelte';
 	import type { RootLayoutProps } from './types';
-	import { loadUpdateStatus } from '../viewModels/update';
+	import { loadUpdateStatus } from '../../viewModels/update';
 	import { onMount } from 'svelte';
 	import './main.css';
 

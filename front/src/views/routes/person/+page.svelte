@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PersonTable from '../../views/components/person/PersonTable.svelte';
-	import FullAvatar from '../../views/components/person/FullAvatar.svelte';
+	import PersonTable from '../../components/person/PersonTable.svelte';
+	import FullAvatar from '../../components/person/FullAvatar.svelte';
 
 	let wcaId = '2018GUIM02';
 </script>
