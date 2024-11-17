@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { toLocalDateFormat } from '$lib/utils/timestamps';
     import Avatar from '../Avatar/Avatar.svelte';
     import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -10,8 +11,9 @@
 	import Typography from '../Typography/Typography.svelte';
     import './style.css';
 
-    // TODO: Formatar timestamp
-    const currenTimestamp = new Date();
+    const currenTimestamp = toLocalDateFormat(new Date(), {
+        dateStyle: 'full',
+    });
     // TODO: Pegar dado da API
     const userImageUrl = 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
 </script>

@@ -27,6 +27,7 @@
 	import ButtonText from "../../components/common/Button/Text/ButtonText.svelte";
 	import { STATE_NAMES } from "$lib/utils/location";
 	import { updateStore } from "../../../stores/update";
+	import { toLocalFormat } from "$lib/utils/timestamps";
 
 	const EVENT_FILTER_OPTIONS = [
 		{
@@ -140,7 +141,7 @@
 		},
 	];
 	
-	const formattedLastUpdatedAt = $updateStore.lastUpdatedAt;
+	const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
 	//TODO: Consumir dados da API
 	let tableData: any = $state({
 		data: [
