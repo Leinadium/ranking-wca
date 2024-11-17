@@ -5,14 +5,6 @@ export function showErrorMessage(args: ShowErrorMessageArgs): void { //, enqueue
 
     // TODO: Implementar exibição de toast
     console.log('friendlyMessage:', customMessage)
-
-    // enqueueSnackbarFn(customMessage || intl.formatMessage({ id: 'anUnexpectedErrorHasOccurredPleaseTryAgain' }), {
-    //     variant: 'error',
-    //     anchorOrigin: {
-    //         horizontal: 'center',
-    //         vertical: 'bottom',
-    //     },
-    // })
     
     if (!args.technicalMessage) return;
     
@@ -21,12 +13,4 @@ export function showErrorMessage(args: ShowErrorMessageArgs): void { //, enqueue
 
 export function showSuccessMessage(args: ShowSuccessMessageArgs): void { // enqueueSnackbarFn, intl
     // TODO: Implementar exibição de toast
-    console.log('friendlyMessage:', args?.friendlyMessage)
-    // enqueueSnackbarFn(friendlyMessage || intl.formatMessage({ id: 'operationSuccessfullyDone' }), {
-    //     variant: 'success',
-    //     anchorOrigin: {
-    //         horizontal: 'center',
-    //         vertical: 'bottom',
-    //     },
-    // })
 }

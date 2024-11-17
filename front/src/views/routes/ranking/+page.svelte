@@ -25,9 +25,9 @@
 	import { INTERNAL_ROUTES } from "$lib/constants/routes";
 	import ButtonRoot from "../../components/common/Button/Root/ButtonRoot.svelte";
 	import ButtonText from "../../components/common/Button/Text/ButtonText.svelte";
-	import { STATE_NAMES } from "$lib/utils/location";
 	import { updateStore } from "../../../stores/update";
 	import { toLocalFormat } from "$lib/utils/timestamps";
+	import { STATE_NAMES } from "$lib/constants/location";
 
 	const EVENT_FILTER_OPTIONS = [
 		{
@@ -245,7 +245,7 @@
 	};
 
   	$effect(() => {
-		tableData.sortedData = sortObjectList(tableData.data, tableData.sortColumn, tableData.sortDirection);
+		tableData.sortedData = sortObjectList<any>(tableData.data, tableData.sortColumn, tableData.sortDirection);
 	})
 
 	$effect(() => {
