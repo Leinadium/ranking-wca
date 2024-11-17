@@ -1,0 +1,4 @@
+body {
+    background-color: var(--color-neutral-light-1);
+    min-height: 100vh;
+}

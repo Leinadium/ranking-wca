@@ -1,0 +1,31 @@
+.table__cell {
+    padding: 8px 16px;
+    border: none;
+    border-bottom: 1px solid var(--color-neutral-base);
+}
+
+.table__cell:nth-child(1) {
+    padding-left: 32px;
+}
+
+.table__cell:last-child {
+    padding-right: 32px;
+}
+
+.table__cell--highlighted {
+    font-weight: bold;
+}
+
+.table__cell--footer {
+    padding: 16px 0 0;
+    background-color: transparent;
+    border: none;
+}
+
+.table__body .table__cell .button {
+    padding: 0;
+}
+
+.table__cell .table__label--sortable {
+    padding: 0 0 0 8px;
+}

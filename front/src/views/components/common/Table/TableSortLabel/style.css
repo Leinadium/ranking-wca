@@ -1,0 +1,9 @@
+.table__label--sortable {
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+}
+
+.table__label--sortable:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,19 @@
+.table__row {
+    text-align: left;
+    background-color: var(--color-neutral-light-2);
+}
+
+/* Habilitar bloco comentado para fazer linhas de cores alternadas */
+/* .table__row:nth-child(even) {
+    background-color: var(--color-neutral-light-1);
+} */
+
+.table__row.table__row--header {
+    background-color: var(--color-neutral-light-1);
+    /* Habilitar bloco comentado para destacar título quando há linhas de cores alternadas */
+    /* background-color: var(--color-neutral-base); */
+}
+
+.table__row.table__row--footer {
+    background-color: transparent;
+}
