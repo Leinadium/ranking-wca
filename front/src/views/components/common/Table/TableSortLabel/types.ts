@@ -1,4 +1,5 @@
 import type { Snippet } from "svelte";
+import type { PersonCurrentRecordsViewModel } from "../../../../../viewModels/person/types";
 
 export type TableSortDirectionOptions = 'asc' | 'desc';
 

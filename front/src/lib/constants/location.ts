@@ -1,3 +1,5 @@
+export const LOCALE = 'pt-br';
+
 export const STATE_NAMES: { [key: string]: string} = {
     "AC": "Acre",
     "AL": "Alagoas",

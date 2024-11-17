@@ -5,6 +5,7 @@
 	import SvgIcon from "../../Icon/SVG/SVGIcon.svelte";
   import type { TableSortLabelProps } from "./types";
 
+  // TODO: Melhorar tipagem de generics do TableSortLabelProps
   let { children, sortDirection = 'asc', column, onSortChange }: TableSortLabelProps = $props();
 
   const toggleSort = () => {

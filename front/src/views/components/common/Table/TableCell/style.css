@@ -26,6 +26,10 @@
     padding: 0;
 }
 
+.table__body .table__cell a {
+    text-decoration: underline;
+}
+
 .table__cell .table__label--sortable {
     padding: 0 0 0 8px;
 }

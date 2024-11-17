@@ -1,4 +1,4 @@
-import type { TableSortDirectionOptions } from "../components/common/Table/TableSortLabel/types";
+import type { TableSortDirectionOptions } from "../../views/components/common/Table/TableSortLabel/types";
 
 export function compareStringsForSorting(firstValue: string, secondValue: string, sortDirection: TableSortDirectionOptions) {
     // Ordem crescente
@@ -16,7 +16,9 @@ export function compareNumbersForSorting(firstValue: number, secondValue: number
     return secondValue - firstValue;
 };
 
-export function sortObjectList(data: { [key: string]: any }[], sortKey: string, sortDirection: TableSortDirectionOptions) {
+export function sortObjectList<T>(data: T[], sortKey: keyof T, sortDirection: TableSortDirectionOptions) {
+    if (!data) return []
+    
     const sortedData = [...data].sort((a, b) => {
         const valueA = a[sortKey];
         const valueB = b[sortKey];

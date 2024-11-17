@@ -75,6 +75,7 @@
     class={`button ${TYPES_CONFIGS.type.class} ${TYPES_CONFIGS.color[color].class} ${width === 'full' ? 'button--full' : 'button--auto'} ${active ? 'button-active' : ''} ${classes || ''}`}
     {...(onClickFn && { onclick: onClickFn })}
     {...(href && { href })}
+    {...(href && { rel: "noopener noreferrer" })}
     {...props}
 >
     {@render children?.({...props, color: TYPES_CONFIGS.color[color].mainColor})}

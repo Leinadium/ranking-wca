@@ -1,45 +1,31 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import GridItem from "./Grid/Item/GridItem.svelte";
+	import Typography from "./Typography/Typography.svelte";
+</script>
 
-<div id="footer-wrapper">
-	<span id="footer">
-		2024
-		<a target="_blank" href="https://github.com/Leinadium/ranking-wca">
-			<img class="icon" src="/icons/github-mark.svg" alt="Github" />
-		</a>
-		<a target="_blank" href="https://leinadium.dev">Daniel Guimarães</a>
-	</span>
-</div>
+<footer>
+	<GridItem direction={'COLUMN'} alignItems={'center'} gap={1}>
+		<Typography type={'caption'} color={'NEUTRAL_DARK_1'}>
+			<a target="_blank" href="https://github.com/Leinadium/ranking-wca">
+				<img class="icon" src="/icons/github-mark.svg" alt="Github" />
+			</a>
+			 |
+			<a target="_blank" href="https://leinadium.dev">Daniel Guimarães</a>
+			e
+			<a target="_blank" href="https://www.jeannelima.com.br/">Jeanne Lima</a>
+			 | 2024
+		</Typography>
+	</GridItem>
+</footer>
 
 <style>
-	#footer-wrapper {
-		box-sizing: border-box;
-		width: 100%;
-		margin: 3% 0 0.5% 0;
-		padding: 1%;
-
-		display: flex;
-		flex-flow: column;
-		justify-content: center;
-		align-items: center;
-
-		background-color: var(--color-lightgray);
+	footer {
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
 	}
-
-	#footer {
-		box-sizing: border-box;
-		text-align: center;
-		font-size: 1rem;
-
-		width: 100%;
-	}
-
-	a {
-		color: #111;
-		text-decoration: none;
-	}
-
 	.icon {
-		height: 0.8rem;
+		height: 0.812rem;
 		aspect-ratio: 1 / 1;
 	}
 </style>
