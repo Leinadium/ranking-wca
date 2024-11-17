@@ -8,15 +8,7 @@ export const personStore: Writable<PersonStore> = writable({
   totalCompetitionsCount: null,
   stateCompetitionsCount: null,
   imageUrl: null,
-  currentRecords: {
-    data: [],
-		totalItems: 0,
-		itemsPerPage: 0,
-		currentPage: 1,
-		sortDirection: 'asc',
-		sortColumn: 'eventId',
-		sortedData: [],
-		paginatedData: [],
-  },
+  currentRecords: [],
+  rankings: {},
   isLoading: false,
 });

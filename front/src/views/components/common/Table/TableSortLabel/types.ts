@@ -6,6 +6,6 @@ export type TableSortDirectionOptions = 'asc' | 'desc';
 export interface TableSortLabelProps {
     children: Snippet<[]>;
     sortDirection: TableSortDirectionOptions;
-    column: any; //TODO: Melhorar tipagem
-    onSortChange: (newDirection: TableSortDirectionOptions, column: keyof PersonCurrentRecordsViewModel) => void;
+    column: string;
+    onSortChange: (newDirection: TableSortDirectionOptions, column: string) => void;
 }

@@ -17,3 +17,20 @@ export interface PersonCurrentRecordsViewModel {
     rankingSingle: number  | null;
     rankingAverage: number  | null;
 }
+
+export interface PersonEventResultViewModel {
+    eventId: string;
+    ranking: number;
+    best: number;
+    competitionId: string;
+    competitionName: string;
+    competitionState: string;
+    times: { [key: number]: number }[];
+}
+
+export interface PersonRankingByModeViewModel {
+    name: string  | null;
+    stateId: string  | null;
+    isRegistered: boolean;
+    rankings: PersonEventResultViewModel[],
+}

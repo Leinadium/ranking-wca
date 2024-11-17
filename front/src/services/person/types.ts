@@ -1,3 +1,4 @@
+import type { CompetitionModes } from "$lib/types/competitions";
 import type { SpecificMethodRequestArgs } from "$lib/utils/http/types";
 
 export interface GetPersonInfoArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
@@ -9,5 +10,10 @@ export interface GetPersonImageArgs extends Omit<SpecificMethodRequestArgs, 'abo
 }
 
 export interface GetPersonCurrentRecordsArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
+    wcaId: string;
+}
+
+export interface GetPersonRankingByModeArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
+    mode: CompetitionModes;
     wcaId: string;
 }

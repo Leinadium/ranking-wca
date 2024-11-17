@@ -1,7 +1,7 @@
 import { ABORT_SIGNALS_KEYS, API_ENDPOINTS, API_URL } from "$lib/constants/services";
 import HTTPService from "$lib/utils/http";
-import type { APIPersonInfoResponse, APIPersonImageResponse, APIPersonCurrentRecordsResponse } from "../../adapters/person/types";
-import type { GetPersonInfoArgs, GetPersonImageArgs, GetPersonCurrentRecordsArgs } from "./types";
+import type { APIPersonInfoResponse, APIPersonImageResponse, APIPersonCurrentRecordsResponse, APIPersonRankingByModeResponse } from "../../adapters/person/types";
+import type { GetPersonInfoArgs, GetPersonImageArgs, GetPersonCurrentRecordsArgs, GetPersonRankingByModeArgs } from "./types";
 
 export const personService = {
     async getInfo(args: GetPersonInfoArgs): Promise<APIPersonInfoResponse> {
@@ -25,6 +25,14 @@ export const personService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.PERSON_CURRENT_RECORDS,
             url: `${API_URL}${API_ENDPOINTS.PERSON_CURRENT_RECORDS}/${args.wcaId}`,
+        })
+    },
+
+    async getRankingByMode(args: GetPersonRankingByModeArgs): Promise<APIPersonRankingByModeResponse> {
+        return await HTTPService.getAsync({
+            ...args,
+            abortSignalKey: ABORT_SIGNALS_KEYS.PERSON_RANKING_BY_MODE,
+            url: `${API_URL}${API_ENDPOINTS.PERSON_RANKING_BY_MODE}/${args.mode}/${args.wcaId}`,
         })
     },
 };

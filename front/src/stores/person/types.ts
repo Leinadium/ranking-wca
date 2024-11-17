@@ -1,19 +1,8 @@
-import type { PersonCurrentRecordsViewModel, PersonImageViewModel, PersonInfoViewModel } from "../../viewModels/person/types";
-import type { TableSortDirectionOptions } from "../../views/components/common/Table/TableSortLabel/types";
-
-export interface PersonCurrentRecords {
-    data: PersonCurrentRecordsViewModel[] | [],
-    totalItems: number,
-    itemsPerPage: number,
-    currentPage: number,
-    sortDirection: TableSortDirectionOptions,
-    sortColumn: keyof PersonCurrentRecordsViewModel, //TODO: Melhorar tipagem
-    sortedData: PersonCurrentRecordsViewModel[]  | [],
-    paginatedData: PersonCurrentRecordsViewModel[]  | [],
-};
+import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel, PersonImageViewModel, PersonInfoViewModel, PersonRankingByModeViewModel } from "../../viewModels/person/types";
 
 export interface PersonStore extends PersonInfoViewModel, PersonImageViewModel {
     imageUrl: string | null;
-    currentRecords: PersonCurrentRecords; 
+    currentRecords: PersonCurrentRecordsViewModel[];
+    rankings: { [key: string]: PersonEventResultViewModel[] }; // TODO: Melhorar tipagem
     isLoading: boolean;
 }

@@ -4,8 +4,7 @@ export function showErrorMessage(args: ShowErrorMessageArgs): void { //, enqueue
     const customMessage = args?.friendlyMessage || args.technicalMessage;
 
     // TODO: Implementar exibição de toast
-    console.log('friendlyMessage:', customMessage)
-    
+        
     if (!args.technicalMessage) return;
     
     console.error(args.technicalMessage);

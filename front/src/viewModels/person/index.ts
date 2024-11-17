@@ -1,7 +1,7 @@
 import { personAdapter } from "../../adapters/person";
-import type { APIPersonCurrentRecordsResponse, APIPersonImageResponse, APIPersonInfoResponse, UIPersonCurrentRecordsResponse, UIPersonImageResponse, UIPersonInfoResponse } from "../../adapters/person/types";
+import type { APIPersonCurrentRecordsResponse, APIPersonImageResponse, APIPersonInfoResponse, APIPersonRankingByModeResponse, UIPersonCurrentRecordsResponse, UIPersonImageResponse, UIPersonInfoResponse, UIPersonRankingByModeResponse } from "../../adapters/person/types";
 import { personService } from "../../services/person";
-import type { GetPersonCurrentRecordsArgs, GetPersonImageArgs, GetPersonInfoArgs } from "../../services/person/types";
+import type { GetPersonCurrentRecordsArgs, GetPersonImageArgs, GetPersonInfoArgs, GetPersonRankingByModeArgs } from "../../services/person/types";
 import { personStore } from "../../stores/person";
 
 export const loadPersonInfo = async (args: GetPersonInfoArgs) => {
@@ -52,9 +52,25 @@ export const loadPersonCurrentRecords = async (args: GetPersonCurrentRecordsArgs
   personStore.update((state) => ({
     ...state,
     isLoading: false,
-    currentRecords: {
-      ...state.currentRecords,
-      data: adaptedResponse.data
+    currentRecords: adaptedResponse.data,
+  }));
+};
+
+export const loadPersonRankingByModeRecords = async (args: GetPersonRankingByModeArgs) => {
+  personStore.update((state) => ({
+    ...state,
+    isLoading: true,
+  }));
+
+  const APIResponse: APIPersonRankingByModeResponse = await personService.getRankingByMode(args);
+  const adaptedResponse: UIPersonRankingByModeResponse = personAdapter.formatRankingByModeToUI(APIResponse);
+
+  personStore.update((state) => ({
+    ...state,
+    isLoading: false,
+    rankings: {
+      ...state.rankings,
+      [args.mode]: adaptedResponse.data.rankings,
     },
   }));
 };

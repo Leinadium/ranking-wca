@@ -6,7 +6,7 @@ export const API_ENDPOINTS = {
     AUTHENTICATE_CALLBACK: '/auth/callback',
     PERSON_INFO: '/person/info',
     PERSON_IMAGE: 'https://www.worldcubeassociation.org/api/v0/persons',
-    PERSON_RANKING_BY_MODE: '/person/info',
+    PERSON_RANKING_BY_MODE: '/person',
     PERSON_CURRENT_RECORDS: '/person/table',
     STATE_RANKING: '/ranking',
 }

@@ -1,6 +1,6 @@
 import type { CustomResponse } from "$lib/utils/http/types";
-import type { PersonCurrentRecordsModel, PersonImageModel, PersonInfoModel } from "../../models/person";
-import type { PersonCurrentRecordsViewModel, PersonImageViewModel, PersonInfoViewModel } from "../../viewModels/person/types";
+import type { PersonCurrentRecordsModel, PersonImageModel, PersonInfoModel, PersonRankingByModeModel } from "../../models/person";
+import type { PersonCurrentRecordsViewModel, PersonImageViewModel, PersonInfoViewModel, PersonRankingByModeViewModel } from "../../viewModels/person/types";
 
 export interface APIPersonInfoResponse extends CustomResponse<PersonInfoModel> {}
 
@@ -13,3 +13,7 @@ export interface UIPersonImageResponse extends CustomResponse<PersonImageViewMod
 export interface APIPersonCurrentRecordsResponse extends CustomResponse<PersonCurrentRecordsModel[]> {}
 
 export interface UIPersonCurrentRecordsResponse extends CustomResponse<PersonCurrentRecordsViewModel[]> {}
+
+export interface APIPersonRankingByModeResponse extends CustomResponse<PersonRankingByModeModel> {}
+
+export interface UIPersonRankingByModeResponse extends CustomResponse<PersonRankingByModeViewModel> {}

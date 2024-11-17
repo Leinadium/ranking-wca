@@ -7,5 +7,5 @@
 </script>
 
 {#if stateId}
-    <img src={stateIdToPng(stateId.toLowerCase())} alt={stateId} height={size * SPACING_FACTOR} width="auto" />
+	<img src={stateIdToPng(stateId.toLowerCase())} alt={stateId} height={size * SPACING_FACTOR} width="auto" />
 {/if}

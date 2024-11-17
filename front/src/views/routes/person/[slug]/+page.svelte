@@ -10,28 +10,38 @@
 	import TableBody from "../../../components/common/Table/TableBody/TableBody.svelte";
     import { page } from '$app/stores';
 	import { onMount } from "svelte";
-	import { loadPersonCurrentRecords, loadPersonImage, loadPersonInfo } from "../../../../viewModels/person/index.svelte";
+	import { loadPersonCurrentRecords, loadPersonImage, loadPersonInfo, loadPersonRankingByModeRecords } from "../../../../viewModels/person";
 	import Flag from "../../../components/common/Flag/Flag.svelte";
 	import Typography from "../../../components/common/Typography/Typography.svelte";
 	import { STATE_NAMES } from "$lib/consts";
-	import type { PersonCurrentRecordsViewModel } from "../../../../viewModels/person/types";
+	import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel } from "../../../../viewModels/person/types";
 	import { toLocalFormat } from "$lib/utils/timestamps";
 	import { updateStore } from "../../../../stores/update";
 	import { sortObjectList } from "$lib/utils/sort";
 	import { filterDataByPage } from "$lib/utils/pagination";
-	import type { CurrentRecordsTableData } from "./types";
+	import type { CurrentRecordsTableData, RankingByModeTableData } from "./types";
 	import { EVENT_LIST } from "$lib/constants/events";
 	import { personStore } from "../../../../stores/person";
 	import ButtonRoot from "../../../components/common/Button/Root/ButtonRoot.svelte";
 	import ButtonText from "../../../components/common/Button/Text/ButtonText.svelte";
 	import ButtonIcon from "../../../components/common/Button/Icon/ButtonIcon.svelte";
 	import FontIcon from "../../../components/common/Icon/Font/FontIcon.svelte";
-	import { formatTimeByEvent } from "$lib/utils/numbers";
+	import { formatByGenericTimeRules, formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
+	import type { CompetitionModes } from "$lib/types/competitions";
+	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
+	import TableFilters from "../../../components/common/TableFilters/TableFilters.svelte";
     import './style.css'
     
     const personId = $page.params.slug
-    const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
 
+    // TODO: Implementar filtros
+    export const tableFilters = $state({
+		// eventId: '333',
+		// stateId: null,
+		competitionMode: 'single',
+	});
+
+    const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
     let currentRecordsTableData: CurrentRecordsTableData = $state({
 		totalItems: 0,
 		itemsPerPage: 0,
@@ -41,17 +51,34 @@
 		sortedData: [],
 		paginatedData: [],
 	});
+    let rankingByModeTableData: RankingByModeTableData = $state({
+		totalItems: 0,
+		itemsPerPage: 0,
+		currentPage: 1,
+		sortDirection: 'asc',
+		sortColumn: 'eventId',
+		sortedData: [],
+		paginatedData: [],
+	});
 
-	function handleSortChange(newDirection: 'asc' | 'desc', column: keyof PersonCurrentRecordsViewModel) {
-        currentRecordsTableData.sortDirection = newDirection;
-        currentRecordsTableData.sortColumn = column;
+	function handleSortChange(newDirection: TableSortDirectionOptions, column: keyof PersonEventResultViewModel | string) {
+        rankingByModeTableData.sortDirection = newDirection;
+        rankingByModeTableData.sortColumn = column as keyof PersonEventResultViewModel;
 	};
 
   	$effect(() => {
         currentRecordsTableData.sortedData = sortObjectList<PersonCurrentRecordsViewModel>(
-            $personStore.currentRecords.data,
+            $personStore.currentRecords,
             currentRecordsTableData.sortColumn,
             currentRecordsTableData.sortDirection,
+        )
+	})
+
+  	$effect(() => {
+        rankingByModeTableData.sortedData = sortObjectList<PersonEventResultViewModel>(
+            $personStore.rankings?.[tableFilters.competitionMode],
+            rankingByModeTableData.sortColumn,
+            rankingByModeTableData.sortDirection,
         )
 	})
 
@@ -64,11 +91,27 @@
 	})
 
 	$effect(() => {
-        currentRecordsTableData.itemsPerPage = $personStore.currentRecords.data.length
+        rankingByModeTableData.paginatedData = filterDataByPage(
+            rankingByModeTableData.sortedData,
+            rankingByModeTableData.currentPage,
+            rankingByModeTableData.itemsPerPage
+        )
 	})
 
 	$effect(() => {
-        currentRecordsTableData.totalItems = $personStore.currentRecords.data.length
+        currentRecordsTableData.itemsPerPage = $personStore.currentRecords.length
+	})
+
+    $effect(() => {
+        rankingByModeTableData.itemsPerPage = $personStore.rankings?.[tableFilters.competitionMode]?.length
+	})
+
+	$effect(() => {
+        currentRecordsTableData.totalItems = $personStore.currentRecords.length
+	})
+
+	$effect(() => {
+        rankingByModeTableData.totalItems = $personStore.rankings?.[tableFilters.competitionMode]?.length
 	})
 
     onMount(async () => {
@@ -76,13 +119,13 @@
             loadPersonInfo({ wcaId: personId }),
             loadPersonImage({ wcaId: personId }),
             loadPersonCurrentRecords({ wcaId: personId }),
+            loadPersonRankingByModeRecords({ wcaId: personId, mode: tableFilters.competitionMode }),
         ])
 	});
 </script>
 
 <svelte:head>
-    <!-- TODO: Exibir nome da pessoa ao invés do ID -->
-	<title>{personId} | Cubos Estaduais</title>
+	<title>{$personStore.name} | Cubos Estaduais</title>
 </svelte:head>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
@@ -144,15 +187,7 @@
         <TableBase>
             <TableHead>
                 <TableRow isHeader>
-                    <TableCell isHeader>
-                        <TableSortLabel
-                            sortDirection={currentRecordsTableData.sortDirection}
-                            column={currentRecordsTableData.sortColumn}
-                            onSortChange={handleSortChange}
-                        >
-                            Evento
-                        </TableSortLabel>
-                    </TableCell>
+                    <TableCell isHeader>Evento</TableCell>
                     <TableCell isHeader>Tempo único</TableCell>
                     <TableCell isHeader>Média</TableCell>
                     <TableCell isHeader>Ranking tempo único</TableCell>
@@ -177,10 +212,88 @@
                             </TableCell>
                             <TableCell>{formatTimeByEvent(row.single, row.eventId)}</TableCell>
                             <TableCell>{formatTimeByEvent(row.average, row.eventId)}</TableCell>
-                            <TableCell>{Number(row.rankingSingle)}</TableCell>
-                            <TableCell>{Number(row.rankingAverage)}</TableCell>
+                            <TableCell>{formatValueAsInt(row.rankingSingle)}</TableCell>
+                            <TableCell>{formatValueAsInt(row.rankingAverage)}</TableCell>
                         </TableRow>
                     {/if}
+                {/each}
+            </TableBody>
+        </TableBase>
+    </TableContainer>
+</GridItem>
+
+<GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+    <Typography type={'h4'} color={'NEUTRAL_DARK_2'}>Resultados</Typography>
+
+    <!-- TODO: Habilitar quando implementar filtros -->
+    <!-- <TableFilters /> -->
+
+    <TableContainer>
+        <TableBase>
+            <!-- TODO: Habilitar quando implementar filtros -->
+            <!-- <TableHead>
+                <TableRow isHeader>
+                    <TableCell isHeader colspan={8}>
+                        <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                            <ButtonIcon>
+                                <FontIcon name={EVENT_LIST?.[tableFilters.eventId]?.icon || ''} />
+                            </ButtonIcon>
+
+                            <ButtonText>
+                                {EVENT_LIST[tableFilters.eventId].name}
+                            </ButtonText>
+                        </ButtonRoot>
+                    </TableCell>
+                </TableRow>
+            </TableHead> -->
+
+            <TableHead>
+                <TableRow isHeader>
+                    <TableCell isHeader>
+                        <TableSortLabel
+                            sortDirection={rankingByModeTableData.sortDirection}
+                            column={rankingByModeTableData.sortColumn}
+                            onSortChange={handleSortChange}
+                        >
+                            Posição
+                        </TableSortLabel>
+                    </TableCell>
+                    <TableCell isHeader>Competição</TableCell>
+                    <TableCell isHeader>Posição</TableCell>
+                    <TableCell isHeader>Tempo único</TableCell>
+                    <TableCell isHeader colspan={5}>Resoluções</TableCell>
+                </TableRow>
+            </TableHead>
+    
+            <TableBody>
+                {#each rankingByModeTableData.paginatedData as row}
+                    <!-- TODO: Habilitar quando implementar filtros -->
+                    <!-- {#if row.eventId === tableFilters.eventId} -->
+                        <TableRow>
+                            <TableCell>
+                                <ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
+                                    <ButtonIcon>
+                                        <FontIcon name={EVENT_LIST?.[row.eventId]?.icon || ''} />
+                                    </ButtonIcon>
+        
+                                    <ButtonText>
+                                        {EVENT_LIST[row.eventId].name}
+                                    </ButtonText>
+                                </ButtonRoot>
+                            </TableCell>
+                            <TableCell>
+                                <ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
+                                    <Flag stateId={row.competitionState} size={2} />
+                                    <ButtonText>{row.competitionName}</ButtonText>
+                                </ButtonRoot>
+                            </TableCell>
+                            <TableCell>{row.ranking}</TableCell>
+                            <TableCell>{formatTimeByEvent(row.best, row.eventId)}</TableCell>
+                            {#each row.times as resolution}
+                                <TableCell>{formatTimeByEvent(resolution, row.eventId)}</TableCell>
+                            {/each}
+                        </TableRow>
+                    <!-- {/if } -->
                 {/each}
             </TableBody>
         </TableBase>

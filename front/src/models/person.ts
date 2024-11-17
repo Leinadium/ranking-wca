@@ -21,3 +21,20 @@ export interface PersonCurrentRecordsModel {
     rankingSingle: number;
     rankingAverage: number;
 }
+
+export interface PersonEventResultModel {
+    event: string;
+    ranking: number;
+    best: number;
+    compId: string;
+    compName: string;
+    compState: string;
+    times: { [key: number]: number }[];
+}
+
+export interface PersonRankingByModeModel {
+    name: string;
+    state: string;
+    registered: boolean;
+    rankings: PersonEventResultModel[],
+}

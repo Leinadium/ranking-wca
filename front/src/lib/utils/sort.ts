@@ -17,6 +17,8 @@ export function compareNumbersForSorting(firstValue: number, secondValue: number
 };
 
 export function sortObjectList<T>(data: T[], sortKey: keyof T, sortDirection: TableSortDirectionOptions) {
+    if (!data) return []
+    
     const sortedData = [...data].sort((a, b) => {
         const valueA = a[sortKey];
         const valueB = b[sortKey];

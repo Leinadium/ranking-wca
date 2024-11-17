@@ -1,11 +1,14 @@
 import { LOCALE } from "$lib/constants/location";
 import { checkIsNullOrUndefinedOrEmptyStringOrNotNumber } from "./validation";
 
-export function formatValueAsInt(value: number | string): number | null {
+export function formatValueAsInt(value: number | string | null): number | null {
     if (checkIsNullOrUndefinedOrEmptyStringOrNotNumber(value)) return null
     if (typeof value === 'string') return parseInt(value)
 
-    const formattedValue = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 }).format(value)
+    const formattedValue = new Intl
+        .NumberFormat(LOCALE, { maximumFractionDigits: 0 })
+        .format(value as number)
+        
     return Number(formattedValue) ?? null
 }
 
@@ -28,6 +31,7 @@ function formatMultiBlindResult(time: number): string {
     return ''
 }
 
+// TODO: Refatorar para evitar duplicação de código
 export function formatTimeByEvent(time: number | null, eventType: string): string {
     if (time === -1) return 'DNF';
     if (time === -2) return 'DNS';
@@ -42,4 +46,14 @@ export function formatTimeByEvent(time: number | null, eventType: string): strin
         default:
             return formatCentisecondsAsMinutes(time / 100);
     }
+}
+
+// TODO: Refatorar para evitar duplicação de código
+export function formatByGenericTimeRules(time: number | null): string {
+    if (time === -1) return 'DNF';
+    if (time === -2) return 'DNS';
+    if (time === 0) return '';
+    if (time === null) return '??';
+
+    return formatCentisecondsAsMinutes(time / 100);
 }
