@@ -6,22 +6,22 @@
 	import type { RootLayoutProps } from './types';
 	import { loadUpdateStatus } from '../../viewModels/update';
 	import { onMount } from 'svelte';
+	import { sidebar } from '$lib/states/sidebar.svelte';
 	import './main.css';
 
 	let { children }: RootLayoutProps = $props();
 
-	const isSidebarExpanded = true;
-	const mainCustomStyle = `
-		width: ${isSidebarExpanded ? 'calc(100vw - 340px)' : 'calc(100vw - 64px)'};
-		margin: 0 ${isSidebarExpanded ? '340px' : '64px'};
-	`
+	const mainCustomStyle = $derived(`
+		width: ${sidebar.isExpanded ? 'calc(100vw - 340px)' : 'calc(100vw - 64px)'};
+		margin: 0 ${sidebar.isExpanded ? '340px' : '64px'};
+	`)
 
 	onMount(() => {
 		loadUpdateStatus();
 	});
 </script>
 
-<Sidebar isExpanded={isSidebarExpanded} />
+<Sidebar />
 
 <main style={mainCustomStyle}>
 	<GlobalHeader />

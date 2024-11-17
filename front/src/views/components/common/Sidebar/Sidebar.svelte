@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SidebarMenuTopics, SidebarProps } from './types';
+	import type { SidebarMenuTopics } from './types';
 	import GridItem from '../Grid/Item/GridItem.svelte';
 	import Typography from '../Typography/Typography.svelte';
 	import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -8,9 +8,8 @@
 	import ButtonText from '../Button/Text/ButtonText.svelte';
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import { EXTERNAL_ROUTES, INTERNAL_ROUTES } from '$lib/constants/routes';
+	import { sidebar } from '$lib/states/sidebar.svelte';
 	import './style.css';
-
-    let { isExpanded }: SidebarProps = $props();
 
 	const MENU_TOPICS: SidebarMenuTopics = [
 		{
@@ -75,24 +74,28 @@
 		},
 	];
 
-	const customStyle = `
-		width: ${isExpanded ? '340px' : '64px'};
-		padding: 32px ${isExpanded ? '32px' : 0};
-	`;
+	const customStyle = $derived(`
+		width: ${sidebar.isExpanded ? '340px' : '64px'};
+		padding: 32px ${sidebar.isExpanded ? '32px' : 0};
+	`);
+
+	function toogleExpansionStatus() {
+		sidebar.isExpanded = !sidebar.isExpanded;
+	}
 </script>
 
-<aside class="sidebar {isExpanded ? '' : 'sidebar--collapsed'}" style={customStyle}>
+<aside class="sidebar {sidebar.isExpanded ? '' : 'sidebar--collapsed'}" style={customStyle}>
 	<GridItem justifyContent={'center'}>
 		<img
 			class="sidebar__brand"
-			src={`/brand/${isExpanded ? 'full-brand.svg' : 'brand-symbol.svg'}`}
+			src={`/brand/${sidebar.isExpanded ? 'full-brand.svg' : 'brand-symbol.svg'}`}
 			alt="Logo do Cubos Nacionais"
 		/>
 
 		<GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={4}>
 			{#each MENU_TOPICS as topic}
 				<GridItem direction={'COLUMN'} alignItems={'flex-start'}>
-					{#if isExpanded}
+					{#if sidebar.isExpanded}
 						<Typography type="h6" color="NEUTRAL_DARK_2">{topic.title}</Typography>
 					{/if}
 
@@ -104,7 +107,7 @@
 								</ButtonIcon>
 							</Tooltip>
 
-							{#if isExpanded}
+							{#if sidebar.isExpanded}
 								<ButtonText>{item.text}</ButtonText>
 							{/if}
 						</ButtonRoot>
@@ -114,10 +117,18 @@
 		</GridItem>
 	</GridItem>
 
-	<!-- TODO: Implementar collapse do menu lateral -->
-	<ButtonRoot type={'OUTLINED'} color={'NEUTRAL'} classes={'sidebar__button--collapse'}>
+	<ButtonRoot
+		type={'OUTLINED'}
+		color={'NEUTRAL'}
+		classes={'sidebar__button--collapse'}
+		onClickFn={toogleExpansionStatus}
+	>
 		<ButtonIcon>
-			<SvgIcon name={isExpanded ? 'faArrowLeft' : 'faArrowRight'}></SvgIcon>
+			{#if sidebar.isExpanded}
+				<SvgIcon name={'faArrowLeft'}></SvgIcon>
+			{:else}
+				<SvgIcon name={'faArrowRight'}></SvgIcon>
+			{/if}
 		</ButtonIcon>
 	</ButtonRoot>
 </aside>
