@@ -30,6 +30,8 @@
 	import type { CompetitionModes } from "$lib/types/competitions";
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
     import './style.css'
+	import SvgIcon from "../../../components/common/Icon/SVG/SVGIcon.svelte";
+	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
     
     const personId = $page.params.slug
 
@@ -137,7 +139,10 @@
 
 <GridItem direction={'COLUMN'} gap={4}>
     <GridItem direction={'COLUMN'} alignItems={'center'} gap={1}>
-        <PageTitle text={$personStore.name || '?'} />
+        <GridItem gap={1}>
+            <PageTitle text={$personStore.name || '?'} />
+            <VerifiedAccountFlag isVerified={$personStore.isRegistered || false} />
+        </GridItem>
     
         {#if $personStore.stateId}
             <GridItem justifyContent={'flex-start'} gap={1}>
@@ -159,11 +164,6 @@
             <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
                 <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>ID da WCA:</Typography>
                 <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{personId}</Typography>
-            </GridItem>
-    
-            <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-                <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Registrado:</Typography>
-                <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.isRegistered}</Typography>
             </GridItem>
     
             <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
