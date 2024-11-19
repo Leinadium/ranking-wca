@@ -11,7 +11,7 @@ type GridItemWrapOptions = 'NOWRAP' | 'WRAP' | 'WRAP-REVERSE' | 'CUSTOM-WRAP';
 export interface GridItemProps {
     children: Snippet<[]>;
     classes?: string;
-    margin?: number;
+    margin?: number | string;
     gap?: number;
     direction?: GridItemDirection;
     justifyContent?: GridItemJustifyContentOptions;

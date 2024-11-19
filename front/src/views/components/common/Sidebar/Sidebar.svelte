@@ -9,6 +9,9 @@
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import { EXTERNAL_ROUTES, INTERNAL_ROUTES } from '$lib/constants/routes';
 	import { sidebar } from '$lib/states/sidebar.svelte';
+	import { BRAND_NAME } from '$lib/utils/general';
+	import { fromPixelToRem } from '$lib/utils/style';
+	import { SPACING_FACTOR } from '$lib/tokens';
 	import './style.css';
 
 	const MENU_TOPICS: SidebarMenuTopics = [
@@ -17,7 +20,7 @@
 			items: [
 				{
 					icon: 'faFileLines',
-					text: 'Sobre Cubos Estaduais',
+					text: `Sobre ${BRAND_NAME}`,
 					link: INTERNAL_ROUTES.MAIN,
 				},
 			],
@@ -75,7 +78,7 @@
 	];
 
 	const customStyle = $derived(`
-		width: ${sidebar.isExpanded ? '340px' : '64px'};
+		width: ${sidebar.isExpanded ? '352px' : '64px'};
 		padding: 32px ${sidebar.isExpanded ? '32px' : 0};
 	`);
 
@@ -86,11 +89,22 @@
 
 <aside class="sidebar {sidebar.isExpanded ? '' : 'sidebar--collapsed'}" style={customStyle}>
 	<GridItem justifyContent={'center'}>
-		<img
-			class="sidebar__brand"
-			src={`/brand/${sidebar.isExpanded ? 'full-brand.svg' : 'brand-symbol.svg'}`}
-			alt="Logo do Cubos Nacionais"
-		/>
+		<GridItem
+			classes="sidebar__brand"
+			alignItems={'center'}
+			margin={`0 0 ${fromPixelToRem(9 * SPACING_FACTOR)}rem`}
+			gap={2}
+		>
+			<img
+				class="sidebar__brand"
+				src="/brand/brand-symbol.svg"
+				alt="Logo do {BRAND_NAME}"
+			/>
+			
+			{#if sidebar.isExpanded}
+				<Typography type="h1" color="PRIMARY_DARK_1">{BRAND_NAME}</Typography>
+			{/if}
+		</GridItem>
 
 		<GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={4}>
 			{#each MENU_TOPICS as topic}

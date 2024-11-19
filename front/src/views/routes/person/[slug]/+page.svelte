@@ -29,10 +29,11 @@
 	import { formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
 	import type { CompetitionModes } from "$lib/types/competitions";
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
-    import './style.css'
 	import SvgIcon from "../../../components/common/Icon/SVG/SVGIcon.svelte";
 	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
 	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
+	import { BRAND_NAME } from "$lib/utils/general";
+    import './style.css'
     
     const personId = $page.params.slug
 
@@ -127,7 +128,7 @@
 </script>
 
 <svelte:head>
-	<title>{$personStore.name} | Cubos Estaduais</title>
+	<title>{$personStore.name} | {BRAND_NAME}</title>
 </svelte:head>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>

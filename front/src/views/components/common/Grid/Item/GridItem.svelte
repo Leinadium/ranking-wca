@@ -15,9 +15,10 @@
         wrap = 'WRAP',
     }: GridItemProps = $props();
 
+    const formattedMargin = typeof margin === 'string' ? margin : `${fromPixelToRem(margin * SPACING_FACTOR)}rem`
     const customStyle = `
         gap: ${fromPixelToRem(gap * SPACING_FACTOR)}rem;
-        margin: ${fromPixelToRem(margin * SPACING_FACTOR)}rem;
+        margin: ${formattedMargin};
         flex-direction: ${direction.toLowerCase()};
         justify-content: ${justifyContent.toLowerCase()};
         align-items: ${alignItems.toLowerCase()};

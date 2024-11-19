@@ -12,8 +12,8 @@
 	let { children }: RootLayoutProps = $props();
 
 	const mainCustomStyle = $derived(`
-		width: ${sidebar.isExpanded ? 'calc(100vw - 340px)' : 'calc(100vw - 64px)'};
-		margin: 0 ${sidebar.isExpanded ? '340px' : '64px'};
+		width: ${sidebar.isExpanded ? 'calc(100vw - 352px)' : 'calc(100vw - 64px)'};
+		margin: 0 ${sidebar.isExpanded ? '352px' : '64px'};
 	`)
 
 	onMount(() => {

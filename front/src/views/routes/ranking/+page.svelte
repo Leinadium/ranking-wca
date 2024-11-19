@@ -21,6 +21,7 @@
 	import { toLocalFormat } from "$lib/utils/timestamps";
 	import { STATE_NAMES } from "$lib/constants/location";
 	import TableFilters from "../../components/common/TableFilters/TableFilters.svelte";
+	import { BRAND_NAME } from "$lib/utils/general";
 	
 	const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
 	//TODO: Consumir dados da API
@@ -135,7 +136,7 @@
 </script>
 
 <svelte:head>
-	<title>Ranking | Cubos Estaduais</title>
+	<title>Ranking | {BRAND_NAME}</title>
 </svelte:head>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
