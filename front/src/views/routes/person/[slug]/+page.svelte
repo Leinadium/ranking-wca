@@ -26,7 +26,7 @@
 	import ButtonText from "../../../components/common/Button/Text/ButtonText.svelte";
 	import ButtonIcon from "../../../components/common/Button/Icon/ButtonIcon.svelte";
 	import FontIcon from "../../../components/common/Icon/Font/FontIcon.svelte";
-	import { formatByGenericTimeRules, formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
+	import { formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
 	import type { CompetitionModes } from "$lib/types/competitions";
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
     import './style.css'
