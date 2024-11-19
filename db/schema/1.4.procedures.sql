@@ -242,7 +242,7 @@ REPLACE INTO datalake.ranking_single (
                     event_id,
                     state_id,
                     -- COALESCE(NULLIF(NULLIF(NULLIF(single,0),-1),-2), 9999999999) AS single
-                    CASE WHEN single <= 0 THEN 9999999999 ELSE single END AS single
+                    CASE WHEN COALESCE(single, 0) <= 0 THEN 9999999999 ELSE single END AS single
                 FROM
                     dump.results_by_state
             ) AS rs2
@@ -274,7 +274,7 @@ REPLACE INTO datalake.ranking_average(
                     event_id,
                     state_id,
                     -- COALESCE(NULLIF(NULLIF(NULLIF(average,0),-1),-2), 9999999999) AS average
-                    CASE WHEN average <= 0 THEN 9999999999 ELSE average END AS average
+                    CASE WHEN COALESCE(average, 0) <= 0 THEN 9999999999 ELSE average END AS average
                 FROM
                     dump.results_by_state
             ) AS rs2
