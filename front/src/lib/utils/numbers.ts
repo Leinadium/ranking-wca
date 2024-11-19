@@ -12,7 +12,9 @@ export function formatValueAsInt(value: number | string | null): number | null {
     return Number(formattedValue) ?? null
 }
 
-function formatCentisecondsAsMinutes(time: number): string {
+function formatSecondsAsMinutes(time: number | null): string {
+    if (!time) return ''
+
     const minutes: number = Math.floor(time / 60);
     const formattedMinutes: string = minutes?.toString()?.padStart(2, '0')
 
@@ -26,34 +28,47 @@ function formatCentisecondsAsMinutes(time: number): string {
     return `${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`;
 }
 
-// TODO: Implementar formatação
-function formatMultiBlindResult(time: number): string {
-    return ''
+function formatMultiBlindResult(time: number | null): string {
+    if (time === null) return '';
+    
+    let solved: number;
+    let attempted: number;
+    let timeInSeconds: number | null;
+
+    if (time.toString().length === 10) {
+        // Old rule
+        solved = 99 - Number(time.toString().slice(1, 3));
+        attempted = Number(time.toString().slice(3, 5));
+        timeInSeconds = Number(time.toString().slice(5));
+    } else {
+        // New rule
+        const difference: number = 99 - Number(time.toString().slice(0, 2));
+        const missed: number = Number(time.toString().slice(7));
+    
+        solved = difference + missed;
+        attempted = solved + missed;
+        timeInSeconds = Number(time.toString().slice(2, 7));
+    }
+
+    // 99999 = unknown
+    timeInSeconds = timeInSeconds === 99999 ? null : timeInSeconds;
+
+    return `${solved}/${attempted} ${formatSecondsAsMinutes(timeInSeconds)}`;
 }
 
-// TODO: Refatorar para evitar duplicação de código
 export function formatTimeByEvent(time: number | null, eventType: string): string {
     if (time === -1) return 'DNF';
     if (time === -2) return 'DNS';
     if (time === 0) return '';
-    if (time === null) return '??';
 
     switch (eventType) {
         case '333fm':
+            if (time === null) return '??';
             return formatValueAsInt(time)?.toString() ?? '??';
-        case '333bf':
+        case '333mbf':
             return formatMultiBlindResult(time);
         default:
-            return formatCentisecondsAsMinutes(time / 100);
+            if (time === null) return '??';
+            return formatSecondsAsMinutes(time/100);
     }
-}
-
-// TODO: Refatorar para evitar duplicação de código
-export function formatByGenericTimeRules(time: number | null): string {
-    if (time === -1) return 'DNF';
-    if (time === -2) return 'DNS';
-    if (time === 0) return '';
-    if (time === null) return '??';
-
-    return formatCentisecondsAsMinutes(time / 100);
 }

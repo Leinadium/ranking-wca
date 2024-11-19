@@ -27,8 +27,8 @@
 	let tableData: any = $state({
 		data: [
 			{
-				wcaId: "2017TESC01",
-				name: "Pedro xxxxx",
+				wcaId: "2017SEMO02",
+				name: "Marcos xxxxx",
 				best: 15.91,
 				ranking: 1,
 				times: [10.91, 11.91, -1, 13.04, 56.10],
@@ -37,24 +37,24 @@
 				stateId: "SP",
 			},
 			{
-				wcaId: "2018GUIM02",
-				name: "Daniel xxxxx",
-				best: 20.12,
-				ranking: 2,
-				times: [10.00, 12.00, 14.00, 16.00, 18.00],
-				registered: true,
-				compName: "Planetario 2023",
-				stateId: null,
-			},
-			{
 				wcaId: "2017TESC01",
-				name: "Renan xxxxx",
+				name: "Pedro xxxxx",
 				best: 15.91,
-				ranking: 3,
+				ranking: 2,
 				times: [10.91, 11.91, -1, 13.04, 56.10],
 				registered: false,
 				compName: "Brasileiro 2024",
 				stateId: "RJ",
+			},
+			{
+				wcaId: "2018GUIM02",
+				name: "Daniel xxxxx",
+				best: 20.12,
+				ranking: 3,
+				times: [10.00, 12.00, 14.00, 16.00, 18.00],
+				registered: true,
+				compName: "Planetario 2023",
+				stateId: null,
 			},
 			{
 				wcaId: "2018GUIM02",
