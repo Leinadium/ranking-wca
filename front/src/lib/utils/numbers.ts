@@ -16,16 +16,16 @@ function formatSecondsAsMinutes(time: number | null): string {
     if (!time) return ''
 
     const minutes: number = Math.floor(time / 60);
-    const formattedMinutes: string = minutes?.toString()?.padStart(2, '0')
+    const formattedMinutes: string = !minutes ? '' : `${minutes?.toString()?.padStart(2, '0')}:`
 
     const seconds: number = Math.floor(time % 60);
-    const formattedSeconds: string = seconds?.toString()?.padStart(2, '0')
+    const formattedSeconds: string = `${seconds?.toString()?.padStart(2, '0')}.`
 
     const milliseconds: number = Math.floor((time % 1) * 100);
     const formattedMilliseconds: string = milliseconds?.toString()?.padStart(2, '0') ?? '00'
 
-    // centiseconds -> MM:SS.mm
-    return `${formattedMinutes}:${formattedSeconds}.${formattedMilliseconds}`;
+    // Seconds -> MM:SS.mm
+    return `${formattedMinutes}${formattedSeconds}${formattedMilliseconds}`;
 }
 
 function formatMultiBlindResult(time: number | null): string {
