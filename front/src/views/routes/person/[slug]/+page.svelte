@@ -32,6 +32,7 @@
     import './style.css'
 	import SvgIcon from "../../../components/common/Icon/SVG/SVGIcon.svelte";
 	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
+	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
     
     const personId = $page.params.slug
 
@@ -209,11 +210,22 @@
                                     </ButtonText>
                                 </ButtonRoot>
                             </TableCell>
-                            <!-- TODO: Verificar regra para destacar algumas células conforme o valor -->
                             <TableCell>{formatTimeByEvent(row.single, row.eventId)}</TableCell>
                             <TableCell>{formatTimeByEvent(row.average, row.eventId)}</TableCell>
-                            <TableCell>{formatValueAsInt(row.rankingSingle)}</TableCell>
-                            <TableCell>{formatValueAsInt(row.rankingAverage)}</TableCell>
+                            {#key row.rankingSingle}
+                                <TableCell
+                                    isHighlighted={checkShouldHighlightPosition(row.rankingSingle)}
+                                >
+                                    {formatValueAsInt(row.rankingSingle)}
+                                </TableCell>
+                            {/key}
+                            {#key row.rankingSingle}
+                                <TableCell 
+                                    isHighlighted={checkShouldHighlightPosition(row.rankingAverage)}
+                                >
+                                    {formatValueAsInt(row.rankingAverage)}
+                                </TableCell>
+                            {/key}
                         </TableRow>
                     {/if}
                 {/each}

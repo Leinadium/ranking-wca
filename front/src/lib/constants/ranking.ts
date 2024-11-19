@@ -1,0 +1,1 @@
+export const RANKING_PODIUM_POSITION_LIMIT:number = 5;
