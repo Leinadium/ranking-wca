@@ -59,7 +59,7 @@
 		itemsPerPage: 0,
 		currentPage: 1,
 		sortDirection: 'asc',
-		sortColumn: 'eventId',
+		sortColumn: 'ranking',
 		sortedData: [],
 		paginatedData: [],
 	});
@@ -236,7 +236,7 @@
 </GridItem>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-    <Typography type={'h4'} color={'NEUTRAL_DARK_2'}>Resultados</Typography>
+    <Typography type={'h4'} color={'NEUTRAL_DARK_2'}>Recordes detalhados</Typography>
 
     <!-- TODO: Habilitar quando implementar filtros -->
     <!-- <TableFilters /> -->
@@ -271,8 +271,8 @@
                             Posição
                         </TableSortLabel>
                     </TableCell>
+                    <TableCell isHeader>Evento</TableCell>
                     <TableCell isHeader>Competição</TableCell>
-                    <TableCell isHeader>Posição</TableCell>
                     <TableCell isHeader>Tempo único</TableCell>
                     <TableCell isHeader colspan={5}>Resoluções</TableCell>
                 </TableRow>
@@ -283,6 +283,13 @@
                     <!-- TODO: Habilitar quando implementar filtros -->
                     <!-- {#if row.eventId === tableFilters.eventId} -->
                         <TableRow>
+                            {#key row.ranking}
+                                <TableCell
+                                    isHighlighted={checkShouldHighlightPosition(row.ranking)}
+                                >
+                                    {row.ranking}
+                                </TableCell>
+                            {/key}
                             <TableCell>
                                 <ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
                                     <ButtonIcon>
@@ -300,11 +307,15 @@
                                     <ButtonText>{row.competitionName}</ButtonText>
                                 </ButtonRoot>
                             </TableCell>
-                            <TableCell>{row.ranking}</TableCell>
-                            <!-- TODO: Verificar regra para destacar algumas células conforme o valor -->
                             <TableCell>{formatTimeByEvent(row.best, row.eventId)}</TableCell>
                             {#each row.times as resolution}
-                                <TableCell>{formatTimeByEvent(resolution, row.eventId)}</TableCell>
+                                <TableCell>
+                                    {#if resolution === row.best}
+                                        ({formatTimeByEvent(resolution, row.eventId)})
+                                    {:else}
+                                        {formatTimeByEvent(resolution, row.eventId)}
+                                    {/if}
+                                </TableCell>
                             {/each}
                         </TableRow>
                     <!-- {/if } -->
