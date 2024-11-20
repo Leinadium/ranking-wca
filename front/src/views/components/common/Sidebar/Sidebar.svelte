@@ -77,9 +77,11 @@
 		},
 	];
 
+	// TODO: Melhorar estilização de tamanho
 	const customStyle = $derived(`
-		width: ${sidebar.isExpanded ? '352px' : '64px'};
-		padding: 32px ${sidebar.isExpanded ? '32px' : 0};
+		min-width: ${sidebar.isExpanded ? '352px' : '64px'};
+		max-width: ${sidebar.isExpanded ? '352px' : '64px'};
+		padding: 32px ${sidebar.isExpanded ? '32px' : '8px'};
 	`);
 
 	function toogleExpansionStatus() {
@@ -96,7 +98,7 @@
 			gap={2}
 		>
 			<img
-				class="sidebar__brand"
+				class="sidebar__image--brand"
 				src="/brand/brand-symbol.svg"
 				alt="Logo do {BRAND_NAME}"
 			/>
@@ -106,7 +108,12 @@
 			{/if}
 		</GridItem>
 
-		<GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={4}>
+		{#key sidebar.isExpanded}
+		<GridItem
+			direction={'COLUMN'}
+			alignItems={sidebar.isExpanded ? 'flex-start' : 'center'}
+			gap={4}
+		>
 			{#each MENU_TOPICS as topic}
 				<GridItem direction={'COLUMN'} alignItems={'flex-start'}>
 					{#if sidebar.isExpanded}
@@ -129,6 +136,7 @@
 				</GridItem>
 			{/each}
 		</GridItem>
+		{/key}
 	</GridItem>
 
 	<ButtonRoot

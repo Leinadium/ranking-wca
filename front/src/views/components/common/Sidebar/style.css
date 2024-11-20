@@ -4,13 +4,15 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     height: 100vh;
 }
 
 .sidebar__brand {
+    white-space: nowrap;
+}
+
+.sidebar__image--brand {
     height: 48px;
     width: auto;
 }
