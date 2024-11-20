@@ -5,7 +5,6 @@ RUN npm i -g pnpm
 RUN pnpm install
 COPY ./front .
 RUN pnpm run build
-RUN pnpm prune
 
 FROM node:22-alpine AS runner-preview
 WORKDIR /app
