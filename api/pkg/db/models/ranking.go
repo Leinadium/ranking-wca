@@ -19,20 +19,21 @@ type RankingResponse struct {
 }
 
 type RankingQuery struct {
-	WCAid      string    `gorm:"column:wca_id"`
-	Name       string    `gorm:"column:name"`
-	State      string    `gorm:"column:state_id"`
-	Best       null.Int  `gorm:"column:best"`
-	Ranking    int       `gorm:"column:ranking"`
-	Registered bool      `gorm:"column:registered"`
-	CompId     string    `gorm:"competition_id"`
-	CompName   string    `gorm:"column:competition_name"`
-	Time1      null.Int  `gorm:"column:time_1"`
-	Time2      null.Int  `gorm:"column:time_2"`
-	Time3      null.Int  `gorm:"column:time_3"`
-	Time4      null.Int  `gorm:"column:time_4"`
-	Time5      null.Int  `gorm:"column:time_5"`
-	Ts         time.Time `gorm:"column:ts"`
+	WCAid      string      `gorm:"column:wca_id"`
+	Name       string      `gorm:"column:name"`
+	State      string      `gorm:"column:state_id"`
+	Best       null.Int    `gorm:"column:best"`
+	Ranking    int         `gorm:"column:ranking"`
+	Registered bool        `gorm:"column:registered"`
+	CompId     string      `gorm:"column:competition_id"`
+	CompName   string      `gorm:"column:competition_name"`
+	CompState  null.String `gorm:"column:competition_state"`
+	Time1      null.Int    `gorm:"column:time_1"`
+	Time2      null.Int    `gorm:"column:time_2"`
+	Time3      null.Int    `gorm:"column:time_3"`
+	Time4      null.Int    `gorm:"column:time_4"`
+	Time5      null.Int    `gorm:"column:time_5"`
+	Ts         time.Time   `gorm:"column:ts"`
 }
 
 func (r RankingQuery) GetTS() time.Time {
@@ -52,9 +53,9 @@ SELECT
 	rs.event_id 		AS event_id,
 	rs.ranking 			AS ranking,
 	rs.single 			AS best,
-	comp.id         AS competition_id,
+	comp.id         	AS competition_id,
     comp.name       	AS competition_name,
-    cpn.state_id  	AS competition_state,
+    cpn.state_id  		AS competition_state,
     dmp.value1      	AS time_1,
     dmp.value2      	AS time_2,
     dmp.value3      	AS time_3,

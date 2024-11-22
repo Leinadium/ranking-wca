@@ -75,7 +75,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 			Registered: v.Registered,
 			CompId:     v.CompId,
 			CompName:   v.CompName,
-			CompState:  null.NewString(v.CompName, true),
+			CompState:  v.CompState,
 			Times:      [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
 		})
 	}
