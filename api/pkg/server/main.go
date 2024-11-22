@@ -39,5 +39,8 @@ func Main() {
 	person.GET("/info/:id", gs.GetPersonInfo)
 	person.GET("/:mode/:id", gs.GetPersonWithMode)
 
+	ranking := api.Group("/ranking")
+	ranking.GET("/:mode/:event/:state", gs.GetRankingWithModeEvent)
+
 	_ = router.Run()
 }

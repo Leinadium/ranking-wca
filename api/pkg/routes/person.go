@@ -13,28 +13,6 @@ import (
 	"ranking.leinadium.dev/pkg/errors"
 )
 
-func updateWithBetter(m map[string]models.PersonQuery, p models.PersonQuery) map[string]models.PersonQuery {
-	curr, ok := m[p.EventId]
-	if !ok {
-		m[p.EventId] = p
-		return m
-	}
-	// check ts
-	// if is after, ignore
-	if curr.Ts.After(p.Ts) {
-		return m
-	}
-	// if is equals, check round (higher wins)
-	// if curr.Ts.Equal(p.Ts) {
-	// 	if curr.Round > p.Round {
-	// 		return m
-	// 	}
-	// }
-	// if is before, or higher round, update
-	m[p.EventId] = p
-	return m
-}
-
 func (gs *GlobalState) GetPersonWithMode(c *gin.Context) {
 	modeReq := c.Param("mode")
 	if modeReq == "" {
@@ -74,7 +52,7 @@ func (gs *GlobalState) GetPersonWithMode(c *gin.Context) {
 	// create values and removing duplicates
 	m := make(map[string]models.PersonQuery)
 	for _, v := range pqs {
-		m = updateWithBetter(m, v)
+		m = models.UpdateWithBetterTimestamp(m, v)
 	}
 
 	// final response

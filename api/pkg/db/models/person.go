@@ -43,6 +43,14 @@ type PersonQuery struct {
 	Ts    time.Time `gorm:"column:ts"`
 }
 
+func (p PersonQuery) GetTS() time.Time {
+	return p.Ts
+}
+
+func (p PersonQuery) GetKey() string {
+	return p.EventId
+}
+
 const QueryPersonSingle = `
 SELECT
     dlk.wca_id      AS wca_id,
