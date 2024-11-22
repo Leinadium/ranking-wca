@@ -133,11 +133,14 @@ Will support national ranking (state = BR)
 
 Might be simplified, like the /table/ endpoint above
 
-### [❌] `GET /ranking/<mode>/<event_id>/<state_id>`
+### [✅] `GET /ranking/<mode>/<event_id>/<state_id>`
 
 - `<mode>`: "average" or "single"
 - `<event_id>`: event id (e.g. 333OH, sq1)
 - `<state_id>`: state id (e.g. RJ. BR (national ranking) is not supported yet)
+
+- query arg: `p`: pagination page (starting from 0)
+- query arg: `q`: pagination quantity per page (default no pagination, max 50)
 
 ```jsonc
 [
@@ -159,5 +162,18 @@ Might be simplified, like the /table/ endpoint above
     "registered": true,
     "compName": "Planetario 2023"
   }
+]
+
+[
+  {
+    "name": "string",
+    "wcaId": "string",
+    "best": "int",
+    "registered": "bool",
+    "compId": "string",
+    "compName": "string",
+    "compState": "string",
+    "times": ["int", "int", "int", "int", "int"],
+  },
 ]
 ```

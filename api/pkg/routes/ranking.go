@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"net/http"
+	"sort"
 
 	"github.com/guregu/null/v5"
 
@@ -28,7 +29,6 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		return
 	}
 	pageArgs := PaginationArgsFromContext(c)
-	println(pageArgs.Offset, pageArgs.Page, pageArgs.Quantity)
 
 	// query
 	var rawSql string
@@ -42,15 +42,19 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 	}
 
 	pqs := []models.RankingQuery{}
-	rawQuery := gs.DB.Raw(
-		rawSql,
+	query := gs.DB.Raw(
+		pageArgs.AddToSQL(rawSql),
 		sql.Named("eventId", eventReq),
 		sql.Named("stateId", stateReq),
 	)
-	query := gs.DB.Table("(?) as x", rawQuery).Limit(pageArgs.Quantity).Offset(pageArgs.Offset)
 
 	if err := query.Find(&pqs).Error; err != nil {
 		errors.LogSetError(c, "could not query database", http.StatusInternalServerError, err)
+		return
+	}
+
+	if len(pqs) == 0 {
+		errors.SetError(c, "no data", http.StatusNotFound)
 		return
 	}
 
@@ -75,5 +79,10 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 			Times:      [5]null.Int{v.Time1, v.Time2, v.Time3, v.Time4, v.Time5},
 		})
 	}
+
+	// sorting results
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].Ranking < ret[j].Ranking
+	})
 	c.JSON(http.StatusOK, ret)
 }
