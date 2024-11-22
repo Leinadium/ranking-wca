@@ -145,27 +145,6 @@ Might be simplified, like the /table/ endpoint above
 ```jsonc
 [
   {
-    "wcaId": "2017TESC01",
-    "name": "Pedro xxxxx",
-    "best": 15.91,
-    "ranking": 1,
-    "times": [10.91, 11.91, -1, 13.04, 56.1],
-    "registered": false,
-    "compName": "Brasileiro 2024"
-  },
-  {
-    "wcaId": "2018GUIM02",
-    "name": "Daniel xxxxx",
-    "best": 20.12,
-    "ranking": 2,
-    "times": [10.0, 12.0, 14.0, 16.0, 18.0],
-    "registered": true,
-    "compName": "Planetario 2023"
-  }
-]
-
-[
-  {
     "name": "string",
     "wcaId": "string",
     "best": "int",
