@@ -70,6 +70,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		ret = append(ret, models.RankingResponse{
 			Name:       v.Name,
 			WCAid:      v.WCAid,
+			State:      v.State,
 			Best:       v.Best,
 			Ranking:    v.Ranking,
 			Registered: v.Registered,

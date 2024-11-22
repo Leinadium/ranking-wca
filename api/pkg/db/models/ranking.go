@@ -9,6 +9,7 @@ import (
 type RankingResponse struct {
 	Name       string      `json:"name"`
 	WCAid      string      `json:"wcaId"`
+	State      string      `json:"stateId"`
 	Best       null.Int    `json:"best"`
 	Ranking    int         `json:"ranking"`
 	Registered bool        `json:"registered"`

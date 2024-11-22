@@ -147,6 +147,7 @@ Might be simplified, like the /table/ endpoint above
   {
     "name": "string",
     "wcaId": "string",
+    "stateId": "string",
     "best": "int",
     "registered": "bool",
     "compId": "string",
