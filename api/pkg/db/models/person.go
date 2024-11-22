@@ -109,7 +109,7 @@ FROM
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
         LEFT JOIN datalake.competitions comp2 on (dmp.competitionId = comp2.competition_id)
 WHERE
-    dlk.average = dmp.best
+    dlk.average = dmp.average
     AND dlk.wca_id = @wcaId
 `
 
