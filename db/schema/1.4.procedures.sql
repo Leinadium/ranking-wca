@@ -1,6 +1,6 @@
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS app.update ()
+CREATE PROCEDURE IF NOT EXISTS app.update_after_insert ()
 LANGUAGE SQL
 NOT DETERMINISTIC
 MODIFIES SQL DATA
@@ -175,25 +175,21 @@ REPLACE INTO dump.all_persons_with_states (
             ON es.wca_id = re.wca_id
 ;
 
--- REPLACE INTO dump.results_by_state (
---     wca_id,
---     state_id,
---     event_id,
---     single
--- )
---     SELECT
---         r.personId                                                              AS wca_id,
---         al.state_id                                                             AS state_id,
---         r.eventId                                                               AS event_id,
---         COALESCE(MIN(NULLIF(NULLIF(NULLIF(r.best, -2),-1),0)), 0)               AS single
---     FROM
---         dump.Results r
---             JOIN dump.all_persons_with_states al
---                 ON r.personId = al.wca_id
---     WHERE al.state_id IS NOT NULL
---     AND r.personId = "2017SEMO02"
---     GROUP BY r.personId, al.state_id, r.eventId 
--- ;
+TRUNCATE TABLE dump.competitions_by_person_and_country;
+
+
+END //
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE IF NOT EXISTS app.refresh ()
+LANGUAGE SQL
+NOT DETERMINISTIC
+MODIFIES SQL DATA
+BEGIN
+
 
 REPLACE INTO dump.results_by_state (
     wca_id,
@@ -348,10 +344,5 @@ REPLACE INTO datalake.sum_of_ranks(
 --             )
 
 -- ;
-
-
-TRUNCATE TABLE dump.all_persons_with_states;
-TRUNCATE TABLE dump.competitions_by_person_and_country;
-TRUNCATE TABLE dump.results_by_state;
 
 END //

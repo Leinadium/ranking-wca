@@ -37,7 +37,10 @@ func (db *WCAdb) ImportFile(filename string) error {
 
 func (db *WCAdb) RunUpdate() error {
 	return db.DB.Transaction(func(tx *gorm.DB) error {
-		return tx.Exec("CALL app.update()").Error
+		if err := tx.Exec("CALL app.update_after_insert()").Error; err != nil {
+			return err
+		}
+		return tx.Exec("CALL app.refresh()").Error
 	})
 }
 
