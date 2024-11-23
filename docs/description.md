@@ -15,3 +15,10 @@ Para visualizar um ranking completo do país e de outros países, consulte o [si
 Os estados são atribuídos automaticamente com base nas competições participadas. O estado do competidor é o estado na qual ele mais competiu dentro os outros estados. Essa atribuição automática só acontece quando a maioria das competições do competidor foi no Brasil.
 
 Caso deseja editar o seu estado atribuído, [entre com a sua conta WCA](...) e altere seu estado. O seu estado e seu ranking será atualizado na próxima atualização dos dados, que ocorre pelo menos uma vez por dia. (((NOTA: VOU PENSAR NESSE REQUISITO NAO FUNCIONAL AINDA)))
+
+## Restrições/Requisitos não funcionais
+
+- Só aparecerem competidores brasileiros.
+- O método de atribuição de estados só considera competições brasileiras
+  - Não consideram competições em múltiplos estados.
+- O método considera o estado onde o competidor mais competiu.
