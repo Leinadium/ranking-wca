@@ -42,7 +42,7 @@ services:
 
   ranking-wca-front:
     build:
-      dockerfile: ./docker/front.Dockerfile
+      dockerfile: ./docker/front-deploy.Dockerfile
     ports:
       - "5173:5173"
     networks:
