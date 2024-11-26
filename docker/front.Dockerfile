@@ -4,7 +4,7 @@ COPY ../front/package*.json /app/
 RUN npm i -g pnpm
 RUN pnpm install
 
-COPY ../front/* /app/
+COPY ../front/ /app/
 RUN pnpm run build
 
 FROM node:22-alpine AS runner-preview
