@@ -19,7 +19,7 @@
 	import { updateStore } from "../../../../stores/update";
 	import { sortObjectList } from "$lib/utils/sort";
 	import { filterDataByPage } from "$lib/utils/pagination";
-	import type { CurrentRecordsTableData, RankingByModeTableData, TableFiltersProps } from "./types";
+	import type { CurrentRecordsTableData, RankingByModeTableData, RankingByModeTableFiltersProps } from "./types";
 	import { EVENT_LIST } from "$lib/constants/events";
 	import { personStore } from "../../../../stores/person";
 	import ButtonRoot from "../../../components/common/Button/Root/ButtonRoot.svelte";
@@ -38,12 +38,11 @@
     const personId = $page.params.slug
 
     // TODO: Implementar filtros
-    export const tableFilters: TableFiltersProps = $state({
+    export const tableFilters: RankingByModeTableFiltersProps = $state({
 		// eventId: '333',
 		// stateId: null,
 		competitionMode: 'single',
 	});
-
     const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
     let currentRecordsTableData: CurrentRecordsTableData = $state({
 		totalItems: 0,

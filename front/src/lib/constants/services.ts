@@ -8,7 +8,7 @@ export const API_ENDPOINTS = {
     PERSON_IMAGE: 'https://www.worldcubeassociation.org/api/v0/persons',
     PERSON_RANKING_BY_MODE: '/person',
     PERSON_CURRENT_RECORDS: '/person/table',
-    STATE_RANKING: '/ranking',
+    RANKING: '/ranking',
 }
 
 export const ABORT_SIGNALS_KEYS = {
@@ -19,5 +19,5 @@ export const ABORT_SIGNALS_KEYS = {
     PERSON_IMAGE: 'SIGNAL_PERSON_IMAGE',
     PERSON_RANKING_BY_MODE: 'SIGNAL_PERSON_RANKING_BY_MODE',
     PERSON_CURRENT_RECORDS: 'SIGNAL_PERSON_CURRENT_RECORDS',
-    STATE_RANKING: 'SIGNAL_STATE_RANKING',
+    RANKING: 'SIGNAL_RANKING',
 }

@@ -4,7 +4,6 @@
 	import ButtonGroupText from "../../ButtonGroup/Text/ButtonGroupText.svelte";
 	import type { TablePaginationStyleConfigs, TablePaginationProps } from "./types";
 
-  // TODO: Alterar itemsPerPage quando tiver implementação na API
   let {
     currentPage = 1,
     totalItems,
@@ -81,7 +80,6 @@
     COLOR: 'NEUTRAL',
     SIZE: 'SMALL',
   }
-
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   let visiblePages = $derived(getVisiblePages(currentPage, totalPages, maxVisiblePages))
 </script>

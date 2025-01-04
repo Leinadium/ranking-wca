@@ -23,7 +23,7 @@ export interface RankingByModeTableData {
     paginatedData: PersonEventResultViewModel[]  | [],
 };
 
-export interface TableFiltersProps {
+export interface RankingByModeTableFiltersProps {
     // eventId: string;
     // stateId: string;
     competitionMode: CompetitionModes;
