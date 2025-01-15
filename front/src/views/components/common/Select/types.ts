@@ -3,6 +3,9 @@ export interface SelectOption {
     value: string | null; 
 };
 
+// TODO: Melhorar tipagens
 export interface SelectProps {
     options: SelectOption[];
+    value: string | null; 
+    onChangeFn: (event: any) => void;
 };

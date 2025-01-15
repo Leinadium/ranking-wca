@@ -25,8 +25,8 @@
 	import type { RankingTableData, RankingTableFiltersProps } from "./types";
 	import { rankingStore } from "../../../stores/ranking";
 	
-	// TODO: Implementar filtros
-    export const tableFilters: RankingTableFiltersProps = $state({
+	// TODO: Definir valores padrões com base em valores centralizados para cada opção
+    let tableFilters: RankingTableFiltersProps = $state({
 		eventId: '333',
 		stateId: 'RJ',
 		competitionMode: 'single',
@@ -42,6 +42,23 @@
 	function handlePageChange(newPage: number) {
 		rankingTableData.currentPage = newPage;
 	};
+	 
+	// TODO: Persistir últimos filtros selecionados
+	// TODO: Melhorar tipagens
+	function updateTableFilters(field: any, value: any) {
+    	tableFilters = { ...tableFilters, [field]: value };
+  	}
+
+	// TODO: Implementar cache
+	async function loadTableData() {
+		await loadRanking({
+			mode: tableFilters.competitionMode,
+			eventId: tableFilters.eventId,
+			stateId: tableFilters.stateId,
+			page: rankingTableData.currentPage - 1,
+			itensPerPage: rankingTableData.itemsPerPage,
+		})
+	}
 
 	$effect(() => {
         rankingTableData.paginatedData = filterDataByPage(
@@ -55,14 +72,12 @@
         rankingTableData.totalItems = $rankingStore.totalItems
 	})
 
+	$effect(() => {
+        loadTableData()
+	})
+
 	onMount(async () => {
-		await loadRanking({
-			mode: tableFilters.competitionMode,
-			eventId: tableFilters.eventId,
-			stateId: tableFilters.stateId,
-			page: rankingTableData.currentPage - 1,
-			itensPerPage: rankingTableData.itemsPerPage,
-		})
+		await loadTableData()
 	});
 </script>
 
@@ -77,7 +92,8 @@
 	</Typography>
 </GridItem>
 
-<TableFilters />
+<!-- Repensar existência do componente de filtro -->
+<TableFilters filters={tableFilters} updateFiltersFn={updateTableFilters} />
 
 <TableContainer>
 	<TableBase>

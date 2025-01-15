@@ -8,99 +8,108 @@
 	import ButtonGroupIcon from "../../../components/common/ButtonGroup/Icon/ButtonGroupIcon.svelte";
 	import FontIcon from "../../../components/common/Icon/Font/FontIcon.svelte";
 	import Tooltip from "../../../components/common/Tooltip/Tooltip.svelte";
+	import { EVENT_LIST } from "$lib/constants/events";
 
+
+	// TODO: Pensar como melhorar as options evitando repetição de código
 	const EVENT_FILTER_OPTIONS = [
 		{
-			icon: 'cubing-icon event-333',
-			name: 'Cubo 3x3x3',
-			value: '',
+			icon: EVENT_LIST['333'].icon,
+			name: EVENT_LIST['333'].name,
+			value: '333',
 		},
 		{
-			icon: 'cubing-icon event-222',
-			name: 'Cubo 2x2x2',
-			value: '',
+			icon: EVENT_LIST['222'].icon,
+			name: EVENT_LIST['222'].name,
+			value: '222',
 		},
 		{
-			icon: 'cubing-icon event-444',
-			name: 'Cubo 4x4x4',
-			value: '',
+			icon: EVENT_LIST['444'].icon,
+			name: EVENT_LIST['444'].name,
+			value: '444',
 		},
 		{
-			icon: 'cubing-icon event-555',
-			name: 'Cubo 5x5x5',
-			value: '',
+			icon: EVENT_LIST['555'].icon,
+			name: EVENT_LIST['555'].name,
+			value: '555',
 		},
 		{
-			icon: 'cubing-icon event-666',
-			name: 'Cubo 6x6x6',
-			value: '',
+			icon: EVENT_LIST['666'].icon,
+			name: EVENT_LIST['666'].name,
+			value: '666',
 		},
 		{
-			icon: 'cubing-icon event-777',
-			name: 'Cubo 7x7x7',
-			value: '',
+			icon: EVENT_LIST['777'].icon,
+			name: EVENT_LIST['777'].name,
+			value: '777',
 		},
 		{
-			icon: 'cubing-icon event-333bf',
-			name: '3x3x3 vendado',
-			value: '',
+			icon: EVENT_LIST['333bf'].icon,
+			name: EVENT_LIST['333bf'].name,
+			value: '333bf',
 		},
 		{
-			icon: 'cubing-icon event-333fm',
-			name: '3x3x3 em menos movimentos',
-			value: '',
+			icon: EVENT_LIST['333fm'].icon,
+			name: EVENT_LIST['333fm'].name,
+			value: '333fm',
 		},
 		{
-			icon: 'cubing-icon event-333oh',
-			name: '3x3x3 com uma mão',
-			value: '',
+			icon: EVENT_LIST['333ft'].icon,
+			name: EVENT_LIST['333ft'].name,
+			value: '333ft',
 		},
 		{
-			icon: 'cubing-icon event-clock',
-			name: 'Clock',
-			value: '',
+			icon: EVENT_LIST['333oh'].icon,
+			name: EVENT_LIST['333oh'].name,
+			value: '333oh',
 		},
 		{
-			icon: 'cubing-icon event-minx',
-			name: 'Megaminx',
-			value: '',
+			icon: EVENT_LIST['clock'].icon,
+			name: EVENT_LIST['clock'].name,
+			value: 'clock',
 		},
 		{
-			icon: 'cubing-icon event-pyram',
-			name: 'Pyraminx',
-			value: '',
+			icon: EVENT_LIST['minx'].icon,
+			name: EVENT_LIST['minx'].name,
+			value: 'minx',
 		},
 		{
-			icon: 'cubing-icon event-skewb',
-			name: 'Skewb',
-			value: '',
+			icon: EVENT_LIST['pyram'].icon,
+			name: EVENT_LIST['pyram'].name,
+			value: 'pyram',
 		},
 		{
-			icon: 'cubing-icon event-sq1',
-			name: 'Square-1',
-			value: '',
+			icon: EVENT_LIST['skewb'].icon,
+			name: EVENT_LIST['skewb'].name,
+			value: 'skewb',
 		},
 		{
-			icon: 'cubing-icon event-444bf',
-			name: '4x4x4 vendado',
-			value: '',
+			icon: EVENT_LIST['sq1'].icon,
+			name: EVENT_LIST['sq1'].name,
+			value: 'sq1',
 		},
 		{
-			icon: 'cubing-icon event-555bf',
-			name: '5x5x5 vendado',
-			value: '',
+			icon: EVENT_LIST['444bf'].icon,
+			name: EVENT_LIST['444bf'].name,
+			value: '444bf',
 		},
 		{
-			icon: 'cubing-icon event-333mbf',
-			name: '3x3x3 múltiplos cubos vendado',
-			value: '',
+			icon: EVENT_LIST['555bf'].icon,
+			name: EVENT_LIST['555bf'].name,
+			value: '555bf',
+		},
+		{
+			icon: EVENT_LIST['333mbf'].icon,
+			name: EVENT_LIST['333mbf'].name,
+			value: '333mbf',
 		},
 	];
+	// TODO: Habilitar opção "Todos" quando back-end suportar
 	const STATE_FILTER_OPTIONS = [
-		{
-			label: 'Todos',
-			value: null,
-		},
+		// {
+		// 	label: 'Todos',
+		// 	value: 'BR',
+		// },
 		{
 			label: 'Rio de Janeiro',
 			value: 'RJ',
@@ -120,6 +129,9 @@
 			value: 'average',
 		},
 	];
+
+	// TODO: Adicionar tipagem
+	const { filters, updateFiltersFn } = $props()
 </script>
 
 <GridItem direction={'ROW'} justifyContent={'start'} alignItems={'flex-start'} gap={4}>
@@ -128,7 +140,7 @@
 		<ButtonGroupRoot>
 			{#each EVENT_FILTER_OPTIONS as event}
 				<Tooltip text={event.name}>
-					<ButtonGroupItem type="OUTLINED" color="PRIMARY">
+					<ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => updateFiltersFn('eventId', event.value)}>
 						<ButtonGroupIcon>
 							<FontIcon name={event.icon} />
 						</ButtonGroupIcon>
@@ -140,11 +152,19 @@
 	
 	<InputGroupRoot>
 		<InputGroupLabel text={'Estado'} />
-		<Select options={STATE_FILTER_OPTIONS} />
+		<Select
+			options={STATE_FILTER_OPTIONS}
+			value={filters.stateId}
+			onChangeFn={(event) => updateFiltersFn('stateId', event?.target?.value)}
+		/>
 	</InputGroupRoot>
 	
 	<InputGroupRoot>
 		<InputGroupLabel text={'Tipo'} />
-		<Select options={TYPE_FILTER_OPTIONS} />
+		<Select
+			options={TYPE_FILTER_OPTIONS}
+			value={filters.competitionMode}
+			onChangeFn={(event) => updateFiltersFn('competitionMode', event?.target?.value)}
+		/>
 	</InputGroupRoot>
 </GridItem>
