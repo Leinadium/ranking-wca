@@ -30,7 +30,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 	}
 	pageArgs := PaginationArgsFromContext(c)
 
-	// query
+	// getting query string
 	var rawSql string
 	if modeReq == "single" {
 		rawSql = models.QueryRankingSingle
@@ -41,6 +41,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		return
 	}
 
+	// querying the database
 	pqs := []models.RankingQuery{}
 	query := gs.DB.Raw(
 		pageArgs.AddToSQL(rawSql),
@@ -48,14 +49,35 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		sql.Named("stateId", stateReq),
 	)
 
+	// obtaining results
 	if err := query.Find(&pqs).Error; err != nil {
 		errors.LogSetError(c, "could not query database", http.StatusInternalServerError, err)
 		return
 	}
 
+	// check no data
 	if len(pqs) == 0 {
 		errors.SetError(c, "no data", http.StatusNotFound)
 		return
+	}
+
+	var totalItems int = int(len(pqs))
+	// if data is equal than pagination quantity, get total count
+	if totalItems == pageArgs.Quantity {
+		var countRes struct {
+			Count int
+		}
+		// query database
+		query := gs.DB.Raw(pageArgs.AddCount(rawSql),
+			sql.Named("eventId", eventReq),
+			sql.Named("stateId", stateReq),
+		)
+		// retrieve value
+		if err := query.First(&countRes).Error; err != nil {
+			errors.LogSetError(c, "could not query database for count", http.StatusInternalServerError, err)
+			return
+		}
+		totalItems = int(countRes.Count)
 	}
 
 	// create values and removing duplicates
@@ -65,9 +87,9 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 	}
 
 	// final response
-	var ret []models.RankingResponse
+	var results []models.RankingResponse
 	for _, v := range m {
-		ret = append(ret, models.RankingResponse{
+		results = append(results, models.RankingResponse{
 			Name:       v.Name,
 			WCAid:      v.WCAid,
 			State:      v.State,
@@ -82,8 +104,13 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 	}
 
 	// sorting results
-	sort.Slice(ret, func(i, j int) bool {
-		return ret[i].Ranking < ret[j].Ranking
+	// OBS: why are we sorting again, if query has ORDER BY?
+	sort.Slice(results, func(i, j int) bool {
+		return results[i].Ranking < results[j].Ranking
 	})
-	c.JSON(http.StatusOK, ret)
+
+	c.JSON(http.StatusOK, gin.H{
+		"totalItems": totalItems,
+		"results":    results,
+	})
 }

@@ -66,3 +66,7 @@ func (pg PaginationArgs) AddToSQL(statement string) string {
 	}
 	return ret.String()
 }
+
+func (pg PaginationArgs) AddCount(statement string) string {
+	return fmt.Sprintf("SELECT COUNT(*) AS count FROM (%s) AS x", statement)
+}
