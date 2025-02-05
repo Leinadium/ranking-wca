@@ -22,7 +22,7 @@ type WCAdb struct {
 
 func (db *WCAdb) ImportFile(filename string) error {
 	cmd := exec.Command(
-		"mysql",
+		"/usr/bin/mariadb",
 		"--host", db.config.Mysql.Host,
 		"--port", strconv.Itoa(db.config.Mysql.Port),
 		"--user", db.config.Mysql.User,
