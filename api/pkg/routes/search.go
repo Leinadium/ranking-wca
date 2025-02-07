@@ -19,10 +19,15 @@ func (gs *GlobalState) GetSearch(c *gin.Context) {
 		return
 	}
 
+	pageArgs := PaginationArgsFromContext(c)
+
 	searchFinal := fmt.Sprintf("%%%s%%", strings.ToLower(searchText))
+	query := gs.DB.Raw(
+		pageArgs.AddToSQL(models.QuerySearchNameId),
+		sql.Named("search", searchFinal),
+	)
 
 	ss := []models.SearchQuery{}
-	query := gs.DB.Raw(models.QuerySearchNameId, sql.Named("search", searchFinal))
 	if err := query.Find(&ss).Error; err != nil {
 		errors.LogSetError(c, "could not query dataabase", http.StatusInternalServerError, err)
 		return

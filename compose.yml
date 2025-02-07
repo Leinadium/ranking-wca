@@ -39,6 +39,7 @@ services:
     depends_on:
       ranking-wca-db:
         condition: service_healthy
+    restart: unless-stopped
 
   ranking-wca-front:
     build:
@@ -47,6 +48,7 @@ services:
       - "3000:3000"
     networks:
       - internal
+    restart: unless-stopped
 
 volumes:
   db-data:
