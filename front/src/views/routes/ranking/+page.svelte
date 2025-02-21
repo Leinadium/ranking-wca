@@ -46,6 +46,7 @@
 	// TODO: Melhorar tipagens
 	function updateTableFilters(field: any, value: any) {
     	tableFilters = { ...tableFilters, [field]: value };
+		handlePageChange(1)
   	}
 
 	// TODO: Implementar cache
