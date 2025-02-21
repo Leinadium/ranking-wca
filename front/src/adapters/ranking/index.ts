@@ -9,9 +9,7 @@ export const rankingAdapter = {
       ok: APIResponse.ok,
       statusCode: APIResponse.statusCode,
       data: {
-        //@ts-ignore
-        items: APIResponse.data.map((recordObject: RankingResultModel): RankingResultViewModel => {
-        // items: APIResponse.data.totalItems.map((recordObject: RankingResultModel): RankingResultViewModel => {
+        items: APIResponse.data?.results?.map((recordObject: RankingResultModel): RankingResultViewModel => {
           return {
             name: recordObject.name,
             wcaId: recordObject.wcaId,
@@ -24,9 +22,8 @@ export const rankingAdapter = {
             competitionState: recordObject.compState,
             times: recordObject.times,
           }
-        }),
-        totalItems: APIResponse.data.totalItems || 50,
-        // totalItems: APIResponse.data.totalItems,
+        }) || [],
+        totalItems: APIResponse.data?.totalItems ?? 50,
       },
     };
   },

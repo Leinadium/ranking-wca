@@ -12,6 +12,6 @@ export interface RankingResultModel {
 }
 
 export interface RankingModel {
-    items: RankingResultModel[],
+    results: RankingResultModel[],
     totalItems: number;
 }

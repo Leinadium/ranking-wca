@@ -10,7 +10,6 @@
 	import TableBody from "../../components/common/Table/TableBody/TableBody.svelte";
 	import TableFooter from "../../components/common/Table/TableFooter/TableFooter.svelte";
 	import TablePagination from "../../components/common/Table/TablePagination/TablePagination.svelte";
-	import { filterDataByPage } from "$lib/utils/pagination";
 	import Flag from "../../components/common/Flag/Flag.svelte";
 	import { INTERNAL_ROUTES } from "$lib/constants/routes";
 	import ButtonRoot from "../../components/common/Button/Root/ButtonRoot.svelte";
@@ -61,11 +60,7 @@
 	}
 
 	$effect(() => {
-        rankingTableData.paginatedData = filterDataByPage(
-            $rankingStore.items,
-            rankingTableData.currentPage,
-            rankingTableData.itemsPerPage
-        )
+        rankingTableData.paginatedData = $rankingStore.items
 	})
 
 	$effect(() => {
