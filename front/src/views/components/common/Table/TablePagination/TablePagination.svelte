@@ -75,6 +75,14 @@
     handlePageClick(page, currentPage);
   }
 
+  function checkIsFirstPage(selectedPage: number): boolean {
+    return selectedPage <= 1
+  }
+
+  function checkIsLastPage(selectedPage: number): boolean {
+    return selectedPage >= totalPages
+  }
+
   const STYLE_CONFIGS: TablePaginationStyleConfigs = {
     TYPE: 'OUTLINED',
     COLOR: 'NEUTRAL',
@@ -92,7 +100,7 @@
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
       onClickFn={() => goToFirstPage(currentPage)}
-      disabled={currentPage === 1}
+      disabled={checkIsFirstPage(currentPage)}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<<'}</ButtonGroupText>
     </ButtonGroupItem>
@@ -103,7 +111,7 @@
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
       onClickFn={() => goToPreviousPage(currentPage)}
-      disabled={currentPage === 1}
+      disabled={checkIsFirstPage(currentPage)}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'<'}</ButtonGroupText>
     </ButtonGroupItem>
@@ -128,7 +136,7 @@
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
       onClickFn={() => goToNextPage(currentPage)}
-      disabled={currentPage === totalPages}
+      disabled={checkIsLastPage(currentPage)}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>'}</ButtonGroupText>
     </ButtonGroupItem>
@@ -139,7 +147,7 @@
       color={STYLE_CONFIGS.COLOR}
       size={STYLE_CONFIGS.SIZE}
       onClickFn={() => goToLastPage(totalPages, currentPage)}
-      disabled={currentPage === totalPages}
+      disabled={checkIsLastPage(currentPage)}
     >
       <ButtonGroupText size={STYLE_CONFIGS.SIZE}>{'>>'}</ButtonGroupText>
     </ButtonGroupItem>
