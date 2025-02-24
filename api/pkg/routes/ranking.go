@@ -61,24 +61,20 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		return
 	}
 
-	var totalItems int = int(len(pqs))
-	// if data is equal than pagination quantity, get total count
-	if totalItems == pageArgs.Quantity {
-		var countRes struct {
-			Count int
-		}
-		// query database
-		query := gs.DB.Raw(pageArgs.AddCount(rawSql),
-			sql.Named("eventId", eventReq),
-			sql.Named("stateId", stateReq),
-		)
-		// retrieve value
-		if err := query.First(&countRes).Error; err != nil {
-			errors.LogSetError(c, "could not query database for count", http.StatusInternalServerError, err)
-			return
-		}
-		totalItems = int(countRes.Count)
+	var countRes struct {
+		Count int
 	}
+	// query database
+	countQuery := gs.DB.Raw(pageArgs.AddCount(rawSql),
+		sql.Named("eventId", eventReq),
+		sql.Named("stateId", stateReq),
+	)
+	// retrieve value
+	if err := countQuery.First(&countRes).Error; err != nil {
+		errors.LogSetError(c, "could not query database for count", http.StatusInternalServerError, err)
+		return
+	}
+	totalItems := int(countRes.Count)
 
 	// create values and removing duplicates
 	m := make(map[string]models.RankingQuery)
