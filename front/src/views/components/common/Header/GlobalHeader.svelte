@@ -16,25 +16,22 @@
     });
     // TODO: Pegar dado da API
     const userImageUrl = null; // 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
+
+    function upperCaseFirstLetter(text: string) {
+        return text.charAt(0).toLocaleUpperCase() + text?.slice(1)
+    }
 </script>
 
 <header class="global-header">
     <GridItem direction='ROW' justifyContent={'space-between'} gap={4}>
         <GridItem gap={1}>
             <SvgIcon name={'faCalendarAlt'} color={'PRIMARY_DARK_1'} size={'sm'}></SvgIcon>
-            <Typography type={'bodyOne'} color={'PRIMARY_DARK_1'}>{currenTimestamp}</Typography>
+            <Typography type={'bodyOne'} color={'PRIMARY_DARK_1'}>
+                {upperCaseFirstLetter(currenTimestamp || '')}
+            </Typography>
         </GridItem>
 
         <GridItem gap={1}>
-            <!-- TODO: Implementar interação de atualização dos dados -->
-            <Tooltip text="Atualizar dados">
-                <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
-                    <ButtonIcon>
-                        <SvgIcon name={'faArrowRotateBack'}></SvgIcon>
-                    </ButtonIcon>
-                </ButtonRoot>
-            </Tooltip>
-
             {#if userImageUrl}
                 <!-- TODO: Implementar interação de logout -->
                 <Tooltip text="Sair da conta">
@@ -49,15 +46,17 @@
 
                 <Avatar imageUrl={userImageUrl} marginH={2} />
             {:else}
-                <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
-
-                <!-- TODO: Implementar interação de login e registro -->
+                <GridItem gap={3}>
+                    <Typography type={'caption'} color={'NEUTRAL_DARK_1'} align={'right'}>
+                        Esse é seu perfil e deseja alterar seu estado?<br />Entre com sua conta WCA
+                    </Typography>
+                    
+                    <Divider isVertical thickness={1} color={'NEUTRAL_BASE'}  />
+                </GridItem>
+                
+                <!-- TODO: Implementar interação de login e alteração de estado -->
                 <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
                     <ButtonText>Login</ButtonText>
-                </ButtonRoot>
-                
-                <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
-                    <ButtonText>Registrar-se</ButtonText>
                 </ButtonRoot>
             {/if}
         </GridItem>
