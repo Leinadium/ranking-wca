@@ -3,5 +3,5 @@ import type { Snippet } from 'svelte';
 
 export interface EmptyMessageProps {
     iconName?: keyof typeof solidIcons;
-    children: Snippet<[]>;
+    children?: Snippet<[]>;
 }

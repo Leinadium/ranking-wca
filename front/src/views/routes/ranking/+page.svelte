@@ -23,6 +23,7 @@
 	import { loadRanking } from "../../../viewModels/ranking";
 	import type { RankingTableData, RankingTableFiltersProps } from "./types";
 	import { rankingStore } from "../../../stores/ranking";
+	import EmptyMessage from "../../components/common/EmptyMessage/EmptyMessage.svelte";
 	
 	// TODO: Definir valores padrões com base em valores centralizados para cada opção
     let tableFilters: RankingTableFiltersProps = $state({
@@ -91,65 +92,69 @@
 <!-- Repensar existência do componente de filtro -->
 <TableFilters filters={tableFilters} updateFiltersFn={updateTableFilters} />
 
-<TableContainer>
-	<TableBase>
-		<TableHead>
-			<TableRow isHeader>
-				<TableCell isHeader>Posição</TableCell>
-				<TableCell isHeader >Nome</TableCell>
-				<TableCell isHeader>ID da WCA</TableCell>
-				<TableCell isHeader>Resultado</TableCell>
-				<TableCell isHeader>Representando</TableCell>
-				<TableCell isHeader>Competição</TableCell>
-			</TableRow>
-		</TableHead>
+{#if rankingTableData.totalItems > 0}
+	<TableContainer>
+		<TableBase>
+			<TableHead>
+				<TableRow isHeader>
+					<TableCell isHeader>Posição</TableCell>
+					<TableCell isHeader >Nome</TableCell>
+					<TableCell isHeader>ID da WCA</TableCell>
+					<TableCell isHeader>Resultado</TableCell>
+					<TableCell isHeader>Representando</TableCell>
+					<TableCell isHeader>Competição</TableCell>
+				</TableRow>
+			</TableHead>
 
-		<TableBody>
-			{#each rankingTableData.paginatedData as row}
-				<TableRow>
-					<TableCell>{row?.ranking}</TableCell>
-					<TableCell>
-						<ButtonRoot
-							type={'BASIC'}
-							color={'NEUTRAL'}
-							href={`${INTERNAL_ROUTES.PERSON}/${row?.wcaId}`}
-						>
-							<ButtonText>{row?.name}</ButtonText>
-						</ButtonRoot>
-					</TableCell>
-					<TableCell>{row?.wcaId}</TableCell>
-					<TableCell>{row?.best}</TableCell>
-					<TableCell>
-						<GridItem justifyContent={'flex-start'} gap={1}>
-							{#if row?.stateId}
-								<Flag stateId={row?.stateId} size={2} />
-								{STATE_NAMES?.[row?.stateId]}
+			<TableBody>
+				{#each rankingTableData.paginatedData as row}
+					<TableRow>
+						<TableCell>{row?.ranking}</TableCell>
+						<TableCell>
+							<ButtonRoot
+								type={'BASIC'}
+								color={'NEUTRAL'}
+								href={`${INTERNAL_ROUTES.PERSON}/${row?.wcaId}`}
+							>
+								<ButtonText>{row?.name}</ButtonText>
+							</ButtonRoot>
+						</TableCell>
+						<TableCell>{row?.wcaId}</TableCell>
+						<TableCell>{row?.best}</TableCell>
+						<TableCell>
+							<GridItem justifyContent={'flex-start'} gap={1}>
+								{#if row?.stateId}
+									<Flag stateId={row?.stateId} size={2} />
+									{STATE_NAMES?.[row?.stateId]}
+								{/if}
+							</GridItem>
+						</TableCell>
+						<TableCell>
+							{#if row?.competitionState}
+								<Flag stateId={row?.competitionState} size={2} />
 							{/if}
-						</GridItem>
-					</TableCell>
-					<TableCell>
-						{#if row?.competitionState}
-							<Flag stateId={row?.competitionState} size={2} />
-						{/if}
-						{row?.competitionName}
+							{row?.competitionName}
+						</TableCell>
+					</TableRow>
+				{/each}
+			</TableBody>
+
+			<TableFooter>
+				<TableRow isFooter>
+					<TableCell isFooter colspan={6}>
+						{#key `${rankingTableData.currentPage}-${rankingTableData.totalItems}-${rankingTableData.itemsPerPage}`}
+							<TablePagination
+								currentPage={rankingTableData.currentPage}
+								totalItems={rankingTableData.totalItems}
+								itemsPerPage={rankingTableData.itemsPerPage}
+								onPageChange={handlePageChange}
+							/>
+						{/key}
 					</TableCell>
 				</TableRow>
-			{/each}
-		</TableBody>
-
-		<TableFooter>
-			<TableRow isFooter>
-				<TableCell isFooter colspan={6}>
-					{#key `${rankingTableData.currentPage}-${rankingTableData.totalItems}-${rankingTableData.itemsPerPage}`}
-						<TablePagination
-							currentPage={rankingTableData.currentPage}
-							totalItems={rankingTableData.totalItems}
-							itemsPerPage={rankingTableData.itemsPerPage}
-							onPageChange={handlePageChange}
-						/>
-					{/key}
-				</TableCell>
-			</TableRow>
-		</TableFooter>
-	</TableBase>
-</TableContainer>
+			</TableFooter>
+		</TableBase>
+	</TableContainer>
+{:else}
+	<EmptyMessage />
+{/if}
