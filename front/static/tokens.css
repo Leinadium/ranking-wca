@@ -41,8 +41,8 @@
     --color-accent-negative-dark-2: #BF0D1C;
     --color-accent-negative-dark-3: #720811;
 
-    --font-family-primary: '"Roboto Condensed"; sans-serif';
-    --font-family-secondary: '"Roboto"; sans-serif';
+    --font-family-primary: 'Roboto Condensed', sans-serif;
+    --font-family-secondary: 'Roboto', sans-serif;
     
     --font-size-bigger-6: '2.000rem'; /* 32px */
     --font-size-bigger-5: '1.812rem'; /* 29px */
