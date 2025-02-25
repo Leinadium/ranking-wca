@@ -18,7 +18,7 @@
 	import { toLocalFormat } from "$lib/utils/timestamps";
 	import { STATE_NAMES } from "$lib/constants/location";
 	import TableFilters from "../../components/common/TableFilters/TableFilters.svelte";
-	import { BRAND_NAME } from "$lib/utils/general";
+	import { BRAND_NAME } from "$lib/constants/general";
 	import {onMount} from "svelte";
 	import { loadRanking } from "../../../viewModels/ranking";
 	import type { RankingTableData, RankingTableFiltersProps } from "./types";

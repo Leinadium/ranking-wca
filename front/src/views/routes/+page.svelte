@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BRAND_NAME } from "$lib/utils/general";
+	import { BRAND_NAME } from "$lib/constants/general";
 	import GridItem from "../components/common/Grid/Item/GridItem.svelte";
 	import PageTitle from "../components/common/PageTitle/PageTitle.svelte";
 	import Typography from "../components/common/Typography/Typography.svelte";

@@ -9,7 +9,7 @@
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import { EXTERNAL_ROUTES, INTERNAL_ROUTES } from '$lib/constants/routes';
 	import { sidebar } from '$lib/states/sidebar.svelte';
-	import { BRAND_NAME } from '$lib/utils/general';
+	import { BRAND_NAME } from '$lib/constants/general';
 	import { fromPixelToRem } from '$lib/utils/style';
 	import { SPACING_FACTOR } from '$lib/tokens';
 	import './style.css';

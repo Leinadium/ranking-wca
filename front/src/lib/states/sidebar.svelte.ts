@@ -1,3 +1,3 @@
 export const sidebar = $state({
-    isExpanded: true,
+    isExpanded: false,
 });

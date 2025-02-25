@@ -73,13 +73,13 @@ export const personAdapter = {
       ok: APIResponse.ok,
       statusCode: APIResponse.statusCode,
       data: {
-        items: APIResponse.data.results.map((recordObject: PeopleSearchResultModel): PeopleSearchResultViewModel => {
+        items: APIResponse.data?.results?.map((recordObject: PeopleSearchResultModel): PeopleSearchResultViewModel => {
           return {
             wcaId: recordObject.wcaId,
             name: recordObject.wcaName,
             stateId: recordObject.stateId,
           }
-        }),
+        }) || [],
         // totalItems: recordObject.totalItems,
       },
     };

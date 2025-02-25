@@ -17,7 +17,7 @@
 	import { updateStore } from "../../../stores/update";
 	import { toLocalFormat } from "$lib/utils/timestamps";
 	import { STATE_NAMES } from "$lib/constants/location";
-	import { BRAND_NAME } from "$lib/utils/general";
+	import { BRAND_NAME } from "$lib/constants/general";
 	import {onMount} from "svelte";
 	import InputGroupRoot from "../../components/common/InputGroup/Root/InputGroupRoot.svelte";
 	import InputGroupLabel from "../../components/common/InputGroup/Label/InputGroupLabel.svelte";

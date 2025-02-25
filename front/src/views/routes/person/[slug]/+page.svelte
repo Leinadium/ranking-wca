@@ -13,7 +13,7 @@
 	import { loadPersonCurrentRecords, loadPersonImage, loadPersonInfo, loadPersonRankingByModeRecords } from "../../../../viewModels/person";
 	import Flag from "../../../components/common/Flag/Flag.svelte";
 	import Typography from "../../../components/common/Typography/Typography.svelte";
-	import { STATE_NAMES } from "$lib/consts";
+	import { STATE_NAMES } from "$lib/constants/location";
 	import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel } from "../../../../viewModels/person/types";
 	import { toLocalFormat } from "$lib/utils/timestamps";
 	import { updateStore } from "../../../../stores/update";
@@ -32,7 +32,7 @@
 	import SvgIcon from "../../../components/common/Icon/SVG/SVGIcon.svelte";
 	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
 	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
-	import { BRAND_NAME } from "$lib/utils/general";
+	import { BRAND_NAME } from "$lib/constants/general";
     import './style.css'
     
     const personId = $page.params.slug
@@ -156,7 +156,7 @@
     <!-- TODO: Criar componente Card -->
     <GridItem justifyContent={'center'} alignItems={'center'} gap={4}>
         <div class="portrait">
-            <img class="portrait__image" src={$personStore.imageUrl} alt="Imagem do {$personStore.name}">
+            <img class="portrait__image" src={$personStore.imageUrl || "/person-default-avatar.png"} alt="Imagem do {$personStore.name}">
         </div>
     
         <!-- TODO: Refatorar para não repetir tanto código -->
