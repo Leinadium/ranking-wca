@@ -3,7 +3,7 @@
 	import type { TypographyTypesConfigs, TypographyProps } from './types';
     import './style.css';
 
-    let { children, type, color, classes, ...props }: TypographyProps = $props();
+    let { children, type, color, align = 'left', classes, ...props }: TypographyProps = $props();
 
     const TYPES_CONFIGS: TypographyTypesConfigs = {
         h1: {
@@ -91,6 +91,7 @@
         font-size: ${TYPES_CONFIGS[type].size};
         line-height: ${TYPES_CONFIGS[type].lineHeight};
         color: ${color ? COLOR_TOKENS[color] : 'inherit'};
+        text-align: ${align};
     `
 </script>
 

@@ -34,3 +34,15 @@ export interface PersonRankingByModeViewModel {
     isRegistered: boolean;
     rankings: PersonEventResultViewModel[],
 }
+
+export interface PeopleSearchResultViewModel {
+    wcaId: string;
+    name: string;
+    stateId: string;
+}
+
+// TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
+export interface PeopleSearchViewModel {
+    items: PeopleSearchResultViewModel[];
+    // totalItems: number;
+}

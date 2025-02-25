@@ -11,4 +11,9 @@ export const personStore: Writable<PersonStore> = writable({
   currentRecords: [],
   rankings: {},
   isLoading: false,
+  search: {
+    items: [],
+    // TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
+    // totalItems: 0,
+  },
 });

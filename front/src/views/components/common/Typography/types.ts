@@ -11,6 +11,7 @@ export interface TypographyProps extends Omit<ButtonRootProps, 'children' | 'typ
     type: TypographyTypes;
     color?: ColorTokens;
     classes?: string;
+    align?: 'left' | 'right' | 'center';
 };
 
 interface TypographyTypeConfigs {

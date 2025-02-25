@@ -17,3 +17,17 @@ export interface GetPersonRankingByModeArgs extends Omit<SpecificMethodRequestAr
     mode: CompetitionModes;
     wcaId: string;
 }
+
+export interface GetPeopleBySearchArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
+    term: string; // a partir de 3 caracteres
+}
+
+// export interface PeopleSearchResultModel {
+//     wcaId: string;
+//     wcaName: string;
+//     stateId: string;
+// }
+
+// export interface PeopleSearchModel {
+//     results: PeopleSearchResultModel[]
+// }

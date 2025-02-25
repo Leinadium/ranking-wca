@@ -1,6 +1,6 @@
-import type { PersonCurrentRecordsModel, PersonEventResultModel, PersonRankingByModeModel } from "../../models/person";
-import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel, PersonRankingByModeViewModel } from "../../viewModels/person/types";
-import type { APIPersonInfoResponse, UIPersonInfoResponse, APIPersonImageResponse, UIPersonImageResponse, APIPersonCurrentRecordsResponse, UIPersonCurrentRecordsResponse, APIPersonRankingByModeResponse, UIPersonRankingByModeResponse } from "./types";
+import type { PersonCurrentRecordsModel, PersonEventResultModel, PeopleSearchResultModel } from "../../models/person";
+import type { PersonCurrentRecordsViewModel, PersonEventResultViewModel, PeopleSearchResultViewModel } from "../../viewModels/person/types";
+import type { APIPersonInfoResponse, UIPersonInfoResponse, APIPersonImageResponse, UIPersonImageResponse, APIPersonCurrentRecordsResponse, UIPersonCurrentRecordsResponse, APIPersonRankingByModeResponse, UIPersonRankingByModeResponse, APIPeopleBySearchResponse, UIPeopleBySearchResponse } from "./types";
 
 export const personAdapter = {
   formatInfoToUI(APIResponse: APIPersonInfoResponse): UIPersonInfoResponse {
@@ -64,6 +64,24 @@ export const personAdapter = {
           }
         }),
       }
+    };
+  },
+
+  // TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
+  formatPeopleBySearchToUI(APIResponse: APIPeopleBySearchResponse): UIPeopleBySearchResponse {
+    return {
+      ok: APIResponse.ok,
+      statusCode: APIResponse.statusCode,
+      data: {
+        items: APIResponse.data.results.map((recordObject: PeopleSearchResultModel): PeopleSearchResultViewModel => {
+          return {
+            wcaId: recordObject.wcaId,
+            name: recordObject.wcaName,
+            stateId: recordObject.stateId,
+          }
+        }),
+        // totalItems: recordObject.totalItems,
+      },
     };
   },
 };

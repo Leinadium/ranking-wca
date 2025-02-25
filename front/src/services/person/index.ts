@@ -1,7 +1,7 @@
 import { ABORT_SIGNALS_KEYS, API_ENDPOINTS, API_URL } from "$lib/constants/services";
 import HTTPService from "$lib/utils/http";
-import type { APIPersonInfoResponse, APIPersonImageResponse, APIPersonCurrentRecordsResponse, APIPersonRankingByModeResponse } from "../../adapters/person/types";
-import type { GetPersonInfoArgs, GetPersonImageArgs, GetPersonCurrentRecordsArgs, GetPersonRankingByModeArgs } from "./types";
+import type { APIPersonInfoResponse, APIPersonImageResponse, APIPersonCurrentRecordsResponse, APIPersonRankingByModeResponse, APIPeopleBySearchResponse } from "../../adapters/person/types";
+import type { GetPersonInfoArgs, GetPersonImageArgs, GetPersonCurrentRecordsArgs, GetPersonRankingByModeArgs, GetPeopleBySearchArgs } from "./types";
 
 export const personService = {
     async getInfo(args: GetPersonInfoArgs): Promise<APIPersonInfoResponse> {
@@ -33,6 +33,14 @@ export const personService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.PERSON_RANKING_BY_MODE,
             url: `${API_URL}${API_ENDPOINTS.PERSON_RANKING_BY_MODE}/${args.mode}/${args.wcaId}`,
+        })
+    },
+
+    async getPeopleBySearch(args: GetPeopleBySearchArgs): Promise<APIPeopleBySearchResponse> {
+        return await HTTPService.getAsync({
+            ...args,
+            abortSignalKey: ABORT_SIGNALS_KEYS.PERSON_SEARCH,
+            url: `${API_URL}${API_ENDPOINTS.PERSON_SEARCH}?s=${args.term}`,
         })
     },
 };

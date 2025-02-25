@@ -1,0 +1,1 @@
+export const KEY_PERSISTED_PEOPLE_SEARCH_TERM = 'peopleSearchTerm'

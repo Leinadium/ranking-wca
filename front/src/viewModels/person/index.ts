@@ -1,7 +1,7 @@
 import { personAdapter } from "../../adapters/person";
-import type { APIPersonCurrentRecordsResponse, APIPersonImageResponse, APIPersonInfoResponse, APIPersonRankingByModeResponse, UIPersonCurrentRecordsResponse, UIPersonImageResponse, UIPersonInfoResponse, UIPersonRankingByModeResponse } from "../../adapters/person/types";
+import type { APIPeopleBySearchResponse, APIPersonCurrentRecordsResponse, APIPersonImageResponse, APIPersonInfoResponse, APIPersonRankingByModeResponse, UIPeopleBySearchResponse, UIPersonCurrentRecordsResponse, UIPersonImageResponse, UIPersonInfoResponse, UIPersonRankingByModeResponse } from "../../adapters/person/types";
 import { personService } from "../../services/person";
-import type { GetPersonCurrentRecordsArgs, GetPersonImageArgs, GetPersonInfoArgs, GetPersonRankingByModeArgs } from "../../services/person/types";
+import type { GetPeopleBySearchArgs, GetPersonCurrentRecordsArgs, GetPersonImageArgs, GetPersonInfoArgs, GetPersonRankingByModeArgs } from "../../services/person/types";
 import { personStore } from "../../stores/person";
 
 export const loadPersonInfo = async (args: GetPersonInfoArgs) => {
@@ -72,5 +72,26 @@ export const loadPersonRankingByModeRecords = async (args: GetPersonRankingByMod
       ...state.rankings,
       [args.mode]: adaptedResponse.data.rankings,
     },
+  }));
+};
+
+
+export const loadPeopleSearchResults = async (args: GetPeopleBySearchArgs) => {
+  personStore.update((state) => ({
+    ...state,
+    isLoading: true,
+  }));
+
+  const APIResponse: APIPeopleBySearchResponse = await personService.getPeopleBySearch(args);
+  const adaptedResponse: UIPeopleBySearchResponse = personAdapter.formatPeopleBySearchToUI(APIResponse);
+
+  personStore.update((state) => ({
+    ...state,
+    search: {
+      items: adaptedResponse.data.items,
+      // TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
+      // totalItems: adaptedResponse.data.totalItems,
+    },
+    isLoading: false,
   }));
 };
