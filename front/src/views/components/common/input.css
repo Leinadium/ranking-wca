@@ -1,0 +1,18 @@
+.input {
+    font-family: var(--font-family-secondary);
+    color: var(--color-neutral-dark-1);
+    background-color: var(--color-neutral-light-2);
+    border: 1px solid var(--color-neutral-base);
+    padding: 8px 16px;
+}
+
+/* TODO: Estilizar placeholder */
+/* .input::placeholder,
+.input::-moz-placeholder,
+.input:-moz-placeholder,
+.input::-webkit-input-placeholder,
+.input::-ms-input-placeholder,
+.input:-ms-input-placeholder {
+    font-family: var(--font-family-secondary);
+    color: var(--color-neutral-base);
+} */

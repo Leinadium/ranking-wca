@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { InputTextProps } from "./types";
+    import '../input.css';
 
     let { value, placeholder, onChangeFn }: InputTextProps = $props();
 </script>
 
 <input
+    class={'input input--text'}
     type="text" bind:value={value}
     placeholder={placeholder}
     onkeyup={(event) => onChangeFn(event)}

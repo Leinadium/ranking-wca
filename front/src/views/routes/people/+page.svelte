@@ -95,7 +95,11 @@
 
 <InputGroupRoot>
 	<InputGroupLabel text={'Nome'} />
-	<InputText value={peopleSearchTerm} onChangeFn={handleSearchedPersonChange} />
+	<InputText
+		value={peopleSearchTerm}
+		onChangeFn={handleSearchedPersonChange}
+		placeholder={'Digite para buscar'}
+	/>
 </InputGroupRoot>
 
 {#if peopleSearchTableData.totalItems > 0}
