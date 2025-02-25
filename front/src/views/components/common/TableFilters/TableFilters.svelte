@@ -10,7 +10,6 @@
 	import Tooltip from "../../../components/common/Tooltip/Tooltip.svelte";
 	import { EVENT_LIST } from "$lib/constants/events";
 
-
 	// TODO: Pensar como melhorar as options evitando repetição de código
 	const EVENT_FILTER_OPTIONS = [
 		{
@@ -134,13 +133,18 @@
 	const { filters, updateFiltersFn } = $props()
 </script>
 
-<GridItem direction={'ROW'} justifyContent={'start'} alignItems={'flex-start'} gap={4}>
+<GridItem direction={'ROW'} justifyContent={'start'} alignItems={'flex-start'} gap={4}>	
+	{#key filters.eventId}
 	<InputGroupRoot>
 		<InputGroupLabel text={'Evento'} />
 		<ButtonGroupRoot>
 			{#each EVENT_FILTER_OPTIONS as event}
 				<Tooltip text={event.name}>
-					<ButtonGroupItem type="OUTLINED" color="PRIMARY" onClickFn={() => updateFiltersFn('eventId', event.value)}>
+					<ButtonGroupItem
+						color="PRIMARY"
+						type={filters.eventId === event.value ? "FILLED" : "OUTLINED"}
+						onClickFn={() => updateFiltersFn('eventId', event.value)}
+					>
 						<ButtonGroupIcon>
 							<FontIcon name={event.icon} />
 						</ButtonGroupIcon>
@@ -149,6 +153,7 @@
 			{/each}
 		</ButtonGroupRoot>
 	</InputGroupRoot>
+	{/key}
 	
 	<InputGroupRoot>
 		<InputGroupLabel text={'Estado'} />

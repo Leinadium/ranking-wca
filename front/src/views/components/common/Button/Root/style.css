@@ -14,6 +14,10 @@
 
 .button--outlined {
     background-color: transparent;
+}
+
+.button--outlined,
+.button--filled {
     border-width: 1px;
     border-style: solid;
 }
@@ -28,6 +32,11 @@
     background-color: var(--color-primary-dark-1);
 }
 
+.button--filled.button--primary {
+    background-color: var(--color-primary-base);
+    color: var(--color-neutral-light-1);
+}
+
 .button--secondary {
     color: var(--color-secondary-base);
     border-color: var(--color-secondary-base);
@@ -36,6 +45,11 @@
 .button--secondary.button-active {
     color: var(--color-secondary-light-1);
     background-color: var(--color-secondary-dark-1);
+}
+
+.button--filled.button--secondary {
+    background-color: var(--color-secondary-base);
+    color: var(--color-neutral-light-1);
 }
 
 .button--neutral {
@@ -48,6 +62,11 @@
     background-color: var(--color-neutral-dark-1);
 }
 
+.button--filled.button--neutral {
+    background-color: var(--color-neutral-dark-1);
+    color: var(--color-neutral-light-1);
+}
+
 .button--positive {
     color: var(--color-accent-positive-base);
     border-color: var(--color-accent-positive-base);
@@ -56,6 +75,11 @@
 .button--positive.button-active {
     color: var(--color-accent-positive-light-1);
     background-color: var(--color-accent-positive-dark-1);
+}
+
+.button--filled.button--positive {
+    background-color: var(--color-accent-positive-base);
+    color: var(--color-neutral-light-1);
 }
 
 .button--warning {
@@ -68,6 +92,11 @@
     background-color: var(--color-accent-warning-dark-1);
 }
 
+.button--filled.button--warning {
+    background-color: var(--color-accent-warning-base);
+    color: var(--color-neutral-light-1);
+}
+
 .button--negative {
     color: var(--color-accent-negative-base);
     border-color: var(--color-accent-negative-base);
@@ -78,10 +107,15 @@
     background-color: var(--color-accent-negative-dark-1);
 }
 
+.button--filled.button--negative {
+    background-color: var(--color-accent-negative-base);
+    color: var(--color-neutral-light-1);
+}
+
 .button--full {
     width: 100%;
 }
 
 .button--auto {
-    width: 'auto';
+    width: auto;
 }

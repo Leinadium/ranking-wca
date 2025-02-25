@@ -1,8 +1,8 @@
 import type { ColorTokens } from "$lib/tokens/types";
 
-export type ButtonRootTypes = 'BASIC' | 'OUTLINED';
+export type ButtonRootTypes = 'BASIC' | 'OUTLINED' | 'FILLED';
 
-type ButtonRootTypeClasses = 'button--basic' | 'button--outlined';
+type ButtonRootTypeClasses = 'button--basic' | 'button--outlined' | 'button--filled';
 
 export type ButtonRootColors = 'PRIMARY' | 'SECONDARY' | 'NEUTRAL' | 'POSITIVE' | 'WARNING' | 'NEGATIVE';
 
@@ -53,6 +53,7 @@ export interface ButtonRootClassesConfigs {
     type: {
         BASIC: ButtonRootTypeClasses;
         OUTLINED: ButtonRootTypeClasses;
+        FILLED: ButtonRootTypeClasses;
     };
     color: {
         PRIMARY: ButtonRootColorClasses;

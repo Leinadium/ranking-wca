@@ -20,6 +20,7 @@
         type: {
             BASIC: 'button--basic',
             OUTLINED: 'button--outlined',
+            FILLED: 'button--filled',
         },
         color: {
             PRIMARY: 'button--primary',
