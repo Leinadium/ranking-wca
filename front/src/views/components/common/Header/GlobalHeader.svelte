@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { toLocalDateFormat } from '$lib/utils/timestamps';
+	import { onMount } from 'svelte';
+	import { authStore } from '../../../../stores/auth';
+	import { loadLoginUrl } from '../../../../viewModels/auth';
     import Avatar from '../Avatar/Avatar.svelte';
     import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -20,6 +23,10 @@
     function upperCaseFirstLetter(text: string) {
         return text.charAt(0).toLocaleUpperCase() + text?.slice(1)
     }
+
+    onMount(() => {
+		loadLoginUrl();
+	});
 </script>
 
 <header class="global-header">
@@ -55,7 +62,7 @@
                 </GridItem>
                 
                 <!-- TODO: Implementar interação de login e alteração de estado -->
-                <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'} target={'_blank'}>
                     <ButtonText>Login</ButtonText>
                 </ButtonRoot>
             {/if}
