@@ -13,6 +13,7 @@
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import Typography from '../Typography/Typography.svelte';
     import './style.css';
+	import { responsivenessStore } from '../../../../stores/responsiveness';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
@@ -30,45 +31,50 @@
 </script>
 
 <header class="global-header">
-    <GridItem direction='ROW' justifyContent={'space-between'} gap={4}>
-        <GridItem gap={1}>
-            <SvgIcon name={'faCalendarAlt'} color={'PRIMARY_DARK_1'} size={'sm'}></SvgIcon>
-            <Typography type={'bodyOne'} color={'PRIMARY_DARK_1'}>
-                {upperCaseFirstLetter(currenTimestamp || '')}
-            </Typography>
-        </GridItem>
-
-        <GridItem gap={1}>
-            {#if userImageUrl}
-                <!-- TODO: Implementar interação de logout -->
-                <Tooltip text="Sair da conta">
-                    <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
-                        <ButtonIcon>
-                            <SvgIcon name={'faSignOut'}></SvgIcon>
-                        </ButtonIcon>
-                    </ButtonRoot>
-                </Tooltip>
-            
-                <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
-
-                <Avatar imageUrl={userImageUrl} marginH={2} />
-            {:else}
-                <GridItem gap={3}>
-                    <Typography type={'caption'} color={'NEUTRAL_DARK_1'} align={'right'}>
-                        Esse é seu perfil e deseja alterar seu estado?<br />Entre com sua conta WCA
+    {#key $responsivenessStore.isSmallDevice}
+        <GridItem direction='ROW' justifyContent={$responsivenessStore.isSmallDevice ? 'flex-end' : 'space-between'} gap={4}>
+            {#if !$responsivenessStore.isSmallDevice}
+                <GridItem gap={1}>
+                    <SvgIcon name={'faCalendarAlt'} color={'PRIMARY_DARK_1'} size={'sm'}></SvgIcon>
+                    <Typography type={'bodyOne'} color={'PRIMARY_DARK_1'}>
+                        {upperCaseFirstLetter(currenTimestamp || '')}
                     </Typography>
-                    
-                    <Divider isVertical thickness={1} color={'NEUTRAL_BASE'}  />
                 </GridItem>
-                
-                <!-- TODO: Implementar interação de login e alteração de estado -->
-                <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'} target={'_blank'}>
-                    <ButtonText>Login</ButtonText>
-                </ButtonRoot>
             {/if}
+
+            <GridItem gap={1}>
+                {#if userImageUrl}
+                    <!-- TODO: Implementar interação de logout -->
+                    <Tooltip text="Sair da conta">
+                        <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                            <ButtonIcon>
+                                <SvgIcon name={'faSignOut'}></SvgIcon>
+                            </ButtonIcon>
+                        </ButtonRoot>
+                    </Tooltip>
+                
+                    <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
+
+                    <Avatar imageUrl={userImageUrl} marginH={2} />
+                {:else}
+                    {#if !$responsivenessStore.isSmallDevice}
+                        <GridItem gap={3}>
+                            <Typography type={'caption'} color={'NEUTRAL_DARK_1'} align={'right'}>
+                                Esse é seu perfil e deseja alterar seu estado?<br />Entre com sua conta WCA
+                            </Typography>
+                            
+                            <Divider isVertical thickness={1} color={'NEUTRAL_BASE'}  />
+                        </GridItem>
+                    {/if}
+                    
+                    <!-- TODO: Implementar interação de login e alteração de estado -->
+                    <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'} target={'_blank'}>
+                        <ButtonText>Login</ButtonText>
+                    </ButtonRoot>
+                {/if}
+            </GridItem>
+
+            <Divider thickness={1} color={'NEUTRAL_BASE'} />
         </GridItem>
-
-        <Divider thickness={1} color={'NEUTRAL_BASE'} />
-    </GridItem>
-
+    {/key}
 </header>

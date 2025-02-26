@@ -34,6 +34,7 @@
 	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
 	import { BRAND_NAME } from "$lib/constants/general";
     import './style.css'
+	import { responsivenessStore } from "../../../../stores/responsiveness";
     
     const personId = $page.params.slug
 
@@ -140,8 +141,8 @@
 
 <GridItem direction={'COLUMN'} gap={4}>
     <GridItem direction={'COLUMN'} alignItems={'center'} gap={1}>
-        <GridItem gap={1}>
-            <PageTitle text={$personStore.name || '?'} />
+        <GridItem gap={1} justifyContent={'center'}  alignItems={'center'}>
+            <PageTitle align="center" text={$personStore.name || '?'} />
             <VerifiedAccountFlag isVerified={$personStore.isRegistered || false} />
         </GridItem>
     

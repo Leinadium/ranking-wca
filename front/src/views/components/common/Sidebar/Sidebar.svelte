@@ -13,6 +13,7 @@
 	import { fromPixelToRem } from '$lib/utils/style';
 	import { SPACING_FACTOR } from '$lib/tokens';
 	import './style.css';
+	import { responsivenessStore } from '../../../../stores/responsiveness';
 
 	const MENU_TOPICS: SidebarMenuTopics = [
 		{
@@ -87,6 +88,10 @@
 	function toogleExpansionStatus() {
 		sidebar.isExpanded = !sidebar.isExpanded;
 	}
+
+	$effect(() => {
+		sidebar.isExpanded = !$responsivenessStore.isSmallDevice
+	})
 </script>
 
 <aside class="sidebar {sidebar.isExpanded ? '' : 'sidebar--collapsed'}" style={customStyle}>
@@ -139,18 +144,20 @@
 		{/key}
 	</GridItem>
 
-	<ButtonRoot
-		type={'OUTLINED'}
-		color={'NEUTRAL'}
-		classes={'sidebar__button--collapse'}
-		onClickFn={toogleExpansionStatus}
-	>
-		<ButtonIcon>
-			{#if sidebar.isExpanded}
-				<SvgIcon name={'faArrowLeft'}></SvgIcon>
-			{:else}
-				<SvgIcon name={'faArrowRight'}></SvgIcon>
-			{/if}
-		</ButtonIcon>
-	</ButtonRoot>
+	{#if !$responsivenessStore.isSmallDevice}
+		<ButtonRoot
+			type={'OUTLINED'}
+			color={'NEUTRAL'}
+			classes={'sidebar__button--collapse'}
+			onClickFn={toogleExpansionStatus}
+		>
+			<ButtonIcon>
+				{#if sidebar.isExpanded}
+					<SvgIcon name={'faArrowLeft'}></SvgIcon>
+				{:else}
+					<SvgIcon name={'faArrowRight'}></SvgIcon>
+				{/if}
+			</ButtonIcon>
+		</ButtonRoot>
+	{/if}
 </aside>

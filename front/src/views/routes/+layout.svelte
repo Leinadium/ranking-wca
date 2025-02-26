@@ -7,6 +7,7 @@
 	import { loadUpdateStatus } from '../../viewModels/update';
 	import { onMount } from 'svelte';
 	import './main.css';
+	import { responsivenessStore } from '../../stores/responsiveness';
 
 	let { children }: RootLayoutProps = $props();
 
@@ -14,8 +15,19 @@
 		width: 100%;
 	`)
 
+	const checkDeviceSize = () => {
+		responsivenessStore.update((state) => ({
+			...state,
+			isSmallDevice: window.innerWidth < 800,
+		}));
+	};
+
 	onMount(() => {
 		loadUpdateStatus();
+		checkDeviceSize();
+		window.addEventListener('resize', checkDeviceSize);
+
+		return () => window.removeEventListener('resize', checkDeviceSize);
 	});
 </script>
 
@@ -25,9 +37,11 @@
 	<GlobalHeader />
 	
 	<main style={mainCustomStyle}>
-		<GridRoot marginH={8} gap={2}>
-			{@render children?.()}
-		</GridRoot>
+		{#key $responsivenessStore.isSmallDevice}
+			<GridRoot marginH={$responsivenessStore.isSmallDevice ? 4 : 8} gap={2}>
+				{@render children?.()}
+			</GridRoot>
+		{/key}
 	</main>
 	
 	<Footer />
