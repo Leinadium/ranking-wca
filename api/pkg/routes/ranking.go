@@ -43,38 +43,55 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 
 	// querying the database
 	pqs := []models.RankingQuery{}
-	query := gs.DB.Raw(
-		pageArgs.AddToSQL(rawSql),
+	// query := gs.DB.Raw(
+	// 	pageArgs.AddToSQL(rawSql),
+	// 	sql.Named("eventId", eventReq),
+	// 	sql.Named("stateId", stateReq),
+	// )
+
+	// // obtaining results
+	// if err := query.Find(&pqs).Error; err != nil {
+	// 	errors.LogSetError(c, "could not query database", http.StatusInternalServerError, err)
+	// 	return
+	// }
+
+	// // check no data
+	// if len(pqs) == 0 {
+	// 	errors.SetError(c, "no data", http.StatusNotFound)
+	// 	return
+	// }
+
+	// var countRes struct {
+	// 	Count int
+	// }
+	// // query database
+	// countQuery := gs.DB.Raw(pageArgs.AddCount(rawSql),
+	// 	sql.Named("eventId", eventReq),
+	// 	sql.Named("stateId", stateReq),
+	// )
+	// // retrieve value
+	// if err := countQuery.First(&countRes).Error; err != nil {
+	// 	errors.LogSetError(c, "could not query database for count", http.StatusInternalServerError, err)
+	// 	return
+	// }
+	// totalItems := int(countRes.Count)
+
+	totalItems, err := PaginatedQuery(
+		gs.DB,
+		pageArgs,
+		&pqs,
+		rawSql,
 		sql.Named("eventId", eventReq),
 		sql.Named("stateId", stateReq),
 	)
-
-	// obtaining results
-	if err := query.Find(&pqs).Error; err != nil {
-		errors.LogSetError(c, "could not query database", http.StatusInternalServerError, err)
+	if err != nil {
+		errors.LogSetError(c, err.Error(), http.StatusInternalServerError, err)
 		return
 	}
-
-	// check no data
-	if len(pqs) == 0 {
+	if totalItems == 0 {
 		errors.SetError(c, "no data", http.StatusNotFound)
 		return
 	}
-
-	var countRes struct {
-		Count int
-	}
-	// query database
-	countQuery := gs.DB.Raw(pageArgs.AddCount(rawSql),
-		sql.Named("eventId", eventReq),
-		sql.Named("stateId", stateReq),
-	)
-	// retrieve value
-	if err := countQuery.First(&countRes).Error; err != nil {
-		errors.LogSetError(c, "could not query database for count", http.StatusInternalServerError, err)
-		return
-	}
-	totalItems := int(countRes.Count)
 
 	// create values and removing duplicates
 	m := make(map[string]models.RankingQuery)

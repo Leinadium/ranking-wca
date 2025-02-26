@@ -1,11 +1,13 @@
 package routes
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func toInt(s string) int {
@@ -69,4 +71,32 @@ func (pg PaginationArgs) AddToSQL(statement string) string {
 
 func (pg PaginationArgs) AddCount(statement string) string {
 	return fmt.Sprintf("SELECT COUNT(*) AS count FROM (%s) AS x", statement)
+}
+
+func PaginatedQuery[S ~[]E, E any](
+	db *gorm.DB,
+	pg PaginationArgs,
+	dest *S,
+	sqlQuery string,
+	sqlArgs ...interface{},
+) (int, error) {
+	// first, create query
+	query := db.Raw(pg.AddToSQL(sqlQuery), sqlArgs...)
+	// bind to dest
+	if err := query.Find(&dest).Error; err != nil {
+		return 0, errors.New("could not query database")
+	}
+	// check if there were results
+	if len(*dest) == 0 {
+		return 0, nil
+	}
+	// now get total count
+	var res struct {
+		Count int
+	}
+	// query with count(*)
+	if err := db.Raw(pg.AddCount(sqlQuery), sqlArgs...).First(&res).Error; err != nil {
+		return 0, errors.New("could not query database for count")
+	}
+	return res.Count, nil
 }
