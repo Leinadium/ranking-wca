@@ -15,24 +15,47 @@
 	import { responsivenessStore } from '../../../../stores/responsiveness';
 	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from '$lib/constants/person';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
-	import { page } from '$app/stores';
-	import { KEY_PERSISTED_USER } from '$lib/constants/auth';
+	import { AUTH_CODE_PARAM_KEY, KEY_PERSISTED_USER } from '$lib/constants/auth';
 	import { getPersonImage } from '$lib/utils/person';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
     import './style.css';
+	import { checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
     });
     const urlParams = new SvelteURLSearchParams($page.url.searchParams);
-    const authCode: string | null = urlParams.get("code");
+    const authCode: string | null = urlParams.get(AUTH_CODE_PARAM_KEY);
     let userImageUrl = $state(DEFAULT_PERSON_AVATAR_IMAGE_SRC);
     
     function upperCaseFirstLetter(text: string) {
         return text.charAt(0).toLocaleUpperCase() + text?.slice(1)
     }
 
+    function removeQueryParam(paramKey: string) {
+        let modifiedUrlParams = urlParams
+
+        modifiedUrlParams.delete(paramKey)        
+        goto(`${$page.url.pathname}${modifiedUrlParams.size > 0 ? '?' + modifiedUrlParams.toString() : ''}`, { replaceState: true });
+    };
+
     function getPersistedUserData() {
-        return JSON.parse(sessionStorage.getItem(KEY_PERSISTED_USER) || 'null')
+        const persistedData = sessionStorage.getItem(KEY_PERSISTED_USER) || null
+        return checkIsNullOrUndefinedOrEmptyString(persistedData) ? null : JSON.parse(persistedData)
+    }
+
+    function updatePersistedUserData(newData) {
+        if (!newData) {
+            sessionStorage.removeItem(KEY_PERSISTED_USER)
+        } else {
+            sessionStorage.setItem(KEY_PERSISTED_USER, JSON.stringify(newData))
+        }
+
+        authStore.update((state) => ({
+            ...state,
+            user: newData,
+        }));
     }
 
     function updateUserData(code: string | null) {
@@ -51,17 +74,26 @@
             wcaId: "2018GUIM02",
         }
 
-        authStore.update((state) => ({
-            ...state,
-            user: mockedResponseData,
-        }));
+        updatePersistedUserData(mockedResponseData)
+    }
+
+    async function initializeUserData() {
+        const persistedUser = getPersistedUserData()
+
+        if (persistedUser) {
+            updatePersistedUserData(persistedUser)
+            removeQueryParam(AUTH_CODE_PARAM_KEY)
+            return
+        }
+
+        await loadLoginUrl()
+        await updateUserData(authCode)
+        removeQueryParam(AUTH_CODE_PARAM_KEY)
     }
 
     function handleLogout() {
-        authStore.update((state) => ({
-            ...state,
-            user: null,
-        }));
+        removeQueryParam(AUTH_CODE_PARAM_KEY)
+        updatePersistedUserData(null)
     }
 
     $effect(() => {
@@ -73,26 +105,8 @@
         })()
     })
 
-    $effect(() => {
-        if (!$authStore.user) return sessionStorage.removeItem(KEY_PERSISTED_USER)
-        sessionStorage.setItem(KEY_PERSISTED_USER, JSON.stringify($authStore.user))
-    })
-
     onMount(() => {
-        const persistedUser = getPersistedUserData()
-
-        if (persistedUser) {
-            authStore.update((state) => ({
-                ...state,
-                user: persistedUser,
-            }));
-            return
-        }
-
-        (async() => {
-            await loadLoginUrl()
-            await updateUserData(authCode)
-        })()
+        initializeUserData()
 	});
 </script>
 
