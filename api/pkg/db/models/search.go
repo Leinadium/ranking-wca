@@ -20,5 +20,4 @@ FROM
 WHERE
 	c.wca_id LIKE @search
 	OR c.wca_name LIKE @search
-LIMIT 10
 `

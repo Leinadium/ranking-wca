@@ -20,22 +20,27 @@ func (gs *GlobalState) GetSearch(c *gin.Context) {
 	}
 
 	pageArgs := PaginationArgsFromContext(c)
-
 	searchFinal := fmt.Sprintf("%%%s%%", strings.ToLower(searchText))
-	query := gs.DB.Raw(
-		pageArgs.AddToSQL(models.QuerySearchNameId),
+	ss := []models.SearchQuery{}
+
+	totalItems, err := PaginatedQuery(
+		gs.DB,
+		pageArgs,
+		&ss,
+		string(models.QuerySearchNameId),
 		sql.Named("search", searchFinal),
 	)
-
-	ss := []models.SearchQuery{}
-	if err := query.Find(&ss).Error; err != nil {
-		errors.LogSetError(c, "could not query dataabase", http.StatusInternalServerError, err)
+	if err != nil {
+		errors.LogSetError(c, err.Error(), http.StatusInternalServerError, err)
 		return
 	}
 
-	if ss == nil {
+	if ss == nil || totalItems == 0 {
 		ss = make([]models.SearchQuery, 0) // empty slice
 	}
 
-	c.JSON(http.StatusOK, gin.H{"results": ss})
+	c.JSON(http.StatusOK, gin.H{
+		"totalItems": totalItems,
+		"results":    ss,
+	})
 }
