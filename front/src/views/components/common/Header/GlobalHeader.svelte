@@ -68,7 +68,7 @@
                     {/if}
                     
                     <!-- TODO: Implementar interação de login e alteração de estado -->
-                    <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'} target={'_blank'}>
+                    <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'}>
                         <ButtonText>Login</ButtonText>
                     </ButtonRoot>
                 {/if}
