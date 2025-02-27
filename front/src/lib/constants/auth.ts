@@ -1,0 +1,1 @@
+export const KEY_PERSISTED_USER = 'user'

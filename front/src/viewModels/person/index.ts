@@ -1,5 +1,6 @@
+import { getPersonImage } from "$lib/utils/person";
 import { personAdapter } from "../../adapters/person";
-import type { APIPeopleBySearchResponse, APIPersonCurrentRecordsResponse, APIPersonImageResponse, APIPersonInfoResponse, APIPersonRankingByModeResponse, UIPeopleBySearchResponse, UIPersonCurrentRecordsResponse, UIPersonImageResponse, UIPersonInfoResponse, UIPersonRankingByModeResponse } from "../../adapters/person/types";
+import type { APIPeopleBySearchResponse, APIPersonCurrentRecordsResponse, APIPersonInfoResponse, APIPersonRankingByModeResponse, UIPeopleBySearchResponse, UIPersonCurrentRecordsResponse, UIPersonInfoResponse, UIPersonRankingByModeResponse } from "../../adapters/person/types";
 import { personService } from "../../services/person";
 import type { GetPeopleBySearchArgs, GetPersonCurrentRecordsArgs, GetPersonImageArgs, GetPersonInfoArgs, GetPersonRankingByModeArgs } from "../../services/person/types";
 import { personStore } from "../../stores/person";
@@ -30,12 +31,11 @@ export const loadPersonImage = async (args: GetPersonImageArgs) => {
     isLoading: true,
   }));
 
-  const APIResponse: APIPersonImageResponse = await personService.getImage(args);
-  const adaptedResponse: UIPersonImageResponse = personAdapter.formatImageToUI(APIResponse);
+  const personImage = await getPersonImage(args)
 
   personStore.update((state) => ({
     ...state,
-    imageUrl: adaptedResponse.data.imageUrl,
+    imageUrl: personImage,
     isLoading: false,
   }));
 };

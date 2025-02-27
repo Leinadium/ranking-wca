@@ -27,14 +27,12 @@
 	import ButtonIcon from "../../../components/common/Button/Icon/ButtonIcon.svelte";
 	import FontIcon from "../../../components/common/Icon/Font/FontIcon.svelte";
 	import { formatTimeByEvent, formatValueAsInt } from "$lib/utils/numbers";
-	import type { CompetitionModes } from "$lib/types/competitions";
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
-	import SvgIcon from "../../../components/common/Icon/SVG/SVGIcon.svelte";
 	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
 	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
 	import { BRAND_NAME } from "$lib/constants/general";
     import './style.css'
-	import { responsivenessStore } from "../../../../stores/responsiveness";
+	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from "$lib/constants/person";
     
     const personId = $page.params.slug
 
@@ -157,7 +155,7 @@
     <!-- TODO: Criar componente Card -->
     <GridItem justifyContent={'center'} alignItems={'center'} gap={4}>
         <div class="portrait">
-            <img class="portrait__image" src={$personStore.imageUrl || "/person-default-avatar.png"} alt="Imagem do {$personStore.name}">
+            <img class="portrait__image" src={$personStore.imageUrl || DEFAULT_PERSON_AVATAR_IMAGE_SRC} alt="Imagem do {$personStore.name}">
         </div>
     
         <!-- TODO: Refatorar para não repetir tanto código -->

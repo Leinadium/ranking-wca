@@ -12,21 +12,87 @@
 	import SvgIcon from '../Icon/SVG/SVGIcon.svelte';
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import Typography from '../Typography/Typography.svelte';
-    import './style.css';
 	import { responsivenessStore } from '../../../../stores/responsiveness';
+	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from '$lib/constants/person';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
+	import { page } from '$app/stores';
+	import { KEY_PERSISTED_USER } from '$lib/constants/auth';
+	import { getPersonImage } from '$lib/utils/person';
+    import './style.css';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
     });
-    // TODO: Pegar dado da API
-    const userImageUrl = null; // 'https://avatars.worldcubeassociation.org/uploads/user/avatar/2018GUIM02/1696093574.JPG';
-
+    const urlParams = new SvelteURLSearchParams($page.url.searchParams);
+    const authCode: string | null = urlParams.get("code");
+    let userImageUrl = $state(DEFAULT_PERSON_AVATAR_IMAGE_SRC);
+    
     function upperCaseFirstLetter(text: string) {
         return text.charAt(0).toLocaleUpperCase() + text?.slice(1)
     }
 
+    function getPersistedUserData() {
+        return JSON.parse(sessionStorage.getItem(KEY_PERSISTED_USER) || 'null')
+    }
+
+    function updateUserData(code: string | null) {
+        if (!code) return
+
+        // TODO: Fazer requisição para auth/callback
+        const mockedResponseData = {
+            accessToken:"x",
+            expiresIn: 7199,
+            name:"Daniel Schreiber Guimarães",
+            register: {
+                canRegister:true,
+                stateId: null,
+                updated: null,
+            },
+            wcaId: "2018GUIM02",
+        }
+
+        authStore.update((state) => ({
+            ...state,
+            user: mockedResponseData,
+        }));
+    }
+
+    function handleLogout() {
+        authStore.update((state) => ({
+            ...state,
+            user: null,
+        }));
+    }
+
+    $effect(() => {
+        if (!$authStore.user) return
+
+        (async() => {
+            const userImage = await getPersonImage({ wcaId: $authStore.user.wcaId })
+            userImageUrl = userImage || DEFAULT_PERSON_AVATAR_IMAGE_SRC
+        })()
+    })
+
+    $effect(() => {
+        if (!$authStore.user) return sessionStorage.removeItem(KEY_PERSISTED_USER)
+        sessionStorage.setItem(KEY_PERSISTED_USER, JSON.stringify($authStore.user))
+    })
+
     onMount(() => {
-		loadLoginUrl();
+        const persistedUser = getPersistedUserData()
+
+        if (persistedUser) {
+            authStore.update((state) => ({
+                ...state,
+                user: persistedUser,
+            }));
+            return
+        }
+
+        (async() => {
+            await loadLoginUrl()
+            await updateUserData(authCode)
+        })()
 	});
 </script>
 
@@ -43,10 +109,9 @@
             {/if}
 
             <GridItem gap={1}>
-                {#if userImageUrl}
-                    <!-- TODO: Implementar interação de logout -->
+                {#if $authStore.user}
                     <Tooltip text="Sair da conta">
-                        <ButtonRoot type={'BASIC'} color={'PRIMARY'}>
+                        <ButtonRoot type={'BASIC'} color={'PRIMARY'} onClickFn={handleLogout}>
                             <ButtonIcon>
                                 <SvgIcon name={'faSignOut'}></SvgIcon>
                             </ButtonIcon>
@@ -67,7 +132,6 @@
                         </GridItem>
                     {/if}
                     
-                    <!-- TODO: Implementar interação de login e alteração de estado -->
                     <ButtonRoot type={'BASIC'} color={'PRIMARY'} href={$authStore.loginUrl || '#'}>
                         <ButtonText>Login</ButtonText>
                     </ButtonRoot>
