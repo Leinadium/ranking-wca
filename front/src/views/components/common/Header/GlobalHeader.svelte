@@ -2,7 +2,7 @@
 	import { toLocalDateFormat } from '$lib/utils/timestamps';
 	import { onMount } from 'svelte';
 	import { authStore } from '../../../../stores/auth';
-	import { loadLoginUrl } from '../../../../viewModels/auth';
+	import { loadLoginUrl, loadUserInformations } from '../../../../viewModels/auth';
     import Avatar from '../Avatar/Avatar.svelte';
     import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -21,6 +21,7 @@
 	import { goto } from '$app/navigation';
     import './style.css';
 	import { checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
+	import type { UserInformationsViewModel } from '../../../../viewModels/auth/types';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
@@ -45,7 +46,7 @@
         return checkIsNullOrUndefinedOrEmptyString(persistedData) ? null : JSON.parse(persistedData)
     }
 
-    function updatePersistedUserData(newData) {
+    function updatePersistedUserData(newData: UserInformationsViewModel) {
         if (!newData) {
             sessionStorage.removeItem(KEY_PERSISTED_USER)
         } else {
@@ -58,11 +59,11 @@
         }));
     }
 
-    function updateUserData(code: string | null) {
+    async function updateUserData(code: string | null) {
         if (!code) return
 
-        // TODO: Fazer requisição para auth/callback
-        const mockedResponseData = {
+        // TODO: Remover valor alternativo de mock após implementações locais do /register
+        const userInformations = (await loadUserInformations({ code })) || {
             accessToken:"x",
             expiresIn: 7199,
             name:"Daniel Schreiber Guimarães",
@@ -74,7 +75,7 @@
             wcaId: "2018GUIM02",
         }
 
-        updatePersistedUserData(mockedResponseData)
+        updatePersistedUserData(userInformations)
     }
 
     async function initializeUserData() {
