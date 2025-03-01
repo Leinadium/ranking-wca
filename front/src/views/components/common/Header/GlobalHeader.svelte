@@ -2,7 +2,7 @@
 	import { toLocalDateFormat } from '$lib/utils/timestamps';
 	import { onMount } from 'svelte';
 	import { authStore } from '../../../../stores/auth';
-	import { loadLoginUrl, loadUserInformations } from '../../../../viewModels/auth';
+	import { loadLoginUrl, updateUserInformations } from '../../../../viewModels/auth';
     import Avatar from '../Avatar/Avatar.svelte';
     import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -76,7 +76,7 @@
 
     function getPersistedUserData() {
         const persistedData = sessionStorage.getItem(KEY_PERSISTED_USER) || null
-        return checkIsNullOrUndefinedOrEmptyString(persistedData) ? null : JSON.parse(persistedData)
+        return checkIsNullOrUndefinedOrEmptyString(persistedData) ? null : JSON.parse(persistedData || '')
     }
 
     function updatePersistedUserData(newData: UserInformationsViewModel | null) {
@@ -92,7 +92,7 @@
         }));
     }
 
-    async function updateUserData(code: string | null) {
+    async function getUpdatedUserData(code: string | null) {
         if (!code) return
 
         // TODO: Remover valor alternativo de mock após implementações locais do /register
@@ -122,7 +122,7 @@
         }
 
         await loadLoginUrl()
-        await updateUserData(authCode)
+        await getUpdatedUserData(authCode)
         removeQueryParam(AUTH_CODE_PARAM_KEY)
     }
 
@@ -141,9 +141,14 @@
         selectedUserState = stateId
     }
 
-    function updateUserInformations() {
-        // TODO: Fazer requisição
-        console.log('Solicitou a atualização das informações do usuário', selectedUserState)
+    async function handleConfirmUserInformationsChange() {
+        await updateUserInformations({
+            accessToken: $authStore.user.accessToken,
+            wcaId: $authStore.user.wcaId,
+            stateId: selectedUserState,
+            customOnSuccessFn: async() => await getUpdatedUserData(authCode),
+            errorMessage: 'Não foi possível atualizar dados pessoais do usuário. Por favor, tente novamente.'
+        })
     }
 
     $effect(() => {
@@ -209,7 +214,7 @@
                         size={'SMALL'}
                         title="Alteração de dados pessoais"
                         actionText={'Alterar'}
-                        actionFn={updateUserInformations}
+                        actionFn={async() => handleConfirmUserInformationsChange()}
                     >
                         <InputGroupRoot isFullWidth>
                             <InputGroupLabel text={'Estado'} />

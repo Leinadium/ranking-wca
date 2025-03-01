@@ -1,7 +1,7 @@
 import { authAdapter } from "../../adapters/auth";
 import type { APIGetLoginUrlResponse, APIGetUserInformationsResponse, UIGetLoginUrlResponse, UIGetUserInformationsResponse } from "../../adapters/auth/types";
 import { authService } from "../../services/auth";
-import type { GetLoginUrlArgs, GetUserInformationsArgs } from "../../services/auth/types";
+import type { GetLoginUrlArgs, GetUserInformationsArgs, UpdateUserInformationsArgs } from "../../services/auth/types";
 import { authStore } from "../../stores/auth";
 import type { UserInformationsViewModel } from "./types";
 
@@ -37,4 +37,18 @@ export const loadUserInformations = async (args?: GetUserInformationsArgs): Prom
   }));
 
   return adaptedResponse.data
+};
+
+export const updateUserInformations = async (args?: UpdateUserInformationsArgs): Promise<void> => {
+  authStore.update((state) => ({
+    ...state,
+    isLoading: true,
+  }));
+
+  await authService.updateUserInformations(args);
+
+  authStore.update((state) => ({
+    ...state,
+    isLoading: false,
+  }));
 };

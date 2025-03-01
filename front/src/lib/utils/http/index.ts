@@ -76,7 +76,7 @@ export default class HTTPService {
     const technicalMessage = checkIsNullOrUndefined(args.error?.message)
       ? undefined
       : args.error?.message?.toString()?.replace('Error: ', '')
-    const friendlyMessage = args.errorMessage ? `${args.errorMessage} ${technicalMessage}` : undefined
+    const friendlyMessage = args.errorMessage ? `${args.errorMessage} Mais detalhes: ${technicalMessage}` : undefined
 
     showErrorMessage({ technicalMessage, friendlyMessage })
 

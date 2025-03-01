@@ -2,8 +2,9 @@ export const API_URL = 'https://ranking.leinadium.dev/api'
 
 export const API_ENDPOINTS = {
     UPDATE_STATUS: '/status',
-    AUTHENTICATE: '/auth/endpoint',
-    AUTHENTICATE_CALLBACK: '/auth/callback',
+    AUTH: '/auth/endpoint',
+    AUTH_CALLBACK: '/auth/callback',
+    USER_UPDATE: '/auth/register',
     PERSON_INFO: '/person/info',
     PERSON_IMAGE: 'https://www.worldcubeassociation.org/api/v0/persons',
     PERSON_RANKING_BY_MODE: '/person',
@@ -14,8 +15,9 @@ export const API_ENDPOINTS = {
 
 export const ABORT_SIGNALS_KEYS = {
     UPDATE_STATUS: 'SIGNAL_UPDATE_STATUS',
-    AUTHENTICATE: 'SIGNAL_AUTHENTICATE',
-    AUTHENTICATE_CALLBACK: 'SIGNAL_AUTHENTICATE_CALLBACK',
+    AUTH: 'SIGNAL_AUTH',
+    AUTH_CALLBACK: 'SIGNAL_AUTH_CALLBACK',
+    USER_UPDATE: 'SIGNAL_USER_UPDATE',
     PERSON_INFO: 'SIGNAL_PERSON_INFO',
     PERSON_IMAGE: 'SIGNAL_PERSON_IMAGE',
     PERSON_RANKING_BY_MODE: 'SIGNAL_PERSON_RANKING_BY_MODE',

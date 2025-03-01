@@ -9,3 +9,5 @@ export interface UIGetLoginUrlResponse extends CustomResponse<LoginUrlViewModel>
 export interface APIGetUserInformationsResponse extends CustomResponse<UserInformationsModel> {}
 
 export interface UIGetUserInformationsResponse extends CustomResponse<UserInformationsViewModel> {}
+
+export interface APIUpdateUserInformationsResponse extends CustomResponse<null> {}
