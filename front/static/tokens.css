@@ -15,7 +15,7 @@
 
     --color-neutral-light-2: #FAFAFA;
     --color-neutral-light-1: #ECF0F3;
-    --color-neutral-base: #DFE4E9;
+    --color-neutral-base: #C3CBD1;
     --color-neutral-dark-1: #8C959D;
     --color-neutral-dark-2: #333333;
     --color-neutral-dark-3: #121212;
@@ -60,7 +60,8 @@
     --line-height-medium-font: '130%';
     --line-height-small-font: '150%';
 
-    --shadow-inner-1: 0px 1px 4px 0px var(--color-neutral-base);
-    --shadow-outer-1: 0px 2px 4px 0px var(--color-neutral-base);
-    --shadow-outer-2: 0px 4px 8px 0px var(--color-neutral-base);
+    --shadow-inner-1: 0px 2px 4px 0px var(--color-neutral-light-1);
+    --shadow-outer-1: 0px 1px 4px 0px var(--color-neutral-base);
+    --shadow-outer-2: 0px 2px 4px 0px var(--color-neutral-base);
+    --shadow-outer-3: 0px 4px 8px 0px var(--color-neutral-base);
 }
