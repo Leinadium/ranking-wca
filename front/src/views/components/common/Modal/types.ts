@@ -6,4 +6,5 @@ export interface ModalProps {
     title: string;
     actionText: string;
     actionFn: () => void;
+    isActionDisabled?: boolean;
 }

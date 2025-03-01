@@ -11,7 +11,7 @@
 	import './style.css';
 	import GridItem from '../Grid/Item/GridItem.svelte';
 
-    let { children, size = 'MEDIUM', title, actionText, actionFn }: ModalProps = $props();
+    let { children, size = 'MEDIUM', title, actionText, actionFn, isActionDisabled = false }: ModalProps = $props();
 	
 	const TYPE_CLASSES = {
         size: {
@@ -59,7 +59,13 @@
 		</GridItem>
 		
 		<GridItem gap={1} classes={'modal__footer'} justifyContent={'flex-end'}>
-			<ButtonRoot type={'FILLED'} size={'SMALL'} color={'PRIMARY'} onClickFn={handleActionButtonClick}>
+			<ButtonRoot
+				type={'FILLED'}
+				size={'SMALL'}
+				color={'PRIMARY'}
+				onClickFn={handleActionButtonClick}
+				disabled={isActionDisabled}
+			>
 				<ButtonText>{actionText}</ButtonText>
 			</ButtonRoot>
 		</GridItem>

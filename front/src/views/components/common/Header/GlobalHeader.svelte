@@ -215,6 +215,7 @@
                         title="Alteração de dados pessoais"
                         actionText={'Alterar'}
                         actionFn={async() => handleConfirmUserInformationsChange()}
+                        isActionDisabled={!selectedUserState || selectedUserState === $authStore.user?.customRegistration?.stateId}
                     >
                         <InputGroupRoot isFullWidth>
                             <InputGroupLabel text={'Estado'} />

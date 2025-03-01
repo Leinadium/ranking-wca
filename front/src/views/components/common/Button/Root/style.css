@@ -112,6 +112,17 @@
     color: var(--color-neutral-light-1);
 }
 
+.button:disabled {
+    color: var(--color-neutral-base) !important;
+    border-color: var(--color-neutral-base) !important;
+    cursor: not-allowed;
+}
+
+.button--filled:disabled {
+    color: var(--color-neutral-dark-1) !important;
+    background-color: var(--color-neutral-base) !important;
+}
+
 .button--full {
     width: 100%;
 }
