@@ -1,4 +1,5 @@
 import type { CompetitionModes } from "$lib/types/competitions";
+import type { PaginatedQuery } from "$lib/types/pagination";
 import type { SpecificMethodRequestArgs } from "$lib/utils/http/types";
 
 export interface GetPersonInfoArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
@@ -18,6 +19,6 @@ export interface GetPersonRankingByModeArgs extends Omit<SpecificMethodRequestAr
     wcaId: string;
 }
 
-export interface GetPeopleBySearchArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {
+export interface GetPeopleBySearchArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'>, PaginatedQuery {
     term: string; // a partir de 3 caracteres
 }

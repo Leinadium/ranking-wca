@@ -45,8 +45,7 @@ export interface PeopleSearchResultModel {
     stateId: string;
 }
 
-// TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
 export interface PeopleSearchModel {
     results: PeopleSearchResultModel[];
-    // totalItems: number;
+    totalItems: number;
 }

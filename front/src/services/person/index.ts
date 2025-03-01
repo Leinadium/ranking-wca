@@ -40,7 +40,7 @@ export const personService = {
         return await HTTPService.getAsync({
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.PERSON_SEARCH,
-            url: `${API_URL}${API_ENDPOINTS.PERSON_SEARCH}?s=${args.term}`,
+            url: `${API_URL}${API_ENDPOINTS.PERSON_SEARCH}?s=${args.term}&p=${args.page ?? 0}&q=${args.itensPerPage ?? 50}`,
         })
     },
 };

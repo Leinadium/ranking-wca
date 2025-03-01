@@ -67,7 +67,6 @@ export const personAdapter = {
     };
   },
 
-  // TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
   formatPeopleBySearchToUI(APIResponse: APIPeopleBySearchResponse): UIPeopleBySearchResponse {
     return {
       ok: APIResponse.ok,
@@ -80,7 +79,7 @@ export const personAdapter = {
             stateId: recordObject.stateId,
           }
         }) || [],
-        // totalItems: recordObject.totalItems,
+        totalItems: APIResponse.data?.totalItems,
       },
     };
   },

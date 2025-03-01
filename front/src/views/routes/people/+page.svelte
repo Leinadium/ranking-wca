@@ -29,6 +29,7 @@
 	import { checkIsNullOrUndefinedOrEmptyString } from "$lib/utils/validation";
 	import EmptyMessage from "../../components/common/EmptyMessage/EmptyMessage.svelte";
 	import { debounce } from "$lib/utils/debounce";
+	import { rankingStore } from "../../../stores/ranking";
 	
 	let peopleSearchTerm = $state(sessionStorage.getItem(KEY_PERSISTED_PEOPLE_SEARCH_TERM) || '')
 	const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
@@ -64,6 +65,8 @@
 
 		await loadPeopleSearchResults({
 			term: peopleSearchTerm,
+			page: peopleSearchTableData.currentPage - 1,
+			itensPerPage: peopleSearchTableData.itemsPerPage,
 		})
 	}
 
@@ -71,10 +74,8 @@
         peopleSearchTableData.paginatedData = $personStore.search.items
 	})
 
-	// TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
 	$effect(() => {
-        peopleSearchTableData.totalItems = $personStore.search.items.length
-        // peopleSearchTableData.totalItems = $rankingStore.search.totalItems
+        peopleSearchTableData.totalItems = $personStore.search.totalItems
 	})
 
 	$effect(() => {

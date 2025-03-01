@@ -89,8 +89,7 @@ export const loadPeopleSearchResults = async (args: GetPeopleBySearchArgs) => {
     ...state,
     search: {
       items: adaptedResponse.data.items,
-      // TODO: Implementar totalItems quando busca estiver paginada pelo Back-end
-      // totalItems: adaptedResponse.data.totalItems,
+      totalItems: adaptedResponse.data.totalItems,
     },
     isLoading: false,
   }));
