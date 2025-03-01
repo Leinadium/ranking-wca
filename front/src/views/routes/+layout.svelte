@@ -18,7 +18,7 @@
 	const checkDeviceSize = () => {
 		responsivenessStore.update((state) => ({
 			...state,
-			isSmallDevice: window.innerWidth < 800,
+			isSmallDevice: window.innerWidth < 800 || window.innerHeight < 600,
 		}));
 	};
 
