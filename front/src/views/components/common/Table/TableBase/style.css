@@ -1,8 +1,12 @@
-.table__base {
+.table__container--scrollable {
+    display: block;
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
-    display: block;
+}
+
+.table__base {
+    width: 100%;
     border-collapse: collapse;
     background-color: transparent;
     border: none;

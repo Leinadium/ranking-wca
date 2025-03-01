@@ -5,6 +5,8 @@
     let { children }: TableBaseProps = $props();
 </script>
 
-<table class="table__base">
-    {@render children()}
-</table>
+<div class="table__container--scrollable">
+    <table class="table__base">
+        {@render children()}
+    </table>
+</div>

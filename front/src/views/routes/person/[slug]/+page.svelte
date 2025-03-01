@@ -1,7 +1,7 @@
 <script lang="ts">
 	import GridItem from "../../../components/common/Grid/Item/GridItem.svelte";
 	import PageTitle from "../../../components/common/PageTitle/PageTitle.svelte";
-    import TableContainer from "../../../components/common/Table/TableContainer/TableContainer.svelte";
+    import Table from "../../../components/common/Table/Table/Table.svelte";
 	import TableBase from "../../../components/common/Table/TableBase/TableBase.svelte";
 	import TableHead from "../../../components/common/Table/TableHead/TableHead.svelte";
 	import TableRow from "../../../components/common/Table/TableRow/TableRow.svelte";
@@ -182,7 +182,7 @@
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
     <Typography type={'h4'} color={'NEUTRAL_DARK_2'}>Recordes pessoais atuais</Typography>
 
-    <TableContainer>
+    <Table>
         <TableBase>
             <TableHead>
                 <TableRow isHeader>
@@ -230,7 +230,7 @@
                 {/each}
             </TableBody>
         </TableBase>
-    </TableContainer>
+    </Table>
 </GridItem>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
@@ -239,7 +239,7 @@
     <!-- TODO: Habilitar quando implementar filtros -->
     <!-- <TableFilters /> -->
 
-    <TableContainer>
+    <Table>
         <TableBase>
             <!-- TODO: Habilitar quando implementar filtros -->
             <!-- <TableHead>
@@ -320,5 +320,5 @@
                 {/each}
             </TableBody>
         </TableBase>
-    </TableContainer>
+    </Table>
 </GridItem>

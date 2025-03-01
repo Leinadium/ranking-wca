@@ -2,7 +2,7 @@
 	import GridItem from "../../components/common/Grid/Item/GridItem.svelte";
 	import PageTitle from "../../components/common/PageTitle/PageTitle.svelte";
 	import Typography from "../../components/common/Typography/Typography.svelte";
-	import TableContainer from "../../components/common/Table/TableContainer/TableContainer.svelte";
+	import Table from "../../components/common/Table/Table/Table.svelte";
 	import TableBase from "../../components/common/Table/TableBase/TableBase.svelte";
 	import TableHead from "../../components/common/Table/TableHead/TableHead.svelte";
 	import TableRow from "../../components/common/Table/TableRow/TableRow.svelte";
@@ -99,7 +99,7 @@
 <TableFilters filters={tableFilters} updateFiltersFn={updateTableFilters} />
 
 {#if rankingTableData.totalItems > 0}
-	<TableContainer>
+	<Table>
 		<TableBase>
 			<TableHead>
 				<TableRow isHeader>
@@ -160,7 +160,7 @@
 				</TableCell>
 			</TableRow>
 		</TableFooter>
-	</TableContainer>
+	</Table>
 {:else}
 	<EmptyMessage />
 {/if}
