@@ -24,13 +24,18 @@
 	import type { RankingTableData, RankingTableFiltersProps } from "./types";
 	import { rankingStore } from "../../../stores/ranking";
 	import EmptyMessage from "../../components/common/EmptyMessage/EmptyMessage.svelte";
+	import { KEY_PERSISTED_RANKING_FILTERS } from "$lib/constants/ranking";
 	
 	// TODO: Definir valores padrões com base em valores centralizados para cada opção
-    let tableFilters: RankingTableFiltersProps = $state({
-		eventId: '333',
-		stateId: 'RJ',
-		competitionMode: 'single',
-	});
+	const persistedFilters = localStorage.getItem(KEY_PERSISTED_RANKING_FILTERS)
+    let tableFilters: RankingTableFiltersProps = $state(persistedFilters ?
+		JSON.parse(persistedFilters) 
+		: {
+			eventId: '333',
+			stateId: 'RJ',
+			competitionMode: 'single',
+		}
+	);
 	const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
 	let rankingTableData: RankingTableData = $state({
 		totalItems: 0,
@@ -43,10 +48,11 @@
 		rankingTableData.currentPage = newPage;
 	};
 	 
-	// TODO: Persistir últimos filtros selecionados
 	// TODO: Melhorar tipagens
 	function updateTableFilters(field: any, value: any) {
-    	tableFilters = { ...tableFilters, [field]: value };
+		const updatedTableFilters = { ...tableFilters, [field]: value };
+    	tableFilters = updatedTableFilters;
+		localStorage.setItem(KEY_PERSISTED_RANKING_FILTERS, JSON.stringify(updatedTableFilters))
 		handlePageChange(1)
   	}
 
