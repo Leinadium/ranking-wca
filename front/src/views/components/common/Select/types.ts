@@ -6,6 +6,7 @@ export interface SelectOption {
 // TODO: Melhorar tipagens
 export interface SelectProps {
     options: SelectOption[];
-    value: string | null; 
+    value: string | null;
+    isFullWidth?: boolean;
     onChangeFn: (event: any) => void;
 };

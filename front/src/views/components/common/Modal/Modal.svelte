@@ -58,7 +58,7 @@
 			{@render children?.()}
 		</GridItem>
 		
-		<GridItem gap={1} classes={'modal__footer'} justifyContent={'space-between'}>
+		<GridItem gap={1} classes={'modal__footer'} justifyContent={'flex-end'}>
 			<ButtonRoot type={'FILLED'} size={'SMALL'} color={'PRIMARY'} onClickFn={handleActionButtonClick}>
 				<ButtonText>{actionText}</ButtonText>
 			</ButtonRoot>

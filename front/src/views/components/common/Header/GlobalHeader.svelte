@@ -211,12 +211,13 @@
                         actionText={'Alterar'}
                         actionFn={updateUserInformations}
                     >
-                        <InputGroupRoot>
+                        <InputGroupRoot isFullWidth>
                             <InputGroupLabel text={'Estado'} />
                             <Select
                                 options={STATE_FILTER_OPTIONS}
                                 value={selectedUserState}
                                 onChangeFn={(event) => updateModalSelectedUserState(event?.target?.value)}
+                                isFullWidth
                             />
                         </InputGroupRoot>
                     </Modal>

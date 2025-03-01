@@ -3,10 +3,18 @@
     import '../input.css';
     import './style.css';
 
-    let { options, value, onChangeFn }: SelectProps = $props();
+    let { options, value, isFullWidth = false, onChangeFn }: SelectProps = $props();
+    let customStyle = $derived(`
+        width: ${isFullWidth ? '100%' : 'auto'}
+    `)
 </script>
 
-<select class={'input select'} bind:value={value} onchange={(event) => onChangeFn(event)}>
+<select
+    bind:value={value}
+    class={'input select'}
+    style={customStyle}
+    onchange={(event) => onChangeFn(event)}
+>
     {#each options as option}
         <option value={option.value} >{option.label}</option>
     {/each}
