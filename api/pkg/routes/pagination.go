@@ -87,9 +87,9 @@ func PaginatedQuery[S ~[]E, E any](
 		return 0, errors.New("could not query database")
 	}
 	// check if there were results
-	if len(*dest) == 0 {
-		return 0, nil
-	}
+	// if len(*dest) == 0 {
+	// 	return 0, nil
+	// }
 	// now get total count
 	var res struct {
 		Count int
