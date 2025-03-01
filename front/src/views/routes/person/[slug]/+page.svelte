@@ -33,6 +33,7 @@
 	import { BRAND_NAME } from "$lib/constants/general";
     import './style.css'
 	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from "$lib/constants/person";
+	import Card from "../../../components/common/Card/Card.svelte";
     
     const personId = $page.params.slug
 
@@ -153,30 +154,32 @@
     </GridItem>
     
     <!-- TODO: Criar componente Card -->
-    <GridItem justifyContent={'center'} alignItems={'center'} gap={4}>
-        <div class="portrait">
-            <img class="portrait__image" src={$personStore.imageUrl || DEFAULT_PERSON_AVATAR_IMAGE_SRC} alt="Imagem do {$personStore.name}">
-        </div>
-    
-        <!-- TODO: Refatorar para não repetir tanto código -->
-        <!-- TODO: Criar componente Badge -->
-        <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={3}>
-            <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-                <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>ID da WCA:</Typography>
-                <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{personId}</Typography>
-            </GridItem>
-    
-            <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-                <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições totais:</Typography>
-                <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.totalCompetitionsCount}</Typography>
-            </GridItem>
-    
-            <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
-                <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições estaduais:</Typography>
-                <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.stateCompetitionsCount}</Typography>
+    <Card>
+        <GridItem justifyContent={'center'} alignItems={'center'} gap={4}>
+            <div class="portrait">
+                <img class="portrait__image" src={$personStore.imageUrl || DEFAULT_PERSON_AVATAR_IMAGE_SRC} alt="Imagem do {$personStore.name}">
+            </div>
+        
+            <!-- TODO: Refatorar para não repetir tanto código -->
+            <!-- TODO: Criar componente Badge -->
+            <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={3}>
+                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                    <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>ID da WCA:</Typography>
+                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{personId}</Typography>
+                </GridItem>
+        
+                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                    <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições totais:</Typography>
+                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.totalCompetitionsCount}</Typography>
+                </GridItem>
+        
+                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                    <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições estaduais:</Typography>
+                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.stateCompetitionsCount}</Typography>
+                </GridItem>
             </GridItem>
         </GridItem>
-    </GridItem>
+    </Card>
 </GridItem>
 
 <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
