@@ -9,6 +9,7 @@ export const rankingService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.RANKING,
             url: `${API_URL}${API_ENDPOINTS.RANKING}/${args.mode}/${args.eventId}/${args.stateId}?p=${args.page ?? 0}&q=${args.itensPerPage ?? 50}`,
+            errorMessage: 'Não foi possível carregar dados de ranking. Por favor, tente novamente.',
         })
     },
 };

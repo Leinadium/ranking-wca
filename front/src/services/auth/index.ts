@@ -9,6 +9,7 @@ export const authService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.AUTH,
             url: `${API_URL}${API_ENDPOINTS.AUTH}`,
+            errorMessage: 'Não foi possível pegar a URL correta do login WCA. Por favor, tente novamente.',
         })
     },
 
@@ -17,6 +18,7 @@ export const authService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.AUTH_CALLBACK,
             url: `${API_URL}${API_ENDPOINTS.AUTH_CALLBACK}?code=${args?.code}`,
+            errorMessage: 'Não foi possível carregar dados pessoais do usuário. Por favor, tente novamente.',
         })
     },
 
@@ -29,7 +31,8 @@ export const authService = {
                 accessToken: args?.accessToken,
                 wcaId: args?.wcaId,
                 stateId: args?.stateId,
-            }
+            },
+            errorMessage: 'Não foi possível atualizar dados pessoais do usuário. Por favor, tente novamente.',
         })
     },
 };

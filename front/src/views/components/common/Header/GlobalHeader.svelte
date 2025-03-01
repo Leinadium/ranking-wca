@@ -2,7 +2,7 @@
 	import { toLocalDateFormat } from '$lib/utils/timestamps';
 	import { onMount } from 'svelte';
 	import { authStore } from '../../../../stores/auth';
-	import { loadLoginUrl, updateUserInformations } from '../../../../viewModels/auth';
+	import { loadLoginUrl, loadUserInformations, updateUserInformations } from '../../../../viewModels/auth';
     import Avatar from '../Avatar/Avatar.svelte';
     import ButtonIcon from '../Button/Icon/ButtonIcon.svelte';
     import ButtonRoot from '../Button/Root/ButtonRoot.svelte';
@@ -96,18 +96,18 @@
         if (!code) return
 
         // TODO: Remover valor alternativo de mock após implementações locais do /register
-        // const userInformations = (await loadUserInformations({ code }))
-        const userInformations: UserInformationsViewModel = {
-            accessToken:"x",
-            expirationTime: 7199,
-            name:"Daniel Schreiber Guimarães",
-            wcaId: "2018GUIM02",
-            customRegistration: {
-                canRegister:true,
-                stateId: null,
-                updateTimestamp: null,
-            },
-        }
+        const userInformations = (await loadUserInformations({ code }))
+        // const userInformations: UserInformationsViewModel = {
+        //     accessToken:"x",
+        //     expirationTime: 7199,
+        //     name:"Daniel Schreiber Guimarães",
+        //     wcaId: "2018GUIM02",
+        //     customRegistration: {
+        //         canRegister:true,
+        //         stateId: null,
+        //         updateTimestamp: null,
+        //     },
+        // }
 
         updatePersistedUserData(userInformations)
     }
@@ -147,7 +147,6 @@
             wcaId: $authStore.user.wcaId,
             stateId: selectedUserState,
             customOnSuccessFn: async() => await getUpdatedUserData(authCode),
-            errorMessage: 'Não foi possível atualizar dados pessoais do usuário. Por favor, tente novamente.'
         })
     }
 

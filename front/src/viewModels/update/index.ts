@@ -14,7 +14,7 @@ export const loadUpdateStatus = async (args?: GetUpdateStatusArgs) => {
   const adaptedResponse: UIUpdateStatusResponse = updateAdapter.formatToUI(APIResponse);
 
   updateStore.set({
-    lastUpdatedAt: adaptedResponse.data.lastUpdatedAt,
+    lastUpdatedAt: adaptedResponse.data?.lastUpdatedAt,
     isLoading: false,
   });
 };

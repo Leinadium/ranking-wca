@@ -15,8 +15,8 @@ export const loadRanking = async (args: GetAllRankingArgs) => {
 
   rankingStore.update((state) => ({
     ...state,
-    items: adaptedResponse.data.items,
-    totalItems: adaptedResponse.data.totalItems,
+    items: adaptedResponse.data?.items,
+    totalItems: adaptedResponse.data?.totalItems,
     isLoading: false,
   }));
 };

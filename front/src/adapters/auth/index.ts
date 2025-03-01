@@ -1,7 +1,12 @@
+import { checkIsNullOrUndefined } from "$lib/utils/validation";
 import type { APIGetLoginUrlResponse, APIGetUserInformationsResponse, UIGetLoginUrlResponse, UIGetUserInformationsResponse } from "./types";
 
 export const authAdapter = {
   formatLoginUrlToUI(APIResponse: APIGetLoginUrlResponse): UIGetLoginUrlResponse {
+    if (checkIsNullOrUndefined(APIResponse.data)) {
+      return APIResponse as unknown as UIGetLoginUrlResponse
+    }
+
     return {
       ok: APIResponse.ok,
       statusCode: APIResponse.statusCode,
@@ -12,6 +17,10 @@ export const authAdapter = {
   },
 
   formatUserInformationsToUI(APIResponse: APIGetUserInformationsResponse): UIGetUserInformationsResponse {
+    if (checkIsNullOrUndefined(APIResponse.data)) {
+      return APIResponse as unknown as UIGetUserInformationsResponse
+    }
+
     return {
       ok: APIResponse.ok,
       statusCode: APIResponse.statusCode,

@@ -9,6 +9,7 @@ export const updateService = {
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.UPDATE_STATUS,
             url: `${API_URL}${API_ENDPOINTS.UPDATE_STATUS}`,
+            errorMessage: 'Não foi possível carregar informações sobre a última atualização dos dados da plataforma. Por favor, tente novamente.',
         })
     }
 };

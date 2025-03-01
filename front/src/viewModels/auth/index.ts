@@ -16,7 +16,7 @@ export const loadLoginUrl = async (args?: GetLoginUrlArgs): Promise<void> => {
 
   authStore.update((state) => ({
     ...state,
-    loginUrl: adaptedResponse.data.url,
+    loginUrl: adaptedResponse.data?.url,
     isLoading: false,
   }));
 };

@@ -16,11 +16,11 @@ export const loadPersonInfo = async (args: GetPersonInfoArgs) => {
 
   personStore.update((state) => ({
     ...state,
-    name: adaptedResponse.data.name,
-    stateId: adaptedResponse.data.stateId,
-    isRegistered: adaptedResponse.data.isRegistered,
-    totalCompetitionsCount: adaptedResponse.data.totalCompetitionsCount,
-    stateCompetitionsCount: adaptedResponse.data.stateCompetitionsCount,
+    name: adaptedResponse.data?.name,
+    stateId: adaptedResponse.data?.stateId,
+    isRegistered: adaptedResponse.data?.isRegistered,
+    totalCompetitionsCount: adaptedResponse.data?.totalCompetitionsCount,
+    stateCompetitionsCount: adaptedResponse.data?.stateCompetitionsCount,
     isLoading: false,
   }));
 };
@@ -70,7 +70,7 @@ export const loadPersonRankingByModeRecords = async (args: GetPersonRankingByMod
     isLoading: false,
     rankings: {
       ...state.rankings,
-      [args.mode]: adaptedResponse.data.rankings,
+      [args.mode]: adaptedResponse.data?.rankings,
     },
   }));
 };
@@ -88,8 +88,8 @@ export const loadPeopleSearchResults = async (args: GetPeopleBySearchArgs) => {
   personStore.update((state) => ({
     ...state,
     search: {
-      items: adaptedResponse.data.items,
-      totalItems: adaptedResponse.data.totalItems,
+      items: adaptedResponse.data?.items,
+      totalItems: adaptedResponse.data?.totalItems,
     },
     isLoading: false,
   }));
