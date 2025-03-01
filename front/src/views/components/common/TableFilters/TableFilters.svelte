@@ -9,6 +9,7 @@
 	import FontIcon from '../../../components/common/Icon/Font/FontIcon.svelte';
 	import Tooltip from '../../../components/common/Tooltip/Tooltip.svelte';
 	import { EVENT_LIST } from '$lib/constants/events';
+	import { STATE_SELECT_OPTIONS } from '$lib/constants/location';
 
 	// TODO: Pensar como melhorar as options evitando repetição de código
 	const EVENT_FILTER_OPTIONS = [
@@ -104,20 +105,13 @@
 		}
 	];
 	// TODO: Habilitar opção "Todos" quando back-end suportar
-	const STATE_FILTER_OPTIONS = [
-		// {
-		// 	label: 'Todos',
-		// 	value: 'BR',
-		// },
-		{
-			label: 'Rio de Janeiro',
-			value: 'RJ'
-		},
-		{
-			label: 'São Paulo',
-			value: 'SP'
-		}
-	];
+	// const STATE_FILTER_OPTIONS = [
+	// 	{
+	// 		label: 'Todos',
+	// 		value: 'BR',
+	// 	},
+	// 	...STATE_SELECT_OPTIONS,
+	// ];
 	const TYPE_FILTER_OPTIONS = [
 		{
 			label: 'Tempo único',
@@ -158,7 +152,7 @@
 	<InputGroupRoot>
 		<InputGroupLabel text={'Estado'} />
 		<Select
-			options={STATE_FILTER_OPTIONS}
+			options={STATE_SELECT_OPTIONS}
 			value={filters.stateId}
 			onChangeFn={(event) => updateFiltersFn('stateId', event?.target?.value)}
 		/>

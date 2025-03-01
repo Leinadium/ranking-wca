@@ -29,3 +29,7 @@ export const STATE_NAMES: { [key: string]: string } = {
 	SE: 'Sergipe',
 	TO: 'Tocantins'
 };
+
+export const STATE_SELECT_OPTIONS = Object.entries(STATE_NAMES).map(([key, value]) => {
+	return { label: value, value: key }
+})

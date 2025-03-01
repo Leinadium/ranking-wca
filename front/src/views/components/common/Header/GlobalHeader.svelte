@@ -32,6 +32,7 @@
 	import Select from '../Select/Select.svelte';
 	import { openModal } from '$lib/utils/modal';
 	import './style.css';
+	import { STATE_SELECT_OPTIONS } from '$lib/constants/location';
 
 	const currenTimestamp = toLocalDateFormat(new Date(), {
 		dateStyle: 'full'
@@ -49,17 +50,6 @@
 			label: 'Sair da conta',
 			iconName: 'faSignOut',
 			fn: handleLogout
-		}
-	];
-	// TODO: Remover quando tiver a listagem em constantes globais
-	const STATE_FILTER_OPTIONS = [
-		{
-			label: 'Rio de Janeiro',
-			value: 'RJ'
-		},
-		{
-			label: 'São Paulo',
-			value: 'SP'
 		}
 	];
 
@@ -215,7 +205,7 @@
 						<InputGroupRoot isFullWidth>
 							<InputGroupLabel text={'Estado'} />
 							<Select
-								options={STATE_FILTER_OPTIONS}
+								options={STATE_SELECT_OPTIONS}
 								value={selectedUserState}
 								onChangeFn={(event) => updateModalSelectedUserState(event?.target?.value)}
 								isFullWidth
