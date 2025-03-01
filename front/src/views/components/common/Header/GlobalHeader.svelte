@@ -22,6 +22,8 @@
     import './style.css';
 	import { checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
 	import type { UserInformationsViewModel } from '../../../../viewModels/auth/types';
+	import Popover from '../Popover/Popover.svelte';
+	import { TRIGGER_ID_USER_MENU, POPOVER_ID_USER_MENU } from '$lib/constants/general';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
@@ -46,7 +48,7 @@
         return checkIsNullOrUndefinedOrEmptyString(persistedData) ? null : JSON.parse(persistedData)
     }
 
-    function updatePersistedUserData(newData: UserInformationsViewModel) {
+    function updatePersistedUserData(newData: UserInformationsViewModel | null) {
         if (!newData) {
             sessionStorage.removeItem(KEY_PERSISTED_USER)
         } else {
@@ -136,7 +138,16 @@
                 
                     <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
 
-                    <Avatar imageUrl={userImageUrl} marginH={2} />
+                    <ButtonRoot
+                        type={'BASIC'}
+                        color={'NEUTRAL'}
+                        popovertarget={POPOVER_ID_USER_MENU}
+                        classes={TRIGGER_ID_USER_MENU}
+                    >
+                        <Avatar imageUrl={userImageUrl} marginH={2} />
+                    </ButtonRoot>
+
+                    <Popover id={POPOVER_ID_USER_MENU} />
                 {:else}
                     {#if !$responsivenessStore.isSmallDevice}
                         <GridItem gap={3}>

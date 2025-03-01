@@ -28,6 +28,7 @@ export interface ButtonRootProps {
     classes?: string;
     href?: string;
     target?: ButtonRootTargetOptions;
+    popovertarget?: string;
 };
 
 interface ButtonRootColorConfigs {

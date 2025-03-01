@@ -2,3 +2,7 @@
     padding: 32px 0;
     margin: 0 32px;
 }
+
+.popover__trigger--user-menu {
+    padding: 0;
+}
