@@ -88,16 +88,18 @@ export default class HTTPService {
 	}
 
 	static _handleError<T>(args: HandleErrorArgs): CustomResponse<T> {
-		const technicalMessage = checkIsNullOrUndefined(args.error?.message)
-			? undefined
-			: args.error?.message?.toString()?.replace('Error: ', '');
-		const friendlyMessage = args.errorMessage
-			? `${args.errorMessage} Mais detalhes: ${technicalMessage}`
-			: undefined;
+		if (args.error !== 'CANCELLED') {
+			const technicalMessage = checkIsNullOrUndefined(args.error?.message)
+				? undefined
+				: args.error?.message?.toString()?.replace('Error: ', '');
+			const friendlyMessage = args.errorMessage
+				? `${args.errorMessage} Mais detalhes: ${technicalMessage}`
+				: undefined;
 
-		showErrorMessage({ technicalMessage, friendlyMessage });
+			showErrorMessage({ technicalMessage, friendlyMessage });
 
-		if (args.customOnErrorFn) args.customOnErrorFn();
+			if (args.customOnErrorFn) args.customOnErrorFn();
+		}
 
 		return {
 			ok: false,
