@@ -23,7 +23,7 @@ export function showErrorMessage(args: ShowErrorMessageArgs): void {
 
     Toastify({
         ...TOAST_COMMON_CONFIGURATIONS,
-        text: args.friendlyMessage,
+        text: customMessage,
         style: {
             ...TOAST_COMMON_CONFIGURATIONS.style,
             background: COLOR_TOKENS.ACCENT_NEGATIVE_BASE,
