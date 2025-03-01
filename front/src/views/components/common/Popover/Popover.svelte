@@ -100,7 +100,7 @@
 
 	function handleScreenResize() {
 		clearTimeout(resizeTimeout);
-		resizeTimeout = debounce(positionPopover, 100) // Delay de 100ms (debounce)
+		resizeTimeout = debounce(positionPopover, 100)
 	}
 
 	function handlePopoverVisibilityToggle(event: unknown) {

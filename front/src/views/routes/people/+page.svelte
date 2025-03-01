@@ -27,11 +27,12 @@
 	import type { PeopleSearchTableData } from "./types";
 	import { KEY_PERSISTED_PEOPLE_SEARCH_TERM } from "$lib/constants/person";
 	import { checkIsNullOrUndefinedOrEmptyString } from "$lib/utils/validation";
-	import SvgIcon from "../../components/common/Icon/SVG/SVGIcon.svelte";
 	import EmptyMessage from "../../components/common/EmptyMessage/EmptyMessage.svelte";
+	import { debounce } from "$lib/utils/debounce";
 	
 	let peopleSearchTerm = $state(sessionStorage.getItem(KEY_PERSISTED_PEOPLE_SEARCH_TERM) || '')
 	const formattedLastUpdatedAt = $derived(toLocalFormat($updateStore.lastUpdatedAt));
+	let searchTermTimeout: any
 	let peopleSearchTableData: PeopleSearchTableData = $state({
 		totalItems: 0,
 		itemsPerPage: 10,
@@ -43,13 +44,16 @@
 		peopleSearchTableData.currentPage = newPage;
 	};
 	
-	// TODO: Melhorar tipagens
-	function handleSearchedPersonChange(event: any) {
-		const searchTerm = event.target.value
-
+	function updateSearchedPersonTerm(searchTerm: string) {
 		peopleSearchTerm = searchTerm
 		sessionStorage.setItem(KEY_PERSISTED_PEOPLE_SEARCH_TERM, searchTerm)
 		handlePageChange(1)
+  	}
+
+	// TODO: Melhorar tipagens
+	function handleSearchedPersonChange(event: Event) {
+		clearTimeout(searchTermTimeout);
+		searchTermTimeout = debounce(() => updateSearchedPersonTerm(event?.target?.value), 300)
   	}
 
 	// TODO: Implementar cache

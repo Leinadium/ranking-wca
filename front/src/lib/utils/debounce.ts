@@ -1,3 +1,3 @@
-export function debounce(fn: Function, delay: number) { // delay em milissegundos
+export function debounce(fn: Function, delay: number) { // Delay em milissegundos
     return setTimeout(() => fn(), delay);
 }
