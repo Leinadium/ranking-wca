@@ -142,22 +142,22 @@
 					</TableRow>
 				{/each}
 			</TableBody>
-
-			<TableFooter>
-				<TableRow isFooter>
-					<TableCell isFooter colspan={3}>
-						{#key `${peopleSearchTableData.currentPage}-${peopleSearchTableData.totalItems}-${peopleSearchTableData.itemsPerPage}`}
-							<TablePagination
-								currentPage={peopleSearchTableData.currentPage}
-								totalItems={peopleSearchTableData.totalItems}
-								itemsPerPage={peopleSearchTableData.itemsPerPage}
-								onPageChange={handlePageChange}
-							/>
-						{/key}
-					</TableCell>
-				</TableRow>
-			</TableFooter>
 		</TableBase>
+
+		<TableFooter>
+			<TableRow isFooter>
+				<TableCell isFooter colspan={3}>
+					{#key `${peopleSearchTableData.currentPage}-${peopleSearchTableData.totalItems}-${peopleSearchTableData.itemsPerPage}`}
+						<TablePagination
+							currentPage={peopleSearchTableData.currentPage}
+							totalItems={peopleSearchTableData.totalItems}
+							itemsPerPage={peopleSearchTableData.itemsPerPage}
+							onPageChange={handlePageChange}
+						/>
+					{/key}
+				</TableCell>
+			</TableRow>
+		</TableFooter>
 	</TableContainer>
 {:else}
 	<EmptyMessage iconName='faSearch'>

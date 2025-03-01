@@ -144,22 +144,22 @@
 					</TableRow>
 				{/each}
 			</TableBody>
-
-			<TableFooter>
-				<TableRow isFooter>
-					<TableCell isFooter colspan={6}>
-						{#key `${rankingTableData.currentPage}-${rankingTableData.totalItems}-${rankingTableData.itemsPerPage}`}
-							<TablePagination
-								currentPage={rankingTableData.currentPage}
-								totalItems={rankingTableData.totalItems}
-								itemsPerPage={rankingTableData.itemsPerPage}
-								onPageChange={handlePageChange}
-							/>
-						{/key}
-					</TableCell>
-				</TableRow>
-			</TableFooter>
 		</TableBase>
+
+		<TableFooter>
+			<TableRow isFooter>
+				<TableCell isFooter colspan={6}>
+					{#key `${rankingTableData.currentPage}-${rankingTableData.totalItems}-${rankingTableData.itemsPerPage}`}
+						<TablePagination
+							currentPage={rankingTableData.currentPage}
+							totalItems={rankingTableData.totalItems}
+							itemsPerPage={rankingTableData.itemsPerPage}
+							onPageChange={handlePageChange}
+						/>
+					{/key}
+				</TableCell>
+			</TableRow>
+		</TableFooter>
 	</TableContainer>
 {:else}
 	<EmptyMessage />

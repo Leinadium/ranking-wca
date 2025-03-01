@@ -17,7 +17,7 @@
 }
 
 .table__cell--footer {
-    padding: 16px 0 0;
+    padding: 16px 0 !important;
     background-color: transparent;
     border: none;
 }
