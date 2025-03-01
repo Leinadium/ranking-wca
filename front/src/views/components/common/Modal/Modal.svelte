@@ -38,7 +38,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-<div class="modal" style={customStyle} on:click={handleOutsideClick}>
+<div class="modal" style={customStyle} onclick={handleOutsideClick}>
 	<GridItem gap={3} classes={`modal__content ${TYPE_CLASSES.size[size]}`}>
 		<GridItem gap={1} classes={'modal__header'} wrap={'NOWRAP'} justifyContent={'space-between'}>
 			<Typography type={'h3'} color={'NEUTRAL_DARK_2'}>

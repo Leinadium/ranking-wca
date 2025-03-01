@@ -38,8 +38,8 @@ export const COLOR_TOKENS = {
     ACCENT_NEGATIVE_LIGHT_1: '#F56672',
     ACCENT_NEGATIVE_BASE: '#F24452',
     ACCENT_NEGATIVE_DARK_1: '#E51022',
-    ACCENT_NEGATIVE_DARK_2: '#BF0D1C',
-    ACCENT_NEGATIVE_DARK_3: '#720811',
+    ACCENT_NEGATIVE_DARK_2: '#B00D1B',
+    ACCENT_NEGATIVE_DARK_3: '#7E0812',
 };
 
 export const FONT_FAMILY_TOKENS = {
@@ -74,7 +74,7 @@ export const SPACING_FACTOR: number = 8;
 export const SIZE_FACTOR: number = 8;
 
 export const SHADOW_TOKENS = {
-    INNER_1: '0px 1px 4px 0px var(--color-neutral-base)',
-    OUTER_1: '0px 2px 4px 0px var(--color-neutral-base)',
-    OUTER_2: '0px 4px 8px 0px var(--color-neutral-base)',
+    INNER_1: '0px 1px 4px 0px var(--color-neutral-dark-1)',
+    OUTER_1: '0px 2px 4px 0px var(--color-neutral-dark-1)',
+    OUTER_2: '0px 4px 8px 0px var(--color-neutral-dark-1)',
 }

@@ -37,7 +37,7 @@ export default class HTTPService {
     }
   }
 
-  static async _requestDataAsync<T>(args: RequestDataArgs): Promise<CustomResponse<T>> { //, enqueueSnackbarFn, intl, features
+  static async _requestDataAsync<T>(args: RequestDataArgs): Promise<CustomResponse<T>> {
     const encodedURL = encodeURI(args.url)
     const requestOptions = {
       method: args.method,
@@ -59,10 +59,8 @@ export default class HTTPService {
       args.successMessage
       && responsePromise?.ok
       && responsePromise?.status >= 200 && responsePromise?.status < 300
-      // && enqueueSnackbarFn
-      // && intl
     ) {
-      showSuccessMessage({ friendlyMessage: args.successMessage }) //, enqueueSnackbarFn, intl
+      showSuccessMessage({ friendlyMessage: args.successMessage })
     }
 
     if (args.customOnSuccessFn) args.customOnSuccessFn(responseData)
@@ -74,15 +72,13 @@ export default class HTTPService {
     }
   }
 
-  static _handleError<T>(args: HandleErrorArgs): CustomResponse<T> { //, enqueueSnackbarFn, intl
+  static _handleError<T>(args: HandleErrorArgs): CustomResponse<T> {
     const technicalMessage = checkIsNullOrUndefined(args.error?.message)
       ? undefined
       : args.error?.message?.toString()?.replace('Error: ', '')
     const friendlyMessage = args.errorMessage ? `${args.errorMessage} ${technicalMessage}` : undefined
 
-    // if (enqueueSnackbarFn && intl) {
-    showErrorMessage({ technicalMessage, friendlyMessage }) //, enqueueSnackbarFn, intl
-    // }
+    showErrorMessage({ technicalMessage, friendlyMessage })
 
     if (args.customOnErrorFn) args.customOnErrorFn()
 
@@ -93,7 +89,7 @@ export default class HTTPService {
     }
   }
 
-  static async getAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> { //, enqueueSnackbareturny {
+  static async getAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> {
     try {
       return await this._requestDataAsync({ method: 'GET', ...args })
     } catch (error: CustomErrorProps | unknown) {
@@ -101,7 +97,7 @@ export default class HTTPService {
     }
   }
 
-  static async postAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> { //, enqueueSnackbareturny {
+  static async postAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> {
     try {
       return await this._requestDataAsync({  method: 'POST', ...args })
     } catch (error: CustomErrorProps | unknown) {
@@ -109,7 +105,7 @@ export default class HTTPService {
     }
   }
 
-  static async putAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> { //, enqueueSnackbareturny {
+  static async putAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> {
     try {
       return await this._requestDataAsync({ method: 'PUT', ...args })
     } catch (error: CustomErrorProps | unknown) {
@@ -117,7 +113,7 @@ export default class HTTPService {
     }
   }
 
-  static async patchAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> { //, enqueueSnackbareturny {
+  static async patchAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> {
     try {
       return await this._requestDataAsync({ method: 'PATCH', ...args })
     } catch (error: CustomErrorProps | unknown) {
@@ -125,7 +121,7 @@ export default class HTTPService {
     }
   }
 
-  static async deleteAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> { //, enqueueSnackbarFn, intl
+  static async deleteAsync<T>(args: SpecificMethodRequestArgs): Promise<CustomResponse<T>> {
     try {
       return await this._requestDataAsync({ method: 'DELETE', ...args })
     } catch (error: CustomErrorProps | unknown) {

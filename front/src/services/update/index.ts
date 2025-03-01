@@ -4,7 +4,7 @@ import type { APIUpdateStatusResponse } from "../../adapters/update/types";
 import type { GetUpdateStatusArgs } from "./types";
 
 export const updateService = {
-    async getStatus(args?: GetUpdateStatusArgs): Promise<APIUpdateStatusResponse> { //, enqueueSnackbarFn, intl 
+    async getStatus(args?: GetUpdateStatusArgs): Promise<APIUpdateStatusResponse> {
         return await HTTPService.getAsync({
             ...args,
             abortSignalKey: ABORT_SIGNALS_KEYS.UPDATE_STATUS,
