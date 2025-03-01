@@ -24,12 +24,43 @@
 	import type { UserInformationsViewModel } from '../../../../viewModels/auth/types';
 	import Popover from '../Popover/Popover.svelte';
 	import { TRIGGER_ID_USER_MENU, POPOVER_ID_USER_MENU } from '$lib/constants/general';
+	import Modal from '../Modal/Modal.svelte';
+	import InputGroupRoot from '../InputGroup/Root/InputGroupRoot.svelte';
+	import InputGroupLabel from '../InputGroup/Label/InputGroupLabel.svelte';
+	import Select from '../Select/Select.svelte';
+	import { openModal } from '$lib/utils/modal';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
     });
     const urlParams = new SvelteURLSearchParams($page.url.searchParams);
     const authCode: string | null = urlParams.get(AUTH_CODE_PARAM_KEY);
+
+    const USER_MENU_OPTIONS = [
+        {
+            label: 'Alterar dados pessoais',
+            iconName: 'faIdCard',
+            fn: openChangeUserInformationsModal,
+        },
+        {
+            label: 'Sair da conta',
+            iconName: 'faSignOut',
+            fn: handleLogout,
+        },
+    ]
+    // TODO: Remover quando tiver a listagem em constantes globais
+    const STATE_FILTER_OPTIONS = [
+		{
+			label: 'Rio de Janeiro',
+			value: 'RJ',
+		},
+		{
+			label: 'São Paulo',
+			value: 'SP',
+		},
+	];
+
+    let selectedUserState: string | null = $state(null);
     let userImageUrl = $state(DEFAULT_PERSON_AVATAR_IMAGE_SRC);
     
     function upperCaseFirstLetter(text: string) {
@@ -100,6 +131,21 @@
         updatePersistedUserData(null)
     }
 
+    function openChangeUserInformationsModal() {
+        selectedUserState = $authStore.user?.customRegistration?.stateId
+        openModal()
+    }
+
+    // TODO: Melhorar tipagem de estado
+    function updateModalSelectedUserState(stateId: string) {
+        selectedUserState = stateId
+    }
+
+    function updateUserInformations() {
+        // TODO: Fazer requisição
+        console.log('Solicitou a atualização das informações do usuário', selectedUserState)
+    }
+
     $effect(() => {
         if (!$authStore.user) return
 
@@ -128,16 +174,6 @@
 
             <GridItem gap={1}>
                 {#if $authStore.user}
-                    <Tooltip text="Sair da conta">
-                        <ButtonRoot type={'BASIC'} color={'PRIMARY'} onClickFn={handleLogout}>
-                            <ButtonIcon>
-                                <SvgIcon name={'faSignOut'}></SvgIcon>
-                            </ButtonIcon>
-                        </ButtonRoot>
-                    </Tooltip>
-                
-                    <Divider isVertical thickness={1} color={'NEUTRAL_BASE'} />
-
                     <ButtonRoot
                         type={'BASIC'}
                         color={'NEUTRAL'}
@@ -145,9 +181,45 @@
                         classes={TRIGGER_ID_USER_MENU}
                     >
                         <Avatar imageUrl={userImageUrl} marginH={2} />
+
+                        <SvgIcon
+                            name={'faChevronDown'}
+                            color={'NEUTRAL_DARK_1'}
+                            size={'2xs'}
+                        />
                     </ButtonRoot>
 
-                    <Popover id={POPOVER_ID_USER_MENU} />
+                    <Popover id={POPOVER_ID_USER_MENU}>
+                        {#each USER_MENU_OPTIONS as option}
+                            <GridItem gap={0} wrap={'NOWRAP'}>
+                                <ButtonRoot type={'BASIC'} size={'SMALL'} color={'NEUTRAL'} onClickFn={option.fn}>
+                                    <ButtonIcon>
+                                        <SvgIcon name={option.iconName}></SvgIcon>
+                                    </ButtonIcon>
+    
+                                    <ButtonText color={'NEUTRAL_DARK_1'}>
+                                        {option.label}
+                                    </ButtonText>
+                                </ButtonRoot>
+                            </GridItem>
+                        {/each}
+                    </Popover>
+
+                    <Modal
+                        size={'SMALL'}
+                        title="Alteração de dados pessoais"
+                        actionText={'Alterar'}
+                        actionFn={updateUserInformations}
+                    >
+                        <InputGroupRoot>
+                            <InputGroupLabel text={'Estado'} />
+                            <Select
+                                options={STATE_FILTER_OPTIONS}
+                                value={selectedUserState}
+                                onChangeFn={(event) => updateModalSelectedUserState(event?.target?.value)}
+                            />
+                        </InputGroupRoot>
+                    </Modal>
                 {:else}
                     {#if !$responsivenessStore.isSmallDevice}
                         <GridItem gap={3}>

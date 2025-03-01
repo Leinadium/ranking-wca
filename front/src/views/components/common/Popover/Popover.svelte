@@ -3,8 +3,9 @@
 	import { debounce } from '$lib/utils/debounce';
 	import type { PopoverProps } from './types';
 	import './style.css';
+	import { modal } from '$lib/states/modal.svelte';
 
-	let { id, position = 'auto' }: PopoverProps = $props();
+	let { id, position = 'auto', children }: PopoverProps = $props();
 
 	let popover = $state<HTMLElement | null>(null);
 	let triggerElement = $state<HTMLElement | null>(null);
@@ -107,13 +108,21 @@
 		positionPopover()
 	}
 
+	$effect(() => {
+		if (modal.isOpened) {
+			popover?.hidePopover()
+		}
+	})
+
 	onMount(() => {
 		triggerElement = document.querySelector(`button[popovertarget="${id}"]`);
 
+		window.addEventListener('scroll', handleScreenResize);
 		window.addEventListener('resize', handleScreenResize);
 		popover?.addEventListener('toggle', handlePopoverVisibilityToggle);
 
 		return () => {
+			window.removeEventListener('scroll', handleScreenResize);
 			window.removeEventListener('resize', handleScreenResize);
 			popover?.removeEventListener('toggle', handlePopoverVisibilityToggle);
 		};
@@ -127,5 +136,5 @@
 	popover={'auto'}
 	style={customStyle}
 >
-	Popover content
+	{@render children?.()}
 </div>
