@@ -17,4 +17,5 @@ export interface GridItemProps {
     justifyContent?: GridItemJustifyContentOptions;
     alignItems?: GridItemAlignItemsOptions;
     wrap?: GridItemWrapOptions;
+    isFullWidth?: boolean
 };

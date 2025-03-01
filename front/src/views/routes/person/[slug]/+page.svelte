@@ -30,10 +30,11 @@
 	import type { TableSortDirectionOptions } from "../../../components/common/Table/TableSortLabel/types";
 	import VerifiedAccountFlag from "../../../components/common/VerifiedAccountFlag/VerifiedAccountFlag.svelte";
 	import { checkShouldHighlightPosition } from "$lib/utils/ranking";
-	import { BRAND_NAME } from "$lib/constants/general";
+	import { BRAND_NAME, DEFAULT_NO_DATA_VALUE } from "$lib/constants/general";
     import './style.css'
 	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from "$lib/constants/person";
 	import Card from "../../../components/common/Card/Card.svelte";
+	import Tag from "../../../components/common/Tag/Tag.svelte";
     
     const personId = $page.params.slug
 
@@ -163,19 +164,19 @@
             <!-- TODO: Refatorar para não repetir tanto código -->
             <!-- TODO: Criar componente Badge -->
             <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={3}>
-                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                <GridItem alignItems={'flex-start'} gap={1} isFullWidth>
                     <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>ID da WCA:</Typography>
-                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{personId}</Typography>
+                    <Tag color={'SECONDARY'} text={personId || DEFAULT_NO_DATA_VALUE} isFullWidth />
                 </GridItem>
         
-                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                <GridItem alignItems={'flex-start'} gap={1} isFullWidth>
                     <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições totais:</Typography>
-                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.totalCompetitionsCount}</Typography>
+                    <Tag color={'SECONDARY'} text={$personStore.totalCompetitionsCount || DEFAULT_NO_DATA_VALUE} isFullWidth />
                 </GridItem>
         
-                <GridItem direction={'COLUMN'} alignItems={'flex-start'} gap={1}>
+                <GridItem alignItems={'flex-start'} gap={1} isFullWidth>
                     <Typography type={'h6'} color={'NEUTRAL_DARK_1'}>Competições estaduais:</Typography>
-                    <Typography type={'bodyOne'} color={'NEUTRAL_DARK_1'}>{$personStore.stateCompetitionsCount}</Typography>
+                    <Tag color={'SECONDARY'} text={$personStore.stateCompetitionsCount || DEFAULT_NO_DATA_VALUE} isFullWidth />
                 </GridItem>
             </GridItem>
         </GridItem>

@@ -40,7 +40,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <div class="modal" style={customStyle} onclick={handleOutsideClick}>
 	<GridItem gap={3} classes={`modal__content ${TYPE_CLASSES.size[size]}`}>
-		<GridItem gap={1} classes={'modal__header'} wrap={'NOWRAP'} justifyContent={'space-between'}>
+		<GridItem gap={1} classes={'modal__header'} wrap={'NOWRAP'} justifyContent={'space-between'} isFullWidth>
 			<Typography type={'h3'} color={'NEUTRAL_DARK_2'}>
 				{title}
 			</Typography>
@@ -54,11 +54,11 @@
 
 		<Divider thickness={1} color={'NEUTRAL_BASE'} />
 		
-		<GridItem gap={1} classes={'modal__body'} justifyContent={'space-between'}>
+		<GridItem gap={1} classes={'modal__body'} justifyContent={'space-between'} isFullWidth>
 			{@render children?.()}
 		</GridItem>
 		
-		<GridItem gap={1} classes={'modal__footer'} justifyContent={'flex-end'}>
+		<GridItem gap={1} classes={'modal__footer'} justifyContent={'flex-end'} isFullWidth>
 			<ButtonRoot
 				type={'FILLED'}
 				size={'SMALL'}

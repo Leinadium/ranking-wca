@@ -45,12 +45,6 @@
   width: 80%;
 }
 
-.modal__header,
-.modal__body,
-.modal__footer {
-  width: 100%;
-}
-
 .modal-close {
   cursor: pointer;
 }

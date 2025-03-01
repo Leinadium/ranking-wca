@@ -91,10 +91,8 @@
 
 		const positionFunction = positionCalculations[position] || positionCalculations.auto;
 		let newPositionStyle = positionFunction(triggerRect, popoverRect, availableSpace);
+		
 		newPositionStyle = preventOverflowOnScreen(newPositionStyle, popoverRect);
-
-		console.log('popoverRect:', popoverRect)
-
 		positionStyle = { top: newPositionStyle.top, left: newPositionStyle.left, transform: 'translate(-2vw, 0)' };
 	}
 

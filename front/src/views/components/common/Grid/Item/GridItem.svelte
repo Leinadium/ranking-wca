@@ -13,6 +13,7 @@
         justifyContent = 'space-between',
         alignItems = 'center',
         wrap = 'WRAP',
+        isFullWidth = false,
     }: GridItemProps = $props();
 
     const formattedMargin = typeof margin === 'string' ? margin : `${fromPixelToRem(margin * SPACING_FACTOR)}rem`
@@ -23,6 +24,7 @@
         justify-content: ${justifyContent.toLowerCase()};
         align-items: ${alignItems.toLowerCase()};
         flex-wrap: ${wrap.toLowerCase()};
+        width: ${isFullWidth ? '100%' : 'auto'};
     `
 </script>
 

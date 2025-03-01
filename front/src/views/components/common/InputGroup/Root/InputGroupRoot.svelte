@@ -11,6 +11,7 @@
     direction={'COLUMN'}
     alignItems={'flex-start'}
     gap={1}
+    isFullWidth={isFullWidth}
 >
     {@render children()}
 </GridItem>
