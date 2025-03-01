@@ -96,18 +96,18 @@
         if (!code) return
 
         // TODO: Remover valor alternativo de mock após implementações locais do /register
-        const userInformations = (await loadUserInformations({ code }))
-        // const userInformations: UserInformationsViewModel = {
-        //     accessToken:"x",
-        //     expirationTime: 7199,
-        //     name:"Daniel Schreiber Guimarães",
-        //     wcaId: "2018GUIM02",
-        //     customRegistration: {
-        //         canRegister:true,
-        //         stateId: null,
-        //         updateTimestamp: null,
-        //     },
-        // }
+        // const userInformations = (await loadUserInformations({ code }))
+        const userInformations: UserInformationsViewModel = {
+            accessToken:"x",
+            expirationTime: 7199,
+            name:"Daniel Schreiber Guimarães",
+            wcaId: "2018GUIM02",
+            customRegistration: {
+                canRegister:true,
+                stateId: null,
+                updateTimestamp: null,
+            },
+        }
 
         updatePersistedUserData(userInformations)
     }
