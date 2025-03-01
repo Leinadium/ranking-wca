@@ -10,7 +10,6 @@
 	import Divider from '../Divider/Divider.svelte';
     import GridItem from '../Grid/Item/GridItem.svelte';
 	import SvgIcon from '../Icon/SVG/SVGIcon.svelte';
-	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import Typography from '../Typography/Typography.svelte';
 	import { responsivenessStore } from '../../../../stores/responsiveness';
 	import { DEFAULT_PERSON_AVATAR_IMAGE_SRC } from '$lib/constants/person';
@@ -19,7 +18,6 @@
 	import { getPersonImage } from '$lib/utils/person';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-    import './style.css';
 	import { checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
 	import type { UserInformationsViewModel } from '../../../../viewModels/auth/types';
 	import Popover from '../Popover/Popover.svelte';
@@ -29,6 +27,7 @@
 	import InputGroupLabel from '../InputGroup/Label/InputGroupLabel.svelte';
 	import Select from '../Select/Select.svelte';
 	import { openModal } from '$lib/utils/modal';
+    import './style.css';
 
     const currenTimestamp = toLocalDateFormat(new Date(), {
         dateStyle: 'full',
@@ -95,20 +94,7 @@
     async function getUpdatedUserData(code: string | null) {
         if (!code) return
 
-        // TODO: Remover valor alternativo de mock após implementações locais do /register
-        // const userInformations = (await loadUserInformations({ code }))
-        const userInformations: UserInformationsViewModel = {
-            accessToken:"x",
-            expirationTime: 7199,
-            name:"Daniel Schreiber Guimarães",
-            wcaId: "2018GUIM02",
-            customRegistration: {
-                canRegister:true,
-                stateId: null,
-                updateTimestamp: null,
-            },
-        }
-
+        const userInformations = (await loadUserInformations({ code }))
         updatePersistedUserData(userInformations)
     }
 
