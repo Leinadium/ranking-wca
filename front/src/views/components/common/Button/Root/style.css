@@ -1,132 +1,132 @@
 .button {
-    cursor: pointer;
-    display: flex;
-    /* TODO: Calcular espaçamentos com base num fator a ser especificado como token */
-    gap: 16px;
-    align-items: center;
-    padding: 8px 16px;
+	cursor: pointer;
+	display: flex;
+	/* TODO: Calcular espaçamentos com base num fator a ser especificado como token */
+	gap: 16px;
+	align-items: center;
+	padding: 8px 16px;
 }
 
 .button--basic {
-    background-color: transparent;
-    border: none;
+	background-color: transparent;
+	border: none;
 }
 
 .button--outlined {
-    background-color: transparent;
+	background-color: transparent;
 }
 
 .button--outlined,
 .button--filled {
-    border-width: 1px;
-    border-style: solid;
+	border-width: 1px;
+	border-style: solid;
 }
 
 .button--primary {
-    color: var(--color-primary-base);
-    border-color: var(--color-primary-base);
+	color: var(--color-primary-base);
+	border-color: var(--color-primary-base);
 }
 
 .button--primary.button-active {
-    color: var(--color-primary-light-1);
-    background-color: var(--color-primary-dark-1);
+	color: var(--color-primary-light-1);
+	background-color: var(--color-primary-dark-1);
 }
 
 .button--filled.button--primary {
-    background-color: var(--color-primary-base);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-primary-base);
+	color: var(--color-neutral-light-1);
 }
 
 .button--secondary {
-    color: var(--color-secondary-base);
-    border-color: var(--color-secondary-base);
+	color: var(--color-secondary-base);
+	border-color: var(--color-secondary-base);
 }
 
 .button--secondary.button-active {
-    color: var(--color-secondary-light-1);
-    background-color: var(--color-secondary-dark-1);
+	color: var(--color-secondary-light-1);
+	background-color: var(--color-secondary-dark-1);
 }
 
 .button--filled.button--secondary {
-    background-color: var(--color-secondary-base);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-secondary-base);
+	color: var(--color-neutral-light-1);
 }
 
 .button--neutral {
-    color: var(--color-neutral-dark-1);
-    border-color: var(--color-neutral-dark-1);
+	color: var(--color-neutral-dark-1);
+	border-color: var(--color-neutral-dark-1);
 }
 
 .button--neutral.button-active {
-    color: var(--color-neutral-light-1);
-    background-color: var(--color-neutral-dark-1);
+	color: var(--color-neutral-light-1);
+	background-color: var(--color-neutral-dark-1);
 }
 
 .button--filled.button--neutral {
-    background-color: var(--color-neutral-dark-1);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-neutral-dark-1);
+	color: var(--color-neutral-light-1);
 }
 
 .button--positive {
-    color: var(--color-accent-positive-base);
-    border-color: var(--color-accent-positive-base);
+	color: var(--color-accent-positive-base);
+	border-color: var(--color-accent-positive-base);
 }
 
 .button--positive.button-active {
-    color: var(--color-accent-positive-light-1);
-    background-color: var(--color-accent-positive-dark-1);
+	color: var(--color-accent-positive-light-1);
+	background-color: var(--color-accent-positive-dark-1);
 }
 
 .button--filled.button--positive {
-    background-color: var(--color-accent-positive-base);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-accent-positive-base);
+	color: var(--color-neutral-light-1);
 }
 
 .button--warning {
-    color: var(--color-accent-warning-base);
-    border-color: var(--color-accent-warning-base);
+	color: var(--color-accent-warning-base);
+	border-color: var(--color-accent-warning-base);
 }
 
 .button--warning.button-active {
-    color: var(--color-accent-warning-light-1);
-    background-color: var(--color-accent-warning-dark-1);
+	color: var(--color-accent-warning-light-1);
+	background-color: var(--color-accent-warning-dark-1);
 }
 
 .button--filled.button--warning {
-    background-color: var(--color-accent-warning-base);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-accent-warning-base);
+	color: var(--color-neutral-light-1);
 }
 
 .button--negative {
-    color: var(--color-accent-negative-base);
-    border-color: var(--color-accent-negative-base);
+	color: var(--color-accent-negative-base);
+	border-color: var(--color-accent-negative-base);
 }
 
 .button--negative.button-active {
-    color: var(--color-accent-negative-light-1);
-    background-color: var(--color-accent-negative-dark-1);
+	color: var(--color-accent-negative-light-1);
+	background-color: var(--color-accent-negative-dark-1);
 }
 
 .button--filled.button--negative {
-    background-color: var(--color-accent-negative-base);
-    color: var(--color-neutral-light-1);
+	background-color: var(--color-accent-negative-base);
+	color: var(--color-neutral-light-1);
 }
 
 .button:disabled {
-    color: var(--color-neutral-base) !important;
-    border-color: var(--color-neutral-base) !important;
-    cursor: not-allowed;
+	color: var(--color-neutral-base) !important;
+	border-color: var(--color-neutral-base) !important;
+	cursor: not-allowed;
 }
 
 .button--filled:disabled {
-    color: var(--color-neutral-dark-1) !important;
-    background-color: var(--color-neutral-base) !important;
+	color: var(--color-neutral-dark-1) !important;
+	background-color: var(--color-neutral-base) !important;
 }
 
 .button--full {
-    width: 100%;
+	width: 100%;
 }
 
 .button--auto {
-    width: auto;
+	width: auto;
 }

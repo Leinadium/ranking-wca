@@ -3,7 +3,7 @@
 	import Tooltip from '../Tooltip/Tooltip.svelte';
 	import type { VerifiedAccountFlagProps } from './types';
 
-    let { isVerified }: VerifiedAccountFlagProps = $props();
+	let { isVerified }: VerifiedAccountFlagProps = $props();
 </script>
 
 <Tooltip text={isVerified ? 'Conta verificada' : 'Verificação de conta pendente'}>

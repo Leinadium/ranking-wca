@@ -1,6 +1,6 @@
 .divider {
-    flex-shrink: 0;
-    align-self: stretch;
-    border: none;
-    margin: 0;
+	flex-shrink: 0;
+	align-self: stretch;
+	border: none;
+	margin: 0;
 }

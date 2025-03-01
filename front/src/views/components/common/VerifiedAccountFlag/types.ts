@@ -1,3 +1,3 @@
 export interface VerifiedAccountFlagProps {
-    isVerified: boolean;
+	isVerified: boolean;
 }

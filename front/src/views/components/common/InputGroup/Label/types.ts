@@ -1,3 +1,3 @@
 export interface InputGroupLabelProps {
-    text: string;
-};
+	text: string;
+}

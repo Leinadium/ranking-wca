@@ -1,5 +1,5 @@
-import type { Snippet } from "svelte";
+import type { Snippet } from 'svelte';
 
 export interface TableFooterProps {
-    children: Snippet<[]>;
+	children: Snippet<[]>;
 }

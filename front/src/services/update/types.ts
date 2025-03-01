@@ -1,3 +1,4 @@
-import type { SpecificMethodRequestArgs } from "$lib/utils/http/types";
+import type { SpecificMethodRequestArgs } from '$lib/utils/http/types';
 
-export interface GetUpdateStatusArgs extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {}
+export interface GetUpdateStatusArgs
+	extends Omit<SpecificMethodRequestArgs, 'abortSignalKey' | 'url' | 'body'> {}

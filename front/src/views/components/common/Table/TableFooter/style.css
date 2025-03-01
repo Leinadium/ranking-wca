@@ -1,6 +1,6 @@
 .table__footer {
-    background-color: transparent;
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+	background-color: transparent;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
 }

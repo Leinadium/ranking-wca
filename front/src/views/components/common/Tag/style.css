@@ -1,37 +1,37 @@
 .tag {
-    box-shadow: var(--shadow-inner-1) inset;
-    border: none;
-    padding: 8px;
-    height: auto;
-    width: auto;
+	box-shadow: var(--shadow-inner-1) inset;
+	border: none;
+	padding: 8px;
+	height: auto;
+	width: auto;
 }
 
 .tag--primary {
-    background-color: var(--color-primary-light-2);
-    color: var(--color-primary-dark-2) !important;
+	background-color: var(--color-primary-light-2);
+	color: var(--color-primary-dark-2) !important;
 }
 
 .tag--secondary {
-    background-color: var(--color-secondary-light-2);
-    color: var(--color-secondary-dark-2) !important;
+	background-color: var(--color-secondary-light-2);
+	color: var(--color-secondary-dark-2) !important;
 }
 
 .tag--neutral {
-    background-color: var(--color-neutral-light-1);
-    color: var(--color-neutral-dark-2) !important;
+	background-color: var(--color-neutral-light-1);
+	color: var(--color-neutral-dark-2) !important;
 }
 
 .tag--positive {
-    background-color: var(--color-accent-positive-light-2);
-    color: var(--color-accent-positive-dark-2) !important;
+	background-color: var(--color-accent-positive-light-2);
+	color: var(--color-accent-positive-dark-2) !important;
 }
 
 .tag--warning {
-    background-color: var(--color-accent-warning-light-2);
-    color: var(--color-accent-warning-dark-2) !important;
+	background-color: var(--color-accent-warning-light-2);
+	color: var(--color-accent-warning-dark-2) !important;
 }
 
 .tag--negative {
-    background-color: var(--color-accent-negative-light-2);
-    color: var(--color-accent-negative-dark-2) !important;
+	background-color: var(--color-accent-negative-light-2);
+	color: var(--color-accent-negative-dark-2) !important;
 }

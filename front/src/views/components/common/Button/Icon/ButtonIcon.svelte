@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { ButtonIconProps } from "./types";
+	import type { ButtonIconProps } from './types';
 
-    let { children }: ButtonIconProps = $props();
+	let { children }: ButtonIconProps = $props();
 </script>
 
 {@render children()}

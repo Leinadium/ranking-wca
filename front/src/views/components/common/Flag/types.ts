@@ -1,4 +1,4 @@
 export interface FlagProps {
-    stateId: string | null;
-    size: number;
+	stateId: string | null;
+	size: number;
 }

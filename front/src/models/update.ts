@@ -1,3 +1,3 @@
 export interface UpdateStatusModel {
-    lastUpdate: string;
+	lastUpdate: string;
 }

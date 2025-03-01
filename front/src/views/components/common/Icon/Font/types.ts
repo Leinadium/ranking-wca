@@ -1,3 +1,3 @@
 export interface FontIconProps {
-    name: string;
+	name: string;
 }

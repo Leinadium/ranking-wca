@@ -13,12 +13,12 @@
 
 	const mainCustomStyle = $derived(`
 		width: 100%;
-	`)
+	`);
 
 	const checkDeviceSize = () => {
 		responsivenessStore.update((state) => ({
 			...state,
-			isSmallDevice: window.innerWidth < 800 || window.innerHeight < 600,
+			isSmallDevice: window.innerWidth < 800 || window.innerHeight < 600
 		}));
 	};
 
@@ -33,9 +33,9 @@
 
 <Sidebar />
 
-<div class="container">	
+<div class="container">
 	<GlobalHeader />
-	
+
 	<main style={mainCustomStyle}>
 		{#key $responsivenessStore.isSmallDevice}
 			<GridRoot marginH={$responsivenessStore.isSmallDevice ? 4 : 8} gap={2}>
@@ -43,6 +43,6 @@
 			</GridRoot>
 		{/key}
 	</main>
-	
+
 	<Footer />
 </div>

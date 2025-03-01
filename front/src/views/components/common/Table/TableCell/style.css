@@ -1,35 +1,35 @@
 .table__cell {
-    padding: 8px 16px;
-    border: none;
-    border-bottom: 1px solid var(--color-neutral-base);
+	padding: 8px 16px;
+	border: none;
+	border-bottom: 1px solid var(--color-neutral-base);
 }
 
 .table__cell:nth-child(1) {
-    padding-left: 32px;
+	padding-left: 32px;
 }
 
 .table__cell:last-child {
-    padding-right: 32px;
+	padding-right: 32px;
 }
 
 .table__cell--highlighted {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .table__cell--footer {
-    padding: 16px 0 !important;
-    background-color: transparent;
-    border: none;
+	padding: 16px 0 !important;
+	background-color: transparent;
+	border: none;
 }
 
 .table__body .table__cell .button {
-    padding: 0;
+	padding: 0;
 }
 
 .table__body .table__cell a {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .table__cell .table__label--sortable {
-    padding: 0 0 0 8px;
+	padding: 0 0 0 8px;
 }

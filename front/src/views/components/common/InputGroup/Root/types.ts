@@ -1,6 +1,6 @@
-import type { Snippet } from "svelte";
+import type { Snippet } from 'svelte';
 
 export interface InputGroupRootProps {
-    children: Snippet<[]>;
-    isFullWidth?: boolean
-};
+	children: Snippet<[]>;
+	isFullWidth?: boolean;
+}

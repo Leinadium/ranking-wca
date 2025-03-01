@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { TableProps } from "./types";
-    import './style.css';
+	import type { TableProps } from './types';
+	import './style.css';
 
-    let { children }: TableProps = $props();
+	let { children }: TableProps = $props();
 </script>
 
 <div class="table">
-    {@render children()}
+	{@render children()}
 </div>

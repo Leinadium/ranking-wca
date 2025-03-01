@@ -1,39 +1,39 @@
 .sidebar {
-    background-color: var(--color-neutral-light-2);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: auto;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+	background-color: var(--color-neutral-light-2);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	height: 100vh;
+	max-height: 100vh;
+	overflow: auto;
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
 }
 
-.sidebar::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.sidebar::-webkit-scrollbar {
+	display: none; /* Safari and Chrome */
 }
 
 .sidebar__brand {
-    white-space: nowrap;
+	white-space: nowrap;
 }
 
 .sidebar__image--brand {
-    height: 48px;
-    width: auto;
+	height: 48px;
+	width: auto;
 }
 
 .sidebar__button--collapse {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
 .sidebar--collapsed .sidebar__button--collapse {
-    left: unset;
-    right: unset;
-    /* width: 100%; */
-    justify-content: center;
+	left: unset;
+	right: unset;
+	/* width: 100%; */
+	justify-content: center;
 }

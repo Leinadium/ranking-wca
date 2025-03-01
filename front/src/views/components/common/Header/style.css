@@ -1,13 +1,13 @@
 .global-header {
-    padding: 32px 0;
-    margin: 0 32px;
+	padding: 32px 0;
+	margin: 0 32px;
 }
 
 .popover__trigger--user-menu {
-    padding: 0;
-    gap: 8px;
+	padding: 0;
+	gap: 8px;
 }
 
 .popover__trigger--user-menu .avatar {
-    margin-right: 4px !important;
+	margin-right: 4px !important;
 }

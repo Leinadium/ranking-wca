@@ -1,6 +1,6 @@
-import type { Snippet } from "svelte";
+import type { Snippet } from 'svelte';
 
 export interface TooltipProps {
-    children: Snippet<[]>;
-    text: string;
+	children: Snippet<[]>;
+	text: string;
 }

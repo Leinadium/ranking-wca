@@ -1,3 +1,3 @@
 export interface ResponsivenessStore {
-    isSmallDevice: boolean;
+	isSmallDevice: boolean;
 }

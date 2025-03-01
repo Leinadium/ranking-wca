@@ -1,39 +1,51 @@
-import type { TableSortDirectionOptions } from "../../views/components/common/Table/TableSortLabel/types";
+import type { TableSortDirectionOptions } from '../../views/components/common/Table/TableSortLabel/types';
 
-export function compareStringsForSorting(firstValue: string, secondValue: string, sortDirection: TableSortDirectionOptions) {
-    // Ordem crescente
-    if (sortDirection === 'asc') return firstValue.localeCompare(secondValue);
-    
-    // Ordem decrescente
-    return secondValue.localeCompare(firstValue);
-};
+export function compareStringsForSorting(
+	firstValue: string,
+	secondValue: string,
+	sortDirection: TableSortDirectionOptions
+) {
+	// Ordem crescente
+	if (sortDirection === 'asc') return firstValue.localeCompare(secondValue);
 
-export function compareNumbersForSorting(firstValue: number, secondValue: number, sortDirection: TableSortDirectionOptions) {
-    // Ordem crescente
-    if (sortDirection === 'asc') return firstValue - secondValue;
-    
-    // Ordem decrescente
-    return secondValue - firstValue;
-};
+	// Ordem decrescente
+	return secondValue.localeCompare(firstValue);
+}
 
-export function sortObjectList<T>(data: T[], sortKey: keyof T, sortDirection: TableSortDirectionOptions) {
-    if (!data) return []
-    
-    const sortedData = [...data].sort((a, b) => {
-        const valueA = a[sortKey];
-        const valueB = b[sortKey];
+export function compareNumbersForSorting(
+	firstValue: number,
+	secondValue: number,
+	sortDirection: TableSortDirectionOptions
+) {
+	// Ordem crescente
+	if (sortDirection === 'asc') return firstValue - secondValue;
 
-        if (typeof valueA === 'string' && typeof valueB === 'string') {
-            return compareStringsForSorting(valueA, valueB, sortDirection)
-        }
-        
-        if (typeof valueA === 'number' && typeof valueB === 'number') {
-            return compareNumbersForSorting(valueA, valueB, sortDirection)
-        }
+	// Ordem decrescente
+	return secondValue - firstValue;
+}
 
-        // Se os valores forem de tipos mistos ou não comparáveis considera todos iguais
-        return 0;
-    });
+export function sortObjectList<T>(
+	data: T[],
+	sortKey: keyof T,
+	sortDirection: TableSortDirectionOptions
+) {
+	if (!data) return [];
 
-    return sortedData
-};
+	const sortedData = [...data].sort((a, b) => {
+		const valueA = a[sortKey];
+		const valueB = b[sortKey];
+
+		if (typeof valueA === 'string' && typeof valueB === 'string') {
+			return compareStringsForSorting(valueA, valueB, sortDirection);
+		}
+
+		if (typeof valueA === 'number' && typeof valueB === 'number') {
+			return compareNumbersForSorting(valueA, valueB, sortDirection);
+		}
+
+		// Se os valores forem de tipos mistos ou não comparáveis considera todos iguais
+		return 0;
+	});
+
+	return sortedData;
+}

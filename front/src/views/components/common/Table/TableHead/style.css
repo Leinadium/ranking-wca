@@ -1,5 +1,5 @@
 .table__head {
-    text-align: left; /* TODO: Permitir personalizar alinhamento da célula */
-    padding: 8px;
-    border: 1px solid var(--color-neutral-base);
+	text-align: left; /* TODO: Permitir personalizar alinhamento da célula */
+	padding: 8px;
+	border: 1px solid var(--color-neutral-base);
 }

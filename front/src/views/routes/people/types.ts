@@ -1,8 +1,8 @@
-import type { PeopleSearchResultViewModel } from "../../../viewModels/person/types";
+import type { PeopleSearchResultViewModel } from '../../../viewModels/person/types';
 
 export interface PeopleSearchTableData {
-    totalItems: number,
-    itemsPerPage: number,
-    currentPage: number,
-    paginatedData: PeopleSearchResultViewModel[] | [],
-};
+	totalItems: number;
+	itemsPerPage: number;
+	currentPage: number;
+	paginatedData: PeopleSearchResultViewModel[] | [];
+}

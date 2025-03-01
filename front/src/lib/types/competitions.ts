@@ -1,1 +1,1 @@
-export type CompetitionModes = 'single' | 'average'
+export type CompetitionModes = 'single' | 'average';

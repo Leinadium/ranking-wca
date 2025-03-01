@@ -22,9 +22,9 @@
 				{
 					icon: 'faFileLines',
 					text: `Sobre ${BRAND_NAME}`,
-					link: INTERNAL_ROUTES.MAIN,
-				},
-			],
+					link: INTERNAL_ROUTES.MAIN
+				}
+			]
 		},
 		{
 			title: 'Resultados',
@@ -32,14 +32,14 @@
 				{
 					icon: 'faRankingStar',
 					text: 'Ranking',
-					link: INTERNAL_ROUTES.RANKING,
+					link: INTERNAL_ROUTES.RANKING
 				},
 				{
 					icon: 'faPeopleGroup',
 					text: 'Pessoas',
-					link: INTERNAL_ROUTES.PEOPLE,
-				},
-			],
+					link: INTERNAL_ROUTES.PEOPLE
+				}
+			]
 		},
 		{
 			title: 'Regulamento Mundial',
@@ -47,35 +47,35 @@
 				{
 					icon: 'faInfoCircle',
 					text: 'Sobre o regulamento',
-					link: 	EXTERNAL_ROUTES.ABOUTE_REGULATIONS,
-					linkTarget: '_blank',
+					link: EXTERNAL_ROUTES.ABOUTE_REGULATIONS,
+					linkTarget: '_blank'
 				},
 				{
 					icon: 'faBook',
 					text: 'Regulamentos e orientações',
-					link: 	EXTERNAL_ROUTES.REGULATIONS_AND_GUIDELINES,
-					linkTarget: '_blank',
+					link: EXTERNAL_ROUTES.REGULATIONS_AND_GUIDELINES,
+					linkTarget: '_blank'
 				},
 				{
 					icon: 'faClipboardList',
 					text: 'Regulamento',
-					link: 	EXTERNAL_ROUTES.REGULATIONS,
-					linkTarget: '_blank',
+					link: EXTERNAL_ROUTES.REGULATIONS,
+					linkTarget: '_blank'
 				},
 				{
 					icon: 'faDirections',
 					text: 'Orientações',
-					link: 	EXTERNAL_ROUTES.GUIDELINES,
-					linkTarget: '_blank',
+					link: EXTERNAL_ROUTES.GUIDELINES,
+					linkTarget: '_blank'
 				},
 				{
 					icon: 'faShuffle',
 					text: 'Embaralhamentos',
-					link: 	EXTERNAL_ROUTES.SCRAMBLES,
-					linkTarget: '_blank',
-				},
-			],
-		},
+					link: EXTERNAL_ROUTES.SCRAMBLES,
+					linkTarget: '_blank'
+				}
+			]
+		}
 	];
 
 	// TODO: Melhorar estilização de tamanho
@@ -90,8 +90,8 @@
 	}
 
 	$effect(() => {
-		sidebar.isExpanded = !$responsivenessStore.isSmallDevice
-	})
+		sidebar.isExpanded = !$responsivenessStore.isSmallDevice;
+	});
 </script>
 
 <aside class="sidebar {sidebar.isExpanded ? '' : 'sidebar--collapsed'}" style={customStyle}>
@@ -102,45 +102,46 @@
 			margin={`0 0 ${fromPixelToRem(9 * SPACING_FACTOR)}rem`}
 			gap={2}
 		>
-			<img
-				class="sidebar__image--brand"
-				src="/brand/brand-symbol.svg"
-				alt="Logo do {BRAND_NAME}"
-			/>
-			
+			<img class="sidebar__image--brand" src="/brand/brand-symbol.svg" alt="Logo do {BRAND_NAME}" />
+
 			{#if sidebar.isExpanded}
 				<Typography type="h1" color="PRIMARY_DARK_1">{BRAND_NAME}</Typography>
 			{/if}
 		</GridItem>
 
 		{#key sidebar.isExpanded}
-		<GridItem
-			direction={'COLUMN'}
-			alignItems={sidebar.isExpanded ? 'flex-start' : 'center'}
-			gap={4}
-		>
-			{#each MENU_TOPICS as topic}
-				<GridItem direction={'COLUMN'} alignItems={'flex-start'}>
-					{#if sidebar.isExpanded}
-						<Typography type="h6" color="NEUTRAL_DARK_2">{topic.title}</Typography>
-					{/if}
+			<GridItem
+				direction={'COLUMN'}
+				alignItems={sidebar.isExpanded ? 'flex-start' : 'center'}
+				gap={4}
+			>
+				{#each MENU_TOPICS as topic}
+					<GridItem direction={'COLUMN'} alignItems={'flex-start'}>
+						{#if sidebar.isExpanded}
+							<Typography type="h6" color="NEUTRAL_DARK_2">{topic.title}</Typography>
+						{/if}
 
-					{#each topic.items as item}
-						<ButtonRoot type={'BASIC'} color={'NEUTRAL'} href={item.link} target={item.linkTarget}>
-							<Tooltip text={item.text}>
-								<ButtonIcon>
-									<SvgIcon name={item.icon}></SvgIcon>
-								</ButtonIcon>
-							</Tooltip>
+						{#each topic.items as item}
+							<ButtonRoot
+								type={'BASIC'}
+								color={'NEUTRAL'}
+								href={item.link}
+								target={item.linkTarget}
+							>
+								<Tooltip text={item.text}>
+									<ButtonIcon>
+										<SvgIcon name={item.icon}></SvgIcon>
+									</ButtonIcon>
+								</Tooltip>
 
-							{#if sidebar.isExpanded}
-								<ButtonText>{item.text}</ButtonText>
-							{/if}
-						</ButtonRoot>
-					{/each}
-				</GridItem>
-			{/each}
-		</GridItem>
+								{#if sidebar.isExpanded}
+									<ButtonText>{item.text}</ButtonText>
+								{/if}
+							</ButtonRoot>
+						{/each}
+					</GridItem>
+				{/each}
+			</GridItem>
 		{/key}
 	</GridItem>
 

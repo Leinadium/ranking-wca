@@ -1,9 +1,9 @@
-import { modal } from "$lib/states/modal.svelte";
+import { modal } from '$lib/states/modal.svelte';
 
 export function openModal() {
-    modal.isOpened = true
-};
+	modal.isOpened = true;
+}
 
 export function closeModal() {
-    modal.isOpened = false
-};
+	modal.isOpened = false;
+}

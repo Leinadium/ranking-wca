@@ -1,7 +1,7 @@
-import type { Snippet } from "svelte";
-import type { PageData } from "./$types";
+import type { Snippet } from 'svelte';
+import type { PageData } from './$types';
 
-export interface RootLayoutProps { 
-    data: PageData;
-    children: Snippet<[]>;
+export interface RootLayoutProps {
+	data: PageData;
+	children: Snippet<[]>;
 }

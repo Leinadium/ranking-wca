@@ -1,67 +1,67 @@
 :root {
-    --color-primary-light-2: #AFDFFD;
-    --color-primary-light-1: #60BFFB;
-    --color-primary-base: #0487D9;
-    --color-primary-dark-1: #0465B4;
-    --color-primary-dark-2: #034E8C;
-    --color-primary-dark-3: #023864;
-    
-    --color-secondary-light-2: #F8F5B4;
-    --color-secondary-light-1: #F4EC7B;
-    --color-secondary-base: #F2E749;
-    --color-secondary-dark-1: #D1C73B;
-    --color-secondary-dark-2: #A19929;
-    --color-secondary-dark-3: #595516;
+	--color-primary-light-2: #afdffd;
+	--color-primary-light-1: #60bffb;
+	--color-primary-base: #0487d9;
+	--color-primary-dark-1: #0465b4;
+	--color-primary-dark-2: #034e8c;
+	--color-primary-dark-3: #023864;
 
-    --color-neutral-light-2: #FAFAFA;
-    --color-neutral-light-1: #ECF0F3;
-    --color-neutral-base: #C3CBD1;
-    --color-neutral-dark-1: #8C959D;
-    --color-neutral-dark-2: #333333;
-    --color-neutral-dark-3: #121212;
+	--color-secondary-light-2: #f8f5b4;
+	--color-secondary-light-1: #f4ec7b;
+	--color-secondary-base: #f2e749;
+	--color-secondary-dark-1: #d1c73b;
+	--color-secondary-dark-2: #a19929;
+	--color-secondary-dark-3: #595516;
 
-    --color-accent-positive-light-2: #C8F9D4;
-    --color-accent-positive-light-1: #A3F5B8;
-    --color-accent-positive-base: #79F297;
-    --color-accent-positive-dark-1: #45ED6F;
-    --color-accent-positive-dark-2: #20963D;
-    --color-accent-positive-dark-3: #155525;
+	--color-neutral-light-2: #fafafa;
+	--color-neutral-light-1: #ecf0f3;
+	--color-neutral-base: #c3cbd1;
+	--color-neutral-dark-1: #8c959d;
+	--color-neutral-dark-2: #333333;
+	--color-neutral-dark-3: #121212;
 
-    --color-accent-warning-light-2: #FADAB3;
-    --color-accent-warning-light-1: #F6BE79;
-    --color-accent-warning-base: #F2A341;
-    --color-accent-warning-dark-1: #E58510;
-    --color-accent-warning-dark-2: #AC640C;
-    --color-accent-warning-dark-3: #724308;
+	--color-accent-positive-light-2: #c8f9d4;
+	--color-accent-positive-light-1: #a3f5b8;
+	--color-accent-positive-base: #79f297;
+	--color-accent-positive-dark-1: #45ed6f;
+	--color-accent-positive-dark-2: #20963d;
+	--color-accent-positive-dark-3: #155525;
 
-    --color-accent-negative-light-2: #FAB3B9;
-    --color-accent-negative-light-1: #F56672;
-    --color-accent-negative-base: #F24452;
-    --color-accent-negative-dark-1: #E51022;
-    --color-accent-negative-dark-2: #B00D1B;
-    --color-accent-negative-dark-3: #7E0812;
+	--color-accent-warning-light-2: #fadab3;
+	--color-accent-warning-light-1: #f6be79;
+	--color-accent-warning-base: #f2a341;
+	--color-accent-warning-dark-1: #e58510;
+	--color-accent-warning-dark-2: #ac640c;
+	--color-accent-warning-dark-3: #724308;
 
-    --font-family-primary: 'Roboto Condensed', sans-serif;
-    --font-family-secondary: 'Roboto', sans-serif;
-    
-    --font-size-bigger-6: '2.000rem'; /* 32px */
-    --font-size-bigger-5: '1.812rem'; /* 29px */
-    --font-size-bigger-4: '1.625rem'; /* 26px */
-    --font-size-bigger-3: '1.438rem'; /* 23px */
-    --font-size-bigger-2: '1.250rem'; /* 20px */
-    --font-size-bigger-1: '1.125rem'; /* 18px */
-    --font-size-button-default: '1rem'; /* 18px */
-    --font-size-button-small: '0.875rem'; /* 14px */
-    --font-size-base: '1rem'; /* 16px */
-    --font-size-smaller-1: '0.875rem'; /* 14px */
-    --font-size-smaller-2: '0.812rem'; /* 13px */
-    
-    --line-height-big-font: '110%';
-    --line-height-medium-font: '130%';
-    --line-height-small-font: '150%';
+	--color-accent-negative-light-2: #fab3b9;
+	--color-accent-negative-light-1: #f56672;
+	--color-accent-negative-base: #f24452;
+	--color-accent-negative-dark-1: #e51022;
+	--color-accent-negative-dark-2: #b00d1b;
+	--color-accent-negative-dark-3: #7e0812;
 
-    --shadow-inner-1: 0px 2px 4px 0px var(--color-neutral-light-1);
-    --shadow-outer-1: 0px 1px 4px 0px var(--color-neutral-base);
-    --shadow-outer-2: 0px 2px 4px 0px var(--color-neutral-base);
-    --shadow-outer-3: 0px 4px 8px 0px var(--color-neutral-base);
+	--font-family-primary: 'Roboto Condensed', sans-serif;
+	--font-family-secondary: 'Roboto', sans-serif;
+
+	--font-size-bigger-6: '2.000rem'; /* 32px */
+	--font-size-bigger-5: '1.812rem'; /* 29px */
+	--font-size-bigger-4: '1.625rem'; /* 26px */
+	--font-size-bigger-3: '1.438rem'; /* 23px */
+	--font-size-bigger-2: '1.250rem'; /* 20px */
+	--font-size-bigger-1: '1.125rem'; /* 18px */
+	--font-size-button-default: '1rem'; /* 18px */
+	--font-size-button-small: '0.875rem'; /* 14px */
+	--font-size-base: '1rem'; /* 16px */
+	--font-size-smaller-1: '0.875rem'; /* 14px */
+	--font-size-smaller-2: '0.812rem'; /* 13px */
+
+	--line-height-big-font: '110%';
+	--line-height-medium-font: '130%';
+	--line-height-small-font: '150%';
+
+	--shadow-inner-1: 0px 2px 4px 0px var(--color-neutral-light-1);
+	--shadow-outer-1: 0px 1px 4px 0px var(--color-neutral-base);
+	--shadow-outer-2: 0px 2px 4px 0px var(--color-neutral-base);
+	--shadow-outer-3: 0px 4px 8px 0px var(--color-neutral-base);
 }

@@ -1,54 +1,66 @@
-import { authAdapter } from "../../adapters/auth";
-import type { APIGetLoginUrlResponse, APIGetUserInformationsResponse, UIGetLoginUrlResponse, UIGetUserInformationsResponse } from "../../adapters/auth/types";
-import { authService } from "../../services/auth";
-import type { GetLoginUrlArgs, GetUserInformationsArgs, UpdateUserInformationsArgs } from "../../services/auth/types";
-import { authStore } from "../../stores/auth";
-import type { UserInformationsViewModel } from "./types";
+import { authAdapter } from '../../adapters/auth';
+import type {
+	APIGetLoginUrlResponse,
+	APIGetUserInformationsResponse,
+	UIGetLoginUrlResponse,
+	UIGetUserInformationsResponse
+} from '../../adapters/auth/types';
+import { authService } from '../../services/auth';
+import type {
+	GetLoginUrlArgs,
+	GetUserInformationsArgs,
+	UpdateUserInformationsArgs
+} from '../../services/auth/types';
+import { authStore } from '../../stores/auth';
+import type { UserInformationsViewModel } from './types';
 
 export const loadLoginUrl = async (args?: GetLoginUrlArgs): Promise<void> => {
-  authStore.update((state) => ({
-    ...state,
-    isLoading: true,
-  }));
+	authStore.update((state) => ({
+		...state,
+		isLoading: true
+	}));
 
-  const APIResponse: APIGetLoginUrlResponse = await authService.getLoginUrl(args);
-  const adaptedResponse: UIGetLoginUrlResponse = authAdapter.formatLoginUrlToUI(APIResponse);
+	const APIResponse: APIGetLoginUrlResponse = await authService.getLoginUrl(args);
+	const adaptedResponse: UIGetLoginUrlResponse = authAdapter.formatLoginUrlToUI(APIResponse);
 
-  authStore.update((state) => ({
-    ...state,
-    loginUrl: adaptedResponse.data?.url,
-    isLoading: false,
-  }));
+	authStore.update((state) => ({
+		...state,
+		loginUrl: adaptedResponse.data?.url,
+		isLoading: false
+	}));
 };
 
-export const loadUserInformations = async (args?: GetUserInformationsArgs): Promise<UserInformationsViewModel> => {
-  authStore.update((state) => ({
-    ...state,
-    isLoading: true,
-  }));
+export const loadUserInformations = async (
+	args?: GetUserInformationsArgs
+): Promise<UserInformationsViewModel> => {
+	authStore.update((state) => ({
+		...state,
+		isLoading: true
+	}));
 
-  const APIResponse: APIGetUserInformationsResponse = await authService.getUserInformations(args);
-  const adaptedResponse: UIGetUserInformationsResponse = authAdapter.formatUserInformationsToUI(APIResponse);
+	const APIResponse: APIGetUserInformationsResponse = await authService.getUserInformations(args);
+	const adaptedResponse: UIGetUserInformationsResponse =
+		authAdapter.formatUserInformationsToUI(APIResponse);
 
-  authStore.update((state) => ({
-    ...state,
-    user: adaptedResponse.data,
-    isLoading: false,
-  }));
+	authStore.update((state) => ({
+		...state,
+		user: adaptedResponse.data,
+		isLoading: false
+	}));
 
-  return adaptedResponse.data
+	return adaptedResponse.data;
 };
 
 export const updateUserInformations = async (args?: UpdateUserInformationsArgs): Promise<void> => {
-  authStore.update((state) => ({
-    ...state,
-    isLoading: true,
-  }));
+	authStore.update((state) => ({
+		...state,
+		isLoading: true
+	}));
 
-  await authService.updateUserInformations(args);
+	await authService.updateUserInformations(args);
 
-  authStore.update((state) => ({
-    ...state,
-    isLoading: false,
-  }));
+	authStore.update((state) => ({
+		...state,
+		isLoading: false
+	}));
 };

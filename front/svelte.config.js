@@ -15,9 +15,9 @@ const config = {
 		// outDir: 'build',
 
 		files: {
-			routes: 'src/views/routes',
-		},
-	},
+			routes: 'src/views/routes'
+		}
+	}
 };
 
 export default config;

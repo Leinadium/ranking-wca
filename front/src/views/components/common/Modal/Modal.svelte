@@ -11,28 +11,35 @@
 	import './style.css';
 	import GridItem from '../Grid/Item/GridItem.svelte';
 
-    let { children, size = 'MEDIUM', title, actionText, actionFn, isActionDisabled = false }: ModalProps = $props();
-	
+	let {
+		children,
+		size = 'MEDIUM',
+		title,
+		actionText,
+		actionFn,
+		isActionDisabled = false
+	}: ModalProps = $props();
+
 	const TYPE_CLASSES = {
-        size: {
-            SMALL: 'modal__content--sm',
-            MEDIUM: 'modal__content--md',
-            LARGE: 'modal__content--lg',
-        },
-    };
+		size: {
+			SMALL: 'modal__content--sm',
+			MEDIUM: 'modal__content--md',
+			LARGE: 'modal__content--lg'
+		}
+	};
 
 	let customStyle = $derived(`
 		display: ${modal.isOpened ? 'flex' : 'none'};
 	`);
 
 	function handleOutsideClick(event: MouseEvent) {
-		if (event.target !== event.currentTarget) return
+		if (event.target !== event.currentTarget) return;
 		closeModal();
 	}
 
 	function handleActionButtonClick() {
-		actionFn()
-		closeModal()
+		actionFn();
+		closeModal();
 	}
 </script>
 
@@ -40,7 +47,13 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <div class="modal" style={customStyle} onclick={handleOutsideClick}>
 	<GridItem gap={3} classes={`modal__content ${TYPE_CLASSES.size[size]}`}>
-		<GridItem gap={1} classes={'modal__header'} wrap={'NOWRAP'} justifyContent={'space-between'} isFullWidth>
+		<GridItem
+			gap={1}
+			classes={'modal__header'}
+			wrap={'NOWRAP'}
+			justifyContent={'space-between'}
+			isFullWidth
+		>
 			<Typography type={'h3'} color={'NEUTRAL_DARK_2'}>
 				{title}
 			</Typography>
@@ -53,11 +66,11 @@
 		</GridItem>
 
 		<Divider thickness={1} color={'NEUTRAL_BASE'} />
-		
+
 		<GridItem gap={1} classes={'modal__body'} justifyContent={'space-between'} isFullWidth>
 			{@render children?.()}
 		</GridItem>
-		
+
 		<GridItem gap={1} classes={'modal__footer'} justifyContent={'flex-end'} isFullWidth>
 			<ButtonRoot
 				type={'FILLED'}

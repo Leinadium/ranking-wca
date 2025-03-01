@@ -18,8 +18,11 @@
 		transform: ${positionStyle.transform};
 	`);
 
-	function preventOverflowOnScreen(position: { top: number; left: number }, popoverRect: DOMRect): { top: number; left: number } {
-		const borderSpacing = 10 // Margem desejada em pixels em relação à borda da tela
+	function preventOverflowOnScreen(
+		position: { top: number; left: number },
+		popoverRect: DOMRect
+	): { top: number; left: number } {
+		const borderSpacing = 10; // Margem desejada em pixels em relação à borda da tela
 
 		// Evita transbordamento da borda direita
 		if (position.left + popoverRect.width > window.innerWidth) {
@@ -43,14 +46,20 @@
 		return triggerRect.left + (triggerRect.width - popoverRect.width) / 2 + window.scrollX;
 	}
 
-	function positionAuto(triggerRect: DOMRect, popoverRect: DOMRect, availableSpace: any): { top: number; left: number } {
+	function positionAuto(
+		triggerRect: DOMRect,
+		popoverRect: DOMRect,
+		availableSpace: any
+	): { top: number; left: number } {
 		const possiblePositions = [
 			{ type: 'bottom', condition: availableSpace.bottom >= popoverRect.height },
 			{ type: 'top', condition: availableSpace.top >= popoverRect.height },
 			{ type: 'right', condition: availableSpace.right >= popoverRect.width },
 			{ type: 'left', condition: availableSpace.left >= popoverRect.width }
 		];
-		const selectedPosition = possiblePositions.find(positionAlternative => positionAlternative.condition)?.type || 'bottom';
+		const selectedPosition =
+			possiblePositions.find((positionAlternative) => positionAlternative.condition)?.type ||
+			'bottom';
 
 		return positionCalculations[selectedPosition](triggerRect, popoverRect);
 	}
@@ -91,28 +100,32 @@
 
 		const positionFunction = positionCalculations[position] || positionCalculations.auto;
 		let newPositionStyle = positionFunction(triggerRect, popoverRect, availableSpace);
-		
+
 		newPositionStyle = preventOverflowOnScreen(newPositionStyle, popoverRect);
-		positionStyle = { top: newPositionStyle.top, left: newPositionStyle.left, transform: 'translate(-2vw, 0)' };
+		positionStyle = {
+			top: newPositionStyle.top,
+			left: newPositionStyle.left,
+			transform: 'translate(-2vw, 0)'
+		};
 	}
 
 	let resizeTimeout: any;
 
 	function handleScreenResize() {
 		clearTimeout(resizeTimeout);
-		resizeTimeout = debounce(positionPopover, 100)
+		resizeTimeout = debounce(positionPopover, 100);
 	}
 
 	function handlePopoverVisibilityToggle(event: unknown) {
-		isVisible = event?.newState === 'open' || false
-		positionPopover()
+		isVisible = event?.newState === 'open' || false;
+		positionPopover();
 	}
 
 	$effect(() => {
 		if (modal.isOpened) {
-			popover?.hidePopover()
+			popover?.hidePopover();
 		}
-	})
+	});
 
 	onMount(() => {
 		triggerElement = document.querySelector(`button[popovertarget="${id}"]`);
@@ -129,12 +142,6 @@
 	});
 </script>
 
-<div
-	bind:this={popover}
-	class="popover"
-	id={id}
-	popover={'auto'}
-	style={customStyle}
->
+<div bind:this={popover} class="popover" {id} popover={'auto'} style={customStyle}>
 	{@render children?.()}
 </div>

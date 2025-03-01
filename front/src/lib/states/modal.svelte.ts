@@ -1,3 +1,3 @@
 export const modal = $state({
-    isOpened: false,
+	isOpened: false
 });

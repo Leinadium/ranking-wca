@@ -1,30 +1,30 @@
 export default class AbortSignalsManager {
-    static controllers = new Map<string, AbortController>()
+	static controllers = new Map<string, AbortController>();
 
-    static abortRequest(key: string, reason: string = 'CANCELLED'): void {
-        const controller: AbortController | undefined = this.controllers.get(key);
+	static abortRequest(key: string, reason: string = 'CANCELLED'): void {
+		const controller: AbortController | undefined = this.controllers.get(key);
 
-        if (!controller || controller?.signal?.aborted) return
-                
-        controller.abort(reason);
-    }
+		if (!controller || controller?.signal?.aborted) return;
 
-    static abortAndGetSignal(key: string): AbortSignal {
-        this.abortRequest(key);
+		controller.abort(reason);
+	}
 
-        const newController: AbortController = new AbortController();
-        this.controllers.set(key, newController);
+	static abortAndGetSignal(key: string): AbortSignal {
+		this.abortRequest(key);
 
-        return newController.signal;
-    }
+		const newController: AbortController = new AbortController();
+		this.controllers.set(key, newController);
 
-    static abortAll(): void {
-        this.controllers.forEach((controller: AbortController, key: string) => {
-            if (!controller.signal.aborted) {
-                controller.abort('CANCELLED');
-            }
-        });
+		return newController.signal;
+	}
 
-        this.controllers.clear();
-    }
+	static abortAll(): void {
+		this.controllers.forEach((controller: AbortController, key: string) => {
+			if (!controller.signal.aborted) {
+				controller.abort('CANCELLED');
+			}
+		});
+
+		this.controllers.clear();
+	}
 }
