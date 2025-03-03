@@ -29,6 +29,7 @@ func Main() {
 	api := router.Group("/api")
 	api.GET("/status", gs.GetStatus)
 	api.GET("/search", gs.GetSearch)
+	api.GET("/states", gs.GetStates)
 
 	auth := api.Group("/auth")
 	auth.GET("/endpoint", gs.GetAuthEndpoint)
