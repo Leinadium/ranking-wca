@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"ranking.leinadium.dev/pkg/db"
 	"ranking.leinadium.dev/pkg/db/models"
 	"ranking.leinadium.dev/pkg/errors"
 
@@ -19,11 +20,11 @@ func (gs *GlobalState) GetSearch(c *gin.Context) {
 		return
 	}
 
-	pageArgs := PaginationArgsFromContext(c)
+	pageArgs := db.PaginationArgsFromContext(c)
 	searchFinal := fmt.Sprintf("%%%s%%", strings.ToLower(searchText))
 	ss := []models.SearchQuery{}
 
-	totalItems, err := PaginatedQuery(
+	totalItems, err := db.PaginatedQuery(
 		gs.DB,
 		pageArgs,
 		&ss,

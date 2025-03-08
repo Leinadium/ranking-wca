@@ -8,6 +8,7 @@ import (
 	"github.com/guregu/null/v5"
 
 	"github.com/gin-gonic/gin"
+	"ranking.leinadium.dev/pkg/db"
 	"ranking.leinadium.dev/pkg/db/models"
 	"ranking.leinadium.dev/pkg/errors"
 )
@@ -28,7 +29,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 		errors.SetError(c, "state not provided", http.StatusBadRequest)
 		return
 	}
-	pageArgs := PaginationArgsFromContext(c)
+	pageArgs := db.PaginationArgsFromContext(c)
 
 	// getting query string
 	var rawSql string
@@ -44,7 +45,7 @@ func (gs *GlobalState) GetRankingWithModeEvent(c *gin.Context) {
 	// querying the database
 	pqs := []models.RankingQuery{}
 
-	totalItems, err := PaginatedQuery(
+	totalItems, err := db.PaginatedQuery(
 		gs.DB,
 		pageArgs,
 		&pqs,

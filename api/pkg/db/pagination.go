@@ -1,4 +1,4 @@
-package routes
+package db
 
 import (
 	"errors"
@@ -80,23 +80,28 @@ func PaginatedQuery[S ~[]E, E any](
 	sqlQuery string,
 	sqlArgs ...interface{},
 ) (int, error) {
-	// first, create query
-	query := db.Raw(pg.AddToSQL(sqlQuery), sqlArgs...)
-	// bind to dest
-	if err := query.Find(&dest).Error; err != nil {
-		return 0, errors.New("could not query database")
+	// first, get total count
+	var res struct {
+		Count int
 	}
+	err := db.Transaction(func(tx *gorm.DB) error {
+		// first, query with count(*)
+		if err := tx.Raw(pg.AddCount(sqlQuery), sqlArgs...).First(&res).Error; err != nil {
+			return errors.New("could not query database for count")
+		}
+		// create paginated query
+		query := db.Raw(pg.AddToSQL(sqlQuery), sqlArgs...)
+		// bind to dest
+		if err := query.Find(&dest).Error; err != nil {
+			return errors.New("could not query database")
+		}
+		return nil
+	})
+
 	// check if there were results
 	// if len(*dest) == 0 {
 	// 	return 0, nil
 	// }
-	// now get total count
-	var res struct {
-		Count int
-	}
-	// query with count(*)
-	if err := db.Raw(pg.AddCount(sqlQuery), sqlArgs...).First(&res).Error; err != nil {
-		return 0, errors.New("could not query database for count")
-	}
-	return res.Count, nil
+	return res.Count, err
+
 }
