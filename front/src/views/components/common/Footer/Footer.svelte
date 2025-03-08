@@ -14,7 +14,7 @@
 			<a target="_blank" href="https://leinadium.dev">Daniel Guimarães</a>
 			e
 			<a target="_blank" href="https://www.jeannelima.com.br/">Jeanne Lima</a>
-			| 2024
+			| 2025
 		</Typography>
 	</GridItem>
 </footer>
