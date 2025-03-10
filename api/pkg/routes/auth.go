@@ -198,5 +198,6 @@ func (gs *GlobalState) PostRegisterState(c *gin.Context) {
 		return
 	}
 
-	c.AbortWithStatus(202)
+	// c.AbortWithStatus(204)
+	c.JSON(http.StatusOK, gin.H{})
 }
