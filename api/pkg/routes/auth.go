@@ -193,7 +193,7 @@ func (gs *GlobalState) PostRegisterState(c *gin.Context) {
 		if errs.Is(insertErr, gorm.ErrForeignKeyViolated) {
 			errors.SetError(c, "invalid state_id", http.StatusBadRequest)
 		} else {
-			errors.SetError(c, "could not update database", http.StatusInternalServerError)
+			errors.LogSetError(c, "could not update database", http.StatusInternalServerError, insertErr)
 		}
 		return
 	}

@@ -3,7 +3,7 @@ package models
 import "time"
 
 type RegisteredUser struct {
-	WcaID        string    `gorm:"column:wca_id"`
+	WcaID        string    `gorm:"column:wca_id;primaryKey"`
 	StateID      string    `gorm:"column:state_id"`
 	RegisterDate time.Time `gorm:"column:register_date"`
 }
