@@ -48,7 +48,7 @@ Information retrieved from oauth callback
 
 body:
 
-````jsonc
+```jsonc
 {
   "accessToken": "string",
   "wcaId": "string",     // optional
@@ -60,7 +60,7 @@ response:
 - `202`: ```<empty>```
 - `4xx`: ```{"error": "..."}```
 
-````
+```
 
 ## Person
 
