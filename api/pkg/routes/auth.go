@@ -171,8 +171,17 @@ func (gs *GlobalState) PostRegisterState(c *gin.Context) {
 			return
 		}
 	} else {
-		if time.Since(registeredUser.RegisterDate).Hours() < 24 {
-			errors.SetError(c, "wait 24h before registering again", http.StatusBadRequest)
+		if gs.Config.Rules.RegisterTimeout == 0 {
+			errors.LogSetError(c, "could not get maximum register timeout", http.StatusInternalServerError, nil)
+			return
+		}
+
+		limit := time.Duration(gs.Config.Rules.RegisterTimeout) * time.Hour
+		if time.Since(registeredUser.RegisterDate) < limit {
+			remaining := time.Until(registeredUser.RegisterDate.Add(limit))
+			msg := fmt.Sprintf("wait %d hours before changing states", int32(remaining.Hours()))
+
+			errors.SetError(c, msg, http.StatusBadRequest)
 			return
 		}
 	}

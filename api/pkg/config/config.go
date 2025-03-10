@@ -25,6 +25,9 @@ type Config struct {
 		ClientSecret string `toml:"client_secret"`
 		RedirectURI  string `toml:"redirect_uri"`
 	} `toml:"auth"`
+	Rules struct {
+		RegisterTimeout int `toml:"register_timeout"`
+	} `toml:"rules"`
 }
 
 func ParseTOML(tomlfile string) Config {
