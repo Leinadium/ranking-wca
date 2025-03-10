@@ -172,7 +172,7 @@ func (gs *GlobalState) PostRegisterState(c *gin.Context) {
 		}
 	} else {
 		if time.Since(registeredUser.RegisterDate).Hours() < 24 {
-			errors.SetError(c, "wait 24h before registering again", http.StatusTooEarly)
+			errors.SetError(c, "wait 24h before registering again", http.StatusBadRequest)
 			return
 		}
 	}
