@@ -57,7 +57,8 @@ body:
 
 response:
 
-- `202`: ```<empty>```
+- `200`: ```<empty>```
+- `425`: ```{"error": "wait 24h before registering again"}
 - `4xx`: ```{"error": "..."}```
 
 ```
