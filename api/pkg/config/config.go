@@ -26,7 +26,7 @@ type Config struct {
 		RedirectURI  string `toml:"redirect_uri"`
 	} `toml:"auth"`
 	Rules struct {
-		RegisterTimeout int `toml:"register_timeout"`
+		RegisterTimeout float32 `toml:"register_timeout"`
 	} `toml:"rules"`
 }
 
