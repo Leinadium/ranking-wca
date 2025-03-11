@@ -11,6 +11,10 @@ func SetError(c *gin.Context, text string, code int) {
 }
 
 func LogSetError(c *gin.Context, text string, code int, err error) {
-	log.Println("Error", text, err.Error())
+	errMsg := ""
+	if err != nil {
+		errMsg = err.Error()
+	}
+	log.Println("Error", text, errMsg)
 	SetError(c, text, code)
 }
