@@ -83,3 +83,48 @@ func (a WCAapi) Download(url string) error {
 	}
 	return nil
 }
+
+// func ResultIntToStr(result int, event string) string {
+// 	if result == 0 {
+// 		return ""
+// 	}
+// 	if result == -1 {
+// 		return "DNF"
+// 	}
+// 	if result == -2 {
+// 		return "DNS"
+// 	}
+// 	if event == "333fm" {
+// 		return strconv.Itoa(result)
+// 	}
+// 	if event == "333mbld" {
+// 		var solved, attempted, timeSeconds int
+
+// 		if result/10000000000 == 1 {
+// 			// old format, 1SSAATTTTT
+// 			s := result % 10000000000 / 10000000
+// 			a := result % 10000000 / 100000
+// 			t := result % 100000
+
+// 			solved = 99 - s
+// 			attempted = a
+// 			timeSeconds = t
+// 		} else {
+// 			// new format, 0DDTTTTTMM
+// 			d := result % 1000000000 / 10000000
+// 			t := result % 10000000 / 100
+// 			m := result % 100
+
+// 			timeSeconds = t
+// 			solved = 99 - d + m
+// 			attempted = solved + m
+// 		}
+// 		timeStr := "(???)"
+// 		if timeSeconds != 99999 {
+// 			duration := (time.Duration(timeSeconds) * time.Second)
+// 			m := duration.Minutes()
+// 			s := duration.Seconds()
+// 		}
+// 	}
+
+// }
