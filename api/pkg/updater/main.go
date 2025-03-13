@@ -27,6 +27,7 @@ func Main() {
 			log.Fatalln("could not run refresh", err.Error())
 		}
 		log.Println("successful refresh")
+		return
 	}
 
 	// fetch from db
