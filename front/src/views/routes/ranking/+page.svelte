@@ -26,6 +26,7 @@
 	import EmptyMessage from '../../components/common/EmptyMessage/EmptyMessage.svelte';
 	import { KEY_PERSISTED_RANKING_FILTERS } from '$lib/constants/ranking';
 	import { formatTimeByEvent } from '$lib/utils/numbers';
+	import { getCompetitionUrl } from '$lib/utils/competition';
 
 	// TODO: Definir valores padrões com base em valores centralizados para cada opção
 	const persistedFilters = localStorage.getItem(KEY_PERSISTED_RANKING_FILTERS);
@@ -139,9 +140,16 @@
 						</TableCell>
 						<TableCell>
 							{#if row?.competitionState}
-								<Flag stateId={row?.competitionState} size={2} />
+								<ButtonRoot
+									type={'BASIC'}
+									color={'NEUTRAL'}
+									href={getCompetitionUrl(row?.competitionId) || undefined}
+									target={'_blank'}
+								>
+									<Flag stateId={row?.competitionState} size={2} />
+									<ButtonText>{row?.competitionName}</ButtonText>
+								</ButtonRoot>
 							{/if}
-							{row?.competitionName}
 						</TableCell>
 					</TableRow>
 				{/each}
