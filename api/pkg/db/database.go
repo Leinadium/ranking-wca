@@ -44,6 +44,10 @@ func (db *WCAdb) RunUpdate() error {
 	})
 }
 
+func (db *WCAdb) RunRefresh() error {
+	return db.DB.Exec("CALL app.refresh()").Error
+}
+
 func (db *WCAdb) ExportDate() (models.ExportDate, error) {
 	var ret models.ExportDate
 	query := db.DB.Take(&ret)

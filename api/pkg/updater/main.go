@@ -2,6 +2,7 @@ package updater
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"ranking.leinadium.dev/pkg/config"
@@ -18,6 +19,15 @@ func Main() {
 	log.Println("initializing objects")
 	db := db.NewWCAdb(c)
 	api := wca.NewWCAapi(c)
+
+	// parsing extra env arg
+	if os.Getenv("ONLY_REFRESH") != "" {
+		err := db.RunRefresh()
+		if err != nil {
+			log.Fatalln("could not run refresh", err.Error())
+		}
+		log.Println("successful refresh")
+	}
 
 	// fetch from db
 	log.Println("fetching from db")
