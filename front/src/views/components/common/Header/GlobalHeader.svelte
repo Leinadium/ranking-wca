@@ -156,6 +156,10 @@
 		goto(`${baseUrl}/person/${userWcaId}`)
 	}
 
+	function checkIsPersonPage(): boolean {
+		return page?.url?.pathname?.includes('/person/') || false
+	}
+
 	$effect(() => {
 		if (!$authStore.user) return;
 
@@ -234,7 +238,7 @@
 						</InputGroupRoot>
 					</Modal>
 				{:else}
-					{#if !$responsivenessStore.isSmallDevice}
+					{#if checkIsPersonPage() && !$responsivenessStore.isSmallDevice}
 						<GridItem gap={3}>
 							<Typography type={'caption'} color={'NEUTRAL_DARK_1'} align={'right'}>
 								Esse é seu perfil e deseja alterar seu estado?<br />Entre com sua conta WCA
