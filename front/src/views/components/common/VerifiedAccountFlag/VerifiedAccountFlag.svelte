@@ -6,9 +6,11 @@
 	let { isVerified }: VerifiedAccountFlagProps = $props();
 </script>
 
-<Tooltip text={isVerified ? 'Conta verificada' : 'Verificação de conta pendente'}>
-	<SvgIcon
-		name={isVerified ? 'faCircleCheck' : 'faCircleExclamation'}
-		color={isVerified ? 'PRIMARY_LIGHT_1' : 'ACCENT_WARNING_BASE'}
-	/>
-</Tooltip>
+{#key isVerified}
+	<Tooltip text={isVerified ? 'Conta verificada' : 'Verificação de conta pendente'}>
+		<SvgIcon
+			name={isVerified ? 'faCircleCheck' : 'faCircleExclamation'}
+			color={isVerified ? 'PRIMARY_LIGHT_1' : 'ACCENT_WARNING_BASE'}
+		/>
+	</Tooltip>
+{/key}
