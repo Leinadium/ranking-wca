@@ -20,9 +20,9 @@
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { AUTH_CODE_PARAM_KEY, KEY_PERSISTED_USER } from '$lib/constants/auth';
 	import { getPersonImage } from '$lib/utils/person';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
-	import { checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
+	import { checkIsNullOrUndefined, checkIsNullOrUndefinedOrEmptyString } from '$lib/utils/validation';
 	import type { UserInformationsViewModel } from '../../../../viewModels/auth/types';
 	import Popover from '../Popover/Popover.svelte';
 	import { TRIGGER_ID_USER_MENU, POPOVER_ID_USER_MENU } from '$lib/constants/general';
@@ -33,14 +33,20 @@
 	import { openModal } from '$lib/utils/modal';
 	import './style.css';
 	import { STATE_SELECT_OPTIONS } from '$lib/constants/location';
+	import { showErrorMessage } from '$lib/utils/feedback';
 
 	const currenTimestamp = toLocalDateFormat(new Date(), {
 		dateStyle: 'full'
 	});
-	const urlParams = new SvelteURLSearchParams($page.url.searchParams);
+	const urlParams = new SvelteURLSearchParams(page.url.searchParams);
 	const authCode: string | null = urlParams.get(AUTH_CODE_PARAM_KEY);
 
 	const USER_MENU_OPTIONS = [
+		{
+			label: 'Ver perfil',
+			iconName: 'faUser',
+			fn: redirectToUserPage
+		},
 		{
 			label: 'Alterar dados pessoais',
 			iconName: 'faIdCard',
@@ -65,7 +71,7 @@
 
 		modifiedUrlParams.delete(paramKey);
 		goto(
-			`${$page.url.pathname}${modifiedUrlParams.size > 0 ? '?' + modifiedUrlParams.toString() : ''}`,
+			`${page.url.pathname}${modifiedUrlParams.size > 0 ? '?' + modifiedUrlParams.toString() : ''}`,
 			{ replaceState: true }
 		);
 	}
@@ -133,6 +139,21 @@
 			stateId: selectedUserState,
 			customOnSuccessFn: async () => await getUpdatedUserData(authCode)
 		});
+	}
+
+	function redirectToUserPage() {
+		const userWcaId = $authStore.user?.wcaId
+
+		if (checkIsNullOrUndefined(userWcaId)) {
+			showErrorMessage({
+				technicalMessage: 'Informado wcaId inválido para redirecionamento de página.',
+				friendlyMessage: 'Não foi possível redirecionar para página do usuário.'
+			})
+			return
+		}
+
+		const baseUrl = page?.url?.origin  
+		goto(`${baseUrl}/person/${userWcaId}`)
 	}
 
 	$effect(() => {
