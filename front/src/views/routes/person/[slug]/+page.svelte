@@ -47,6 +47,7 @@
 	import Card from '../../../components/common/Card/Card.svelte';
 	import Tag from '../../../components/common/Tag/Tag.svelte';
 	import './style.css';
+	import { getCompetitionUrl } from '$lib/utils/competition';
 
 	const personId = $page.params.slug;
 
@@ -329,7 +330,12 @@
 							</ButtonRoot>
 						</TableCell>
 						<TableCell>
-							<ButtonRoot type={'BASIC'} color={'NEUTRAL'}>
+							<ButtonRoot
+								type={'BASIC'}
+								color={'NEUTRAL'}
+								href={getCompetitionUrl(row?.competitionId) || undefined}
+								target={'_blank'}
+							>
 								<Flag stateId={row.competitionState} size={2} />
 								<ButtonText>{row.competitionName}</ButtonText>
 							</ButtonRoot>
