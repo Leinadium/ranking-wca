@@ -25,6 +25,7 @@
 	import { rankingStore } from '../../../stores/ranking';
 	import EmptyMessage from '../../components/common/EmptyMessage/EmptyMessage.svelte';
 	import { KEY_PERSISTED_RANKING_FILTERS } from '$lib/constants/ranking';
+	import { formatTimeByEvent } from '$lib/utils/numbers';
 
 	// TODO: Definir valores padrões com base em valores centralizados para cada opção
 	const persistedFilters = localStorage.getItem(KEY_PERSISTED_RANKING_FILTERS);
@@ -127,7 +128,7 @@
 							</ButtonRoot>
 						</TableCell>
 						<TableCell>{row?.wcaId}</TableCell>
-						<TableCell>{row?.best}</TableCell>
+						<TableCell>{formatTimeByEvent(row.best, tableFilters.eventId)}</TableCell>
 						<TableCell>
 							<GridItem justifyContent={'flex-start'} gap={1}>
 								{#if row?.stateId}
