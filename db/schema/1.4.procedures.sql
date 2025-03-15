@@ -148,32 +148,19 @@ REPLACE INTO datalake.estimated_state_for_user (
 ;
 
 
-REPLACE INTO app.registered_users (
-    wca_id,
-    state_id
-)
-    SELECT
-        wca_id,
-        state_id
-    FROM
-        app.next_update_users
-;
+-- REPLACE INTO app.registered_users (
+--     wca_id,
+--     state_id
+-- )
+--     SELECT
+--         wca_id,
+--         state_id
+--     FROM
+--         app.next_update_users
+-- ;
 
-TRUNCATE TABLE app.next_update_users;
+-- TRUNCATE TABLE app.next_update_users;
 
-
-REPLACE INTO dump.all_persons_with_states (
-    wca_id,
-    state_id
-)
-    SELECT
-        es.wca_id                           AS wca_id,
-        COALESCE(re.state_id, es.state_id)  AS state_id
-    FROM
-        datalake.estimated_state_for_user es
-        LEFT JOIN app.registered_users re
-            ON es.wca_id = re.wca_id
-;
 
 TRUNCATE TABLE dump.competitions_by_person_and_country;
 
@@ -189,6 +176,19 @@ LANGUAGE SQL
 NOT DETERMINISTIC
 MODIFIES SQL DATA
 BEGIN
+
+REPLACE INTO dump.all_persons_with_states (
+    wca_id,
+    state_id
+)
+    SELECT
+        es.wca_id                           AS wca_id,
+        COALESCE(re.state_id, es.state_id)  AS state_id
+    FROM
+        datalake.estimated_state_for_user es
+        LEFT JOIN app.registered_users re
+            ON es.wca_id = re.wca_id
+;
 
 
 REPLACE INTO dump.results_by_state (
