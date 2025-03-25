@@ -44,6 +44,14 @@ CREATE TABLE IF NOT EXISTS datalake.estimated_state_for_user (
     FOREIGN KEY (wca_id) REFERENCES datalake.competitors(wca_id) ON DELETE CASCADE,
     FOREIGN KEY (state_id) REFERENCES app.states(state_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS datalake.all_persons_with_states (
+    wca_id              VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    state_id            CHAR(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    PRIMARY KEY (wca_id),
+    FOREIGN KEY (state_id) REFERENCES app.states(state_id) ON DELETE CASCADE
+);
+
 -----------------------------------------------------
 
 -- rankings
