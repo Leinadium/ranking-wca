@@ -72,10 +72,9 @@ SELECT
     STR_TO_DATE(CONCAT(comp.year, ',', comp.endMonth, ',', comp.endDay), '%Y,%m,%d') AS ts
 FROM
     datalake.ranking_single dlk
-        LEFT JOIN datalake.competitors ct on dlk.wca_id = ct.wca_id
-        LEFT JOIN datalake.all_persons_with_states al on dlk.wca_id = al.wca_id
-        LEFT JOIN app.registered_users ru on dlk.wca_id = ru.wca_id
-        LEFT JOIN app.estimated_state_by_user
+        LEFT JOIN datalake.competitors ct on (dlk.wca_id = ct.wca_id)
+        LEFT JOIN datalake.all_persons_with_states al on (dlk.wca_id = al.wca_id)
+        LEFT JOIN app.registered_users ru on (dlk.wca_id = ru.wca_id)
         LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
         LEFT JOIN datalake.competitions comp2 on (dmp.competitionId = comp2.competition_id)
@@ -105,9 +104,9 @@ SELECT
     STR_TO_DATE(CONCAT(comp.year, ',', comp.endMonth, ',', comp.endDay), '%Y,%m,%d') AS ts
 FROM
     datalake.ranking_average dlk
-        LEFT JOIN datalake.competitors ct on dlk.wca_id = ct.wca_id
-        LEFT JOIN datalake.all_persons_with_states al on dlk.wca_id = al.wca_id
-        LEFT JOIN app.registered_users ru on dlk.wca_id = ru.wca_id
+        LEFT JOIN datalake.competitors ct on (dlk.wca_id = ct.wca_id)
+        LEFT JOIN datalake.all_persons_with_states al on (dlk.wca_id = al.wca_id)
+        LEFT JOIN app.registered_users ru on (dlk.wca_id = ru.wca_id)
         LEFT JOIN dump.Results dmp on (dlk.wca_id = dmp.personId and dlk.event_id = dmp.eventId)
         LEFT JOIN dump.Competitions comp on (dmp.competitionId = comp.id)
         LEFT JOIN datalake.competitions comp2 on (dmp.competitionId = comp2.competition_id)
