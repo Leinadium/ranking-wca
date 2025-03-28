@@ -1,6 +1,6 @@
 DROP TABLE datalake.ranking_average;
 DROP TABLE datalake.ranking_single;
-DROP TABLE dump.all_persons_with_states;
+DROP TABLE datalake.all_persons_with_states;
 DROP TABLE dump.competitions_by_person_and_country;
 DROP TABLE dump.results_by_state;
 DROP TABLE datalake.estimated_state_for_user;
