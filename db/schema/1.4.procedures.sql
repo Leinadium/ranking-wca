@@ -215,6 +215,18 @@ REPLACE INTO dump.results_by_state (
     AND rs.eventId IS NOT NULL
 ;
 
+-- remove old values if the state has changed
+-- as the replace doesnt remove these old values
+DELETE
+FROM dump.results_by_state rs
+WHERE EXISTS (
+    SELECT wca_id, state_id
+    FROM datalake.all_persons_with_states al
+    WHERE
+        rs.wca_id = al.wca_id
+        AND rs.state_id != al.state_id
+);
+
 REPLACE INTO datalake.ranking_single (
     wca_id,
     event_id,
