@@ -177,7 +177,7 @@ NOT DETERMINISTIC
 MODIFIES SQL DATA
 BEGIN
 
-REPLACE INTO dump.all_persons_with_states (
+REPLACE INTO datalake.all_persons_with_states (
     wca_id,
     state_id
 )
@@ -205,7 +205,7 @@ REPLACE INTO dump.results_by_state (
         rs.best             AS single,
         ra.best             AS average
     FROM
-        dump.all_persons_with_states al
+        datalake.all_persons_with_states al
             LEFT JOIN dump.RanksSingle rs
                 ON al.wca_id = rs.personId
             LEFT JOIN dump.RanksAverage ra
@@ -214,6 +214,18 @@ REPLACE INTO dump.results_by_state (
     WHERE al.state_id IS NOT NULL
     AND rs.eventId IS NOT NULL
 ;
+
+-- remove old values if the state has changed
+-- as the replace doesnt remove these old values
+DELETE
+FROM dump.results_by_state rs
+WHERE EXISTS (
+    SELECT wca_id, state_id
+    FROM datalake.all_persons_with_states al
+    WHERE
+        rs.wca_id = al.wca_id
+        AND rs.state_id != al.state_id
+);
 
 REPLACE INTO datalake.ranking_single (
     wca_id,
@@ -332,7 +344,7 @@ REPLACE INTO datalake.sum_of_ranks(
 -- )
 --     SELECT
 --     FROM
---         dump.all_persons_with_states al
+--         datalake.all_persons_with_states al
 --             LEFT JOIN (
 --                 SELECT
 --                     sr.wca_id,
